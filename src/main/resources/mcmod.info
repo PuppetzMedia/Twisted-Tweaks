@@ -1,0 +1,16 @@
+[
+{
+  "modid": "twistedtweaks",
+  "name": "Twisted Tweaks",
+  "description": "Twisted Tweaks making the game ever more twisted.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/TSSN/Twisted-Tweaks",
+  "updateUrl": "",
+  "authorList": ["artdude543", "MindlessPuppetz"],
+  "credits": "Funwayguy",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
