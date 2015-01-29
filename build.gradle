@@ -22,7 +22,7 @@ group= "uk.artdude.tweaks.twisted"
 archivesBaseName = "twistedtweaks"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
+    version = "${minecraft_version}-${forge_version}-${System.getenv().BUILD_NUMBER}"
     runDir = "eclipse"
     
     replaceIn "References.java"

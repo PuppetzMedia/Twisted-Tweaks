@@ -35,7 +35,7 @@ public class TTAddons {
                 MinecraftForge.EVENT_BUS.register(new CropAcidRain());
             } else {
                 TwistedTweaks.logger.log(Level.WARN, "Crops acid rain was enabled but AppleCore is not installed, to " +
-                        "enable crops acid rain please install AppleCore");
+                        "enable this feature please install AppleCore");
             }
         }
         // Check to see if the player starve death is enabled.
@@ -45,8 +45,8 @@ public class TTAddons {
                 // Register the events to MinecraftForge.
                 MinecraftForge.EVENT_BUS.register(new StarveDeath());
             } else {
-                TwistedTweaks.logger.log(Level.WARN, "Crops acid rain was enabled but AppleCore is not installed, to " +
-                        "enable crops acid rain please install AppleCore");
+                TwistedTweaks.logger.log(Level.WARN, "Starve death was enabled but AppleCore is not installed, to " +
+                        "enable this feature please install AppleCore");
             }
         }
     }
