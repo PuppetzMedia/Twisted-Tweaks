@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 
 ext.artifact_version = 'NFG'
-artifact_version = "${mod_version}.${System.getenv().BUILD_NUMBER}"
+artifact_version = "${mod_version}-${System.getenv().BUILD_NUMBER}"
 
 version = "${artifact_version}"
 group= "uk.artdude.tweaks.twisted"
