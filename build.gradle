@@ -17,7 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "${mod_version}-${System.getenv().BUILD_NUMBER}"
+artifact_version = "${mod_version}.${System.getenv().BUILD_NUMBER}"
+
+version = "${artifact_version}"
 group= "uk.artdude.tweaks.twisted"
 archivesBaseName = "twistedtweaks"
 
@@ -42,7 +44,7 @@ processResources {
     include 'mcmod.info'
     
     // replace version and mcversion
-    expand 'version':project.version, 'mcversion':project.minecraft.version
+    expand 'version':artifact_version, 'mcversion':project.minecraft.version
   }
   
   // copy everything else that's not the mcmod.info
