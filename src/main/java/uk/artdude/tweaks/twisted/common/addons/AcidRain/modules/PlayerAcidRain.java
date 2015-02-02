@@ -10,8 +10,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
-import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
 import uk.artdude.tweaks.twisted.common.enchantments.Galvanized;
@@ -44,7 +42,6 @@ public class PlayerAcidRain {
         if (!AcidRainCore.getIsAcidRain(event.player.worldObj)) {
             return;
         }
-        TwistedTweaks.logger.log(Level.INFO, "Player Acid Rain? " + AcidRainCore.getIsAcidRain(event.player.worldObj));
         Long time = this.lastTickTimes.get(player);
         if (time == null) {
             this.lastTickTimes.put(player, System.currentTimeMillis());

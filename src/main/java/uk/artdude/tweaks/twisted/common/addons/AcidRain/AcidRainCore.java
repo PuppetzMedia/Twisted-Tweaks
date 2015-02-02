@@ -4,8 +4,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
-import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
 
 import java.util.HashMap;
@@ -37,7 +35,6 @@ public class AcidRainCore {
             rainTracking.put(dimensionID,  world.isRaining());
             // Set the value of whether it is raining in the world.
             worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < TTAddonsConfig.acidRainChance);
-            TwistedTweaks.logger.log(Level.INFO, "World: " + dimensionID + " Acid Rain? " + worldTracking.get(dimensionID));
         }
     }
 
