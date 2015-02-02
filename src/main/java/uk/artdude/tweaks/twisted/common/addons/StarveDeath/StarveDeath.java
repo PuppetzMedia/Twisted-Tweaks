@@ -1,4 +1,4 @@
-package uk.artdude.tweaks.twisted.common.addons.StarveDeath;
+package uk.artdude.tweaks.twisted.common.addons.starvedeath;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import squeek.applecore.api.hunger.StarvationEvent;

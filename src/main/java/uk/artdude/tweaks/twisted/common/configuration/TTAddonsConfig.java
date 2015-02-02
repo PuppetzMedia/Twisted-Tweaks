@@ -16,6 +16,7 @@ public class TTAddonsConfig {
     public static int acidRainInitialDuration;
     public static int acidRainMaxDuration;
     public static int acidRainAddedDuration;
+    public static double acidRainChance;
     public static double acidRainMobMinimumChance;
     public static double acidRainSeedDropChance;
     public static double acidRainCropReturnChance;
@@ -45,6 +46,7 @@ public class TTAddonsConfig {
                   "the player.", 600).getInt(600);
             acidRainAddedDuration = config.get("Acid Rain Effects", "Set the added duration of the poison effect to be " +
                   "applied to the player.", 600).getInt(600);
+            acidRainChance = config.get("Acid Rain Effects", "Set the chance of the rain fall to be acidified. (Default: 25%)", 0.25).getDouble(0.25);
             acidRainMobMinimumChance = config.get("Acid Rain Effects", "Set the minimum chance for when passive mobs can get " +
                     "effected by the acid rain (Default: 10% chance)", 0.1).getDouble(0.1);
             acidRainSeedDropChance = config.get("Acid Rain Effects", "Set the chance of the possibility of the seed dropping " +

@@ -11,6 +11,8 @@ public class TTMainConfig {
     public static Configuration config;
     /* Blocks */
     public static boolean enableLiquidVoid;
+    /* Version Checking */
+    public static boolean enableVersionChecking;
     /* Debug */
     public static boolean enableDebug;
 
@@ -26,6 +28,8 @@ public class TTMainConfig {
             // Settings configurations.
             enableDebug = config.get("Settings", "Enable Debug", false, "Toggle debug mode in the mod, this is for" +
                     " experienced users only!").getBoolean(false);
+            enableVersionChecking = config.get("Settings", "Enable Version Checking", true, "You can turn the mods " +
+                    "version checking off with this settings").getBoolean(true);
             // Log that the config has been loaded successfully.
             TwistedTweaks.logger.log(Level.INFO, "Successfully loaded the main configurations");
         } catch (Exception err) {

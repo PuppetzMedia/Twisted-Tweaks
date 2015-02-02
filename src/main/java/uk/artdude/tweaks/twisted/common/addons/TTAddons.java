@@ -5,11 +5,12 @@ import cpw.mods.fml.common.Loader;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Level;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
-import uk.artdude.tweaks.twisted.common.addons.AcidRain.CropAcidRain;
-import uk.artdude.tweaks.twisted.common.addons.StarveDeath.StarveDeath;
+import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
+import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.CropAcidRain;
+import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.MobAcidRain;
+import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.PlayerAcidRain;
+import uk.artdude.tweaks.twisted.common.addons.starvedeath.StarveDeath;
 import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
-import uk.artdude.tweaks.twisted.common.addons.AcidRain.MobAcidRain;
-import uk.artdude.tweaks.twisted.common.addons.AcidRain.PlayerAcidRain;
 
 public class TTAddons {
 
@@ -17,6 +18,8 @@ public class TTAddons {
      * This is the main function call to this class.
      */
     public static void init() {
+        // Register the core acid rain.
+        FMLCommonHandler.instance().bus().register(new AcidRainCore());
         // Check to see if the player acid rain is enabled.
         if (TTAddonsConfig.enablePlayerAcidRain) {
             // Register the events to FML.
