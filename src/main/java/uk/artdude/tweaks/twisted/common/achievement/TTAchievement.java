@@ -10,6 +10,9 @@ public class TTAchievement {
 
     public static Achievement acidRain;
 
+    /**
+     * This is the main function call to this class.
+     */
     public static void init() {
         acidRain = new Achievement("twistedtweaks.acidRain", "twistedtweaks.acidRain", 0, 0, Items.bucket, null).registerStat();
         // Set the achievement page up with the achievement we want to add.

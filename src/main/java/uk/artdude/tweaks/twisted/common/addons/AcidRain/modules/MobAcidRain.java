@@ -11,7 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
-import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
+import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 import java.util.HashMap;
 
@@ -25,6 +25,10 @@ public class MobAcidRain {
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent event) {
+        // If player acid rain is disabled via the config return.
+        if (!ConfigurationHelper.enableMobAcidRain) {
+            return;
+        }
         // Get the world information.
         World world = event.entityLiving.worldObj;
         // Get the entity information.
@@ -48,7 +52,7 @@ public class MobAcidRain {
             if (entity instanceof EntityAnimal) {
                 // Get the minimum value of when to check to add the poison effect to the mob from the config.
                 double minimumChance;
-                minimumChance = TTAddonsConfig.acidRainMobMinimumChance;
+                minimumChance = ConfigurationHelper.acidRainMobMinimumChance;
                 // Perform the random chance to see if the mob is going to get effected by the rain.
                 if (Math.random() < minimumChance) {
                     // Add the acid rain the mob.
@@ -85,9 +89,9 @@ public class MobAcidRain {
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the entity.
         */
-        int initialDuration = TTAddonsConfig.acidRainInitialDuration;
-        int maxDuration = TTAddonsConfig.acidRainMaxDuration;
-        int addedDuration = TTAddonsConfig.acidRainAddedDuration;
+        int initialDuration = ConfigurationHelper.acidRainInitialDuration;
+        int maxDuration = ConfigurationHelper.acidRainMaxDuration;
+        int addedDuration = ConfigurationHelper.acidRainAddedDuration;
         /*
         Check that the world the entity is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the entity.

@@ -13,8 +13,7 @@ import org.apache.logging.log4j.Level;
 import squeek.applecore.api.plants.PlantGrowthEvent;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
-import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
-import uk.artdude.tweaks.twisted.common.configuration.TTMainConfig;
+import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 import java.util.Random;
 
@@ -22,6 +21,10 @@ public class CropAcidRain {
 
     @SubscribeEvent
     public void growthTickAllowed(PlantGrowthEvent.AllowGrowthTick event) {
+        // If player acid rain is disabled via the config return.
+        if (!ConfigurationHelper.enableCropAcidRain) {
+            return;
+        }
         // Set the block we are currently dealing with.
         Block crop = event.block;
         // Set the world that the block is in.
@@ -53,15 +56,15 @@ public class CropAcidRain {
             */
             if (currentMeta > 0) {
                 // Get the chance of the seed dropping from the configs.
-                if (TTMainConfig.enableDebug) {
+                if (ConfigurationHelper.enableDebug) {
                     seedDropChance = 1.0;
                 } else {
-                    seedDropChance = TTAddonsConfig.acidRainSeedDropChance;
+                    seedDropChance = ConfigurationHelper.acidRainSeedDropChance;
                 }
                 // If the chance is lower then the current random drop the seed for the current crop and replace the crop with air.
                 if (Math.random() < seedDropChance) {
                     // If debugging is enabled log the activity.
-                    if (TTMainConfig.enableDebug) {
+                    if (ConfigurationHelper.enableDebug) {
                         TwistedTweaks.logger.log(Level.INFO, "Seed Drop: " + crop.getLocalizedName() + " Cords: " +
                                 event.x + ", " + event.y + ", " + event.z);
                     }
@@ -73,11 +76,11 @@ public class CropAcidRain {
                     // Create the random.
                     Random random = new Random();
                     // Get the chance of turning back a stage from the config.
-                    double returnStageChance = TTAddonsConfig.acidRainCropReturnChance;
+                    double returnStageChance = ConfigurationHelper.acidRainCropReturnChance;
                     // Check to see if the chance meets to return a growth stage of a crop.
                     if (random.nextDouble() < returnStageChance) {
                         // If debugging is enabled log the activity.
-                        if (TTMainConfig.enableDebug) {
+                        if (ConfigurationHelper.enableDebug) {
                             TwistedTweaks.logger.log(Level.INFO, "Crop Growth Backwards: " + crop.getLocalizedName() + " Cords: " +
                                     event.x + ", " + event.y + ", " + event.z);
                         }

@@ -9,8 +9,9 @@ import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.CropAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.MobAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.PlayerAcidRain;
-import uk.artdude.tweaks.twisted.common.addons.starvedeath.StarveDeath;
-import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
+import uk.artdude.tweaks.twisted.common.addons.modifications.IgniteBlocks;
+import uk.artdude.tweaks.twisted.common.addons.modifications.StarveDeath;
+import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 public class TTAddons {
 
@@ -20,37 +21,30 @@ public class TTAddons {
     public static void init() {
         // Register the core acid rain.
         FMLCommonHandler.instance().bus().register(new AcidRainCore());
-        // Check to see if the player acid rain is enabled.
-        if (TTAddonsConfig.enablePlayerAcidRain) {
-            // Register the events to FML.
-            FMLCommonHandler.instance().bus().register(new PlayerAcidRain());
-        }
-        // Check to see if the mobs acid rain is enabled.
-        if (TTAddonsConfig.enableMobAcidRain) {
+        // Register the player acid rain to FML.
+        FMLCommonHandler.instance().bus().register(new PlayerAcidRain());
+        // Register the mob acid rain to MinecraftForge.
+        MinecraftForge.EVENT_BUS.register(new MobAcidRain());
+        // Check to see if AppleCore is installed/loaded.
+        if (Loader.isModLoaded("AppleCore")) {
             // Register the events to MinecraftForge.
-            MinecraftForge.EVENT_BUS.register(new MobAcidRain());
+            MinecraftForge.EVENT_BUS.register(new CropAcidRain());
+        } else {
+            TwistedTweaks.logger.log(Level.WARN, "Crops acid rain was enabled but AppleCore is not installed, to " +
+                    "enable this feature please install AppleCore");
         }
-        // Check to see if the crops acid rain is enabled.
-        if (TTAddonsConfig.enableCropAcidRain) {
-            // Check to see if AppleCore is installed/loaded.
-            if (Loader.isModLoaded("AppleCore")) {
-                // Register the events to MinecraftForge.
-                MinecraftForge.EVENT_BUS.register(new CropAcidRain());
-            } else {
-                TwistedTweaks.logger.log(Level.WARN, "Crops acid rain was enabled but AppleCore is not installed, to " +
-                        "enable this feature please install AppleCore");
-            }
+        // Check to see if AppleCore is installed/loaded.
+        if (Loader.isModLoaded("AppleCore")) {
+            // Register the events to MinecraftForge.
+            MinecraftForge.EVENT_BUS.register(new StarveDeath());
+        } else {
+            TwistedTweaks.logger.log(Level.WARN, "Starve death was enabled but AppleCore is not installed, to " +
+                    "enable this feature please install AppleCore");
         }
-        // Check to see if the player starve death is enabled.
-        if (TTAddonsConfig.enablestarveDeathDamage) {
-            // Check to see if AppleCore is installed/loaded.
-            if (Loader.isModLoaded("AppleCore")) {
-                // Register the events to MinecraftForge.
-                MinecraftForge.EVENT_BUS.register(new StarveDeath());
-            } else {
-                TwistedTweaks.logger.log(Level.WARN, "Starve death was enabled but AppleCore is not installed, to " +
-                        "enable this feature please install AppleCore");
-            }
+        // Check to see if the config is set to enable the Ignite Blocks add-on.
+        if (ConfigurationHelper.enableIgniteBlocks) {
+            // Load the add-on.
+            IgniteBlocks.init();
         }
     }
 }

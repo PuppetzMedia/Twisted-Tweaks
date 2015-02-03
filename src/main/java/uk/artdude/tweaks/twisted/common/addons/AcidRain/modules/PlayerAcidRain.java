@@ -10,8 +10,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import uk.artdude.tweaks.twisted.common.achievement.TTAchievement;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
-import uk.artdude.tweaks.twisted.common.configuration.TTAddonsConfig;
+import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.enchantments.Galvanized;
 
 import java.util.HashMap;
@@ -29,6 +30,10 @@ public class PlayerAcidRain {
 
     @SubscribeEvent
     public void tick(TickEvent.PlayerTickEvent event) {
+        // If player acid rain is disabled via the config return.
+        if (!ConfigurationHelper.enablePlayerAcidRain) {
+            return;
+        }
         if (!event.phase.equals(TickEvent.Phase.END)) {
             return;
         }
@@ -102,9 +107,9 @@ public class PlayerAcidRain {
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the player.
         */
-        int initialDuration = TTAddonsConfig.acidRainInitialDuration;
-        int maxDuration = TTAddonsConfig.acidRainMaxDuration;
-        int addedDuration = TTAddonsConfig.acidRainAddedDuration;
+        int initialDuration = ConfigurationHelper.acidRainInitialDuration;
+        int maxDuration = ConfigurationHelper.acidRainMaxDuration;
+        int addedDuration = ConfigurationHelper.acidRainAddedDuration;
         /*
         Check that the world the player is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the player.
@@ -121,6 +126,8 @@ public class PlayerAcidRain {
             }
             // Add the potion effect the player.
             player.addPotionEffect(potionEffect);
+            // Add the achievement to the player.
+            player.addStat(TTAchievement.acidRain, 1);
         }
     }
 }

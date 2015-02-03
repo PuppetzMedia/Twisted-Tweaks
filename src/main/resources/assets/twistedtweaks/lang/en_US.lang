@@ -1,5 +1,12 @@
 itemGroup.twistedtweaks=Twisted Tweaks
 
+tweaks.twisted.config.blocks.tooltip=Modify block settings and toggle blocks on/off.
+tweaks.twisted.config.rain.acid.tooltip=Toggle the states of acid rain.
+tweaks.twisted.config.rain.acid.effects.tooltip=Modify the effects of acid rain.
+tweaks.twisted.config.game.tweaks.tooltip=Toggle game tweaks and modify settings.
+tweaks.twisted.config.enchantments.tooltip=Modify enchantments and settings.
+tweaks.twisted.config.settings.tooltip=Configure mod settings and features.
+
 tile.liquid_void.name=Liquid Void
 
 enchantment.galvanized=Galvanized
