@@ -1,5 +1,21 @@
 itemGroup.twistedtweaks=Twisted Tweaks
 
+tweaks.twisted.config.blocks.tooltip=Modify block settings and toggle blocks on/off.
+tweaks.twisted.config.rain.acid.tooltip=Toggle the states of acid rain.
+tweaks.twisted.config.rain.acid.effects.tooltip=Modify the effects of acid rain.
+tweaks.twisted.config.game.tweaks.tooltip=Toggle game tweaks and modify settings.
+tweaks.twisted.config.enchantments.tooltip=Modify enchantments and settings.
+tweaks.twisted.config.settings.tooltip=Configure mod settings and features.
+
 tile.liquid_void.name=Liquid Void
 
 enchantment.galvanized=Galvanized
+
+potion.tweaks.twisted.acid.burn=Acid Burn
+
+achievement.tweaks.twisted.acid.rain=Acidification Anyone?
+achievement.tweaks.twisted.acid.rain.desc=Being outside during an acid rain fall.
+achievement.tweaks.twisted.acid.burn=It Burns, It Burns!
+achievement.tweaks.twisted.acid.burn.desc=Looking up at the sky during a acid rain fall.
+
+death.attack.tweaks.twisted.acid.rain=%s corroded away

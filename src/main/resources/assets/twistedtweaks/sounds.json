@@ -1,0 +1,11 @@
+{
+  "records.test": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "records/test",
+        "stream": true
+      }
+    ]
+  }
+}
