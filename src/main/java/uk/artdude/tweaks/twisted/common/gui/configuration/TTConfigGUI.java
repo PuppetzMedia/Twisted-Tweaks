@@ -25,6 +25,7 @@ public class TTConfigGUI extends GuiConfig {
         list.add(configElement(ConfigurationHelper.CATEGORY_BLOCKS, "Blocks", "tweaks.twisted.config.blocks"));
         list.add(configElement(ConfigurationHelper.CATEGORY_ACIDRAIN, "Acid Rain", "tweaks.twisted.config.rain.acid"));
         list.add(configElement(ConfigurationHelper.CATEGORY_ACIDRAIN_EFFECTS, "Acid Rain Effects", "tweaks.twisted.config.rain.acid.effects"));
+        list.add(configElement(ConfigurationHelper.CATEGORY_POTIONS, "Potions", "tweaks.twisted.config.rain.acid.potions"));
         list.add(configElement(ConfigurationHelper.CATEGORY_TWEAKS, " Game Tweaks", "tweaks.twisted.config.game.tweaks"));
         list.add(configElement(ConfigurationHelper.CATEGORY_ENCHANTMENTS, "Enchantments", "tweaks.twisted.config.enchantments"));
         list.add(configElement(ConfigurationHelper.CATEGORY_SETTINGS, "Settings", "tweaks.twisted.config.settings"));

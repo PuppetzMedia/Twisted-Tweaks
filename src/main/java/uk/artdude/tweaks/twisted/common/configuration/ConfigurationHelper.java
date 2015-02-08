@@ -10,6 +10,7 @@ public class ConfigurationHelper {
     public static String CATEGORY_TWEAKS = "tweaks";
     public static String CATEGORY_SETTINGS = "settings";
     public static String CATEGORY_ENCHANTMENTS = "enchantments";
+    public static String CATEGORY_POTIONS = "potions";
 
     // Blocks
     public static boolean enableLiquidVoid;
@@ -21,6 +22,7 @@ public class ConfigurationHelper {
     public static boolean enablePlayerAcidRain;
     public static boolean enableMobAcidRain;
     public static boolean enableCropAcidRain;
+    public static boolean enableAcidFullDeath;
     public static int acidRainInitialDuration;
     public static int acidRainMaxDuration;
     public static int acidRainAddedDuration;
@@ -39,6 +41,10 @@ public class ConfigurationHelper {
     // Enchantments
     public static boolean enableGalvanized;
     public static int galvanizedEnchantmentID;
+
+    // Potions
+    public static boolean enableAcidBurnPotion;
+    public static int acidBurnPotionID = 26;
 
     // Settings
     public static boolean enableDebug;

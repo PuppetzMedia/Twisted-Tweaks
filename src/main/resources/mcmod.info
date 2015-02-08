@@ -7,8 +7,8 @@
   "mcversion": "${mcversion}",
   "url": "https://github.com/TSSN/Twisted-Tweaks",
   "updateUrl": "",
-  "authorList": ["artdude543", "MindlessPuppetz"],
-  "credits": "Funwayguy",
+  "authorList": ["artdude543", "MindlessPuppetz", "Funwayguy"],
+  "credits": "Hixfd398",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

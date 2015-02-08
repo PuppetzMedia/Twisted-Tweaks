@@ -4,7 +4,10 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +21,7 @@ import uk.artdude.tweaks.twisted.common.crafting.BlockRecipes;
 import uk.artdude.tweaks.twisted.common.creativetabs.TTCreativeTab;
 import uk.artdude.tweaks.twisted.common.enchantments.TTEnchantments;
 import uk.artdude.tweaks.twisted.common.items.TTItems;
+import uk.artdude.tweaks.twisted.common.potions.TTPotions;
 import uk.artdude.tweaks.twisted.common.util.References;
 
 /* Set up the mods core settings. */
@@ -66,9 +70,11 @@ public class TwistedTweaks {
         /* Load our enchantments. */
         TTEnchantments.init();
         /* Load our items */
-        TTItems.init();
+        //TTItems.init();
         /* Load our blocks */
         TTBlocks.init();
+        /* Load our potions */
+        TTPotions.init();
         /* Load out addons. */
         TTAddons.init();
         /* Load our recipes */
@@ -78,15 +84,11 @@ public class TwistedTweaks {
     }
 
     @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
-    }
-
-    @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {}
 
     @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-        if(eventArgs.modID.equals(References.modID)) {
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if(event.modID.equals(References.modID)) {
             TTConfiguration.init();
         }
     }

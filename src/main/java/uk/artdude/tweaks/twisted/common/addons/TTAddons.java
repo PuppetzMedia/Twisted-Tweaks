@@ -19,8 +19,10 @@ public class TTAddons {
      * This is the main function call to this class.
      */
     public static void init() {
+        AcidRainCore acidRainCore = new AcidRainCore();
         // Register the core acid rain.
-        FMLCommonHandler.instance().bus().register(new AcidRainCore());
+        FMLCommonHandler.instance().bus().register(acidRainCore);
+        MinecraftForge.EVENT_BUS.register(acidRainCore);
         // Register the player acid rain to FML.
         FMLCommonHandler.instance().bus().register(new PlayerAcidRain());
         // Register the mob acid rain to MinecraftForge.

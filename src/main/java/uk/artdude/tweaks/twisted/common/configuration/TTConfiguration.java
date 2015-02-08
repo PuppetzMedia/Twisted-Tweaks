@@ -44,14 +44,16 @@ public class TTConfiguration {
                     "apply the acid rain effect to be applied to passive mobs");
             ConfigurationHelper.enableCropAcidRain = config.getBoolean("Enable Crop Acid Rain", ConfigurationHelper.CATEGORY_ACIDRAIN, true, "This toggles the ability to apply " +
                     "the acid rain effect to the applied to crops.");
+            ConfigurationHelper.enableAcidFullDeath = config.getBoolean("Enable Full Death", ConfigurationHelper.CATEGORY_ACIDRAIN, false, "Having this set to true will make " +
+                    "the player die completely from the acid potion effect.");
             ConfigurationHelper.acidRainInitialDuration = config.getInt("Acid Rain Initial Duration", ConfigurationHelper.CATEGORY_ACIDRAIN, 60, 0, 100, "Set the initial duration " +
                     "of the poison effect to be applied.");
             ConfigurationHelper.acidRainMaxDuration = config.getInt("Acid Rain Max Duration", ConfigurationHelper.CATEGORY_ACIDRAIN, 600, 0, 600, "Set the max duration of the " +
                     "poison effect to be applied to the player.");
             ConfigurationHelper.acidRainAddedDuration = config.getInt("Acid Rain Added Duration", ConfigurationHelper.CATEGORY_ACIDRAIN,600, 0, 600, "Set the added duration of " +
                     "the poison effect to be applied to the player.");
-            ConfigurationHelper.acidRainChance = config.get(ConfigurationHelper.CATEGORY_ACIDRAIN_EFFECTS, "Chance Of Acid Rain" , 0.25, "Set the chance of the rain fall to be " +
-                    "acidified. (Default: 25%)").getDouble(0.25);
+            ConfigurationHelper.acidRainChance = config.get(ConfigurationHelper.CATEGORY_ACIDRAIN_EFFECTS, "Chance Of Acid Rain" , 0.45, "Set the chance of the rain fall to be " +
+                    "acidified. (Default: 25%)").getDouble(0.45);
             ConfigurationHelper.acidRainMobMinimumChance = config.get(ConfigurationHelper.CATEGORY_ACIDRAIN_EFFECTS, "Chance Of Passive Hurt" , 0.1, "Set the minimum chance for " +
                     "when passive mobs can get effected by the acid rain.").getDouble(0.1);
             ConfigurationHelper.acidRainSeedDropChance = config.get(ConfigurationHelper.CATEGORY_ACIDRAIN_EFFECTS, "Chance Of Seed Dropping" , 0.01, "Set the chance of the " +
@@ -72,8 +74,13 @@ public class TTConfiguration {
             // Enchantment configurations
             ConfigurationHelper.enableGalvanized = config.getBoolean("Enable Galvanized", ConfigurationHelper.CATEGORY_ENCHANTMENTS, true, "You can enable or disable the galvanized " +
                     "enchant using this config. Note: This is best used when you have Acid Rain turned on also.");
-            ConfigurationHelper.galvanizedEnchantmentID = config.getInt("Enchantment ID for Galvanized", ConfigurationHelper.CATEGORY_ENCHANTMENTS, 200, 200, 256, "This " +
+            ConfigurationHelper.galvanizedEnchantmentID = config.getInt("Enchantment ID for Galvanized", ConfigurationHelper.CATEGORY_ENCHANTMENTS, 200, 0, 255, "This " +
                     "toggles the core acid rain to be enabled in the game");
+
+            // Potions
+            ConfigurationHelper.enableAcidBurnPotion = config.getBoolean("Enable Acid Burn Potion", ConfigurationHelper.CATEGORY_POTIONS, true, "If there is not a free potion ID " +
+                    "to use for the custom potion set this to false and the poison effect will be used as a replacement.");
+            ConfigurationHelper.acidBurnPotionID = config.getInt("Acid Burn ID", ConfigurationHelper.CATEGORY_POTIONS, 26, 26, 32, "The ID to use for registering the potion.");
 
             // Settings configurations.
             ConfigurationHelper.enableDebug = config.getBoolean("Enable Debug", ConfigurationHelper.CATEGORY_SETTINGS, false, "Toggle debug mode in the mod, this is for experienced " +
@@ -85,6 +92,7 @@ public class TTConfiguration {
         } finally {
             // If the config has been changed (I.E. Via the in game GUI save the changes to the config.
             if (config.hasChanged()) {
+                // Save the changes to the config file.
                 config.save();
             }
         }
