@@ -135,10 +135,8 @@ public class PlayerAcidRain {
             if (potionEffectAcid == null) {
                 // If the player does not have the effect create the potion effect to be applied to the player.
                 potionEffectAcid = new PotionEffect(acidPotion.id, initialDuration);
-                TwistedTweaks.logger.log(Level.ERROR, "Amplifier " + potionEffectAcid.getAmplifier());
             } else if (potionEffectAcid.getDuration() < maxDuration) {
                 if (potionEffectAcid.getDuration() < 300) {
-                    TwistedTweaks.logger.log(Level.ERROR, "Amplifier 2 " + potionEffectAcid.getAmplifier());
                     potionEffectAcid = new PotionEffect(acidPotion.id, Math.max(potionEffectAcid.getDuration() +
                             addedDuration, maxDuration), potionEffectAcid.getAmplifier() + 1);
                 }
