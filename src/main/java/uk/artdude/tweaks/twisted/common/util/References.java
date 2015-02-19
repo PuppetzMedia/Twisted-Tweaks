@@ -18,7 +18,4 @@ public class References {
 
     /* Gui References */
     public static final String modGUIFactory = "uk.artdude.tweaks.twisted.common.gui.configuration.TTGUIFactory";
-
-    /* Other Mod References */
-    public static final String modVersionFile = "https://scripts.artdude.uk/mods/twistedtweaks/version.json";
 }

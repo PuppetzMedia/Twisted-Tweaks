@@ -2,9 +2,11 @@ package uk.artdude.tweaks.twisted.common.potions;
 
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 public class TTPotionEvent {
@@ -29,6 +31,11 @@ public class TTPotionEvent {
                 // Apply the damage to the entity.
                 event.entityLiving.attackEntityFrom(damageSourceAcidRain, 1.0F);
             }
+        }
+        // Check to see if the player has the poison effect and the config is toggled to kill the player.
+        if (event.entityLiving.isPotionActive(Potion.poison) && AcidRainCore.getIsAcidRain(event.entityLiving.worldObj) && ConfigurationHelper.enableAcidFullDeath) {
+            // Apply the damage to the entity.
+            event.entityLiving.attackEntityFrom(damageSourceAcidRain, 1.0F);
         }
     }
 }

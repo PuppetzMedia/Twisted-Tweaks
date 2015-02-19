@@ -35,6 +35,40 @@ public class IgniteBlocks {
                 setFireValues(tinkersToolStationLogic, 5, 20);
             }
         }
+        // Check to see if Chisel 2 is loaded.
+        if (Loader.isModLoaded("chisel")) {
+            // Get the Chisel blocks we want to give fire properties too.
+            Block chiselAcaciaPlanks = TTUtilities.getBlock("chisel", "acacia_planks");
+            Block chiselBirchPlanks = TTUtilities.getBlock("chisel", "birch_planks");
+            Block chiselDarkOakPlanks = TTUtilities.getBlock("chisel", "dark_oak_planks");
+            Block chiselJunglePlanks = TTUtilities.getBlock("chisel", "jungle_planks");
+            Block chiselOakPlanks = TTUtilities.getBlock("chisel", "oak_planks");
+            Block chiselSprucePlanks = TTUtilities.getBlock("chisel", "spruce_planks");
+            // Check to see if the Acacia Planks block was not null if not set the fire values on the block.
+            if (chiselAcaciaPlanks != null) {
+                setFireValues(chiselAcaciaPlanks, 5, 20);
+            }
+            // Check to see if the Birch Planks block was not null if not set the fire values on the block.
+            if (chiselBirchPlanks != null) {
+                setFireValues(chiselBirchPlanks, 5, 20);
+            }
+            // Check to see if the Dark Oak Planks block was not null if not set the fire values on the block.
+            if (chiselDarkOakPlanks != null) {
+                setFireValues(chiselDarkOakPlanks, 5, 20);
+            }
+            // Check to see if the Jungle Planks block was not null if not set the fire values on the block.
+            if (chiselJunglePlanks != null) {
+                setFireValues(chiselJunglePlanks, 5, 20);
+            }
+            // Check to see if the Oak Planks block was not null if not set the fire values on the block.
+            if (chiselOakPlanks != null) {
+                setFireValues(chiselOakPlanks, 5, 20);
+            }
+            // Check to see if the Spruce Planks block was not null if not set the fire values on the block.
+            if (chiselSprucePlanks != null) {
+                setFireValues(chiselSprucePlanks, 5, 20);
+            }
+        }
     }
 
     /**

@@ -38,6 +38,10 @@ public class ConfigurationHelper {
     // Ignite Blocks
     public static boolean enableIgniteBlocks;
 
+    // Block Changes
+    public static boolean enableXPVoid;
+    public static String[] oreXPDisabled;
+
     // Enchantments
     public static boolean enableGalvanized;
     public static int galvanizedEnchantmentID;

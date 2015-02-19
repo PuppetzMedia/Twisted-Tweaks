@@ -5,7 +5,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -15,7 +14,6 @@ import uk.artdude.tweaks.twisted.common.ProxyCommon;
 import uk.artdude.tweaks.twisted.common.achievement.TTAchievement;
 import uk.artdude.tweaks.twisted.common.addons.TTAddons;
 import uk.artdude.tweaks.twisted.common.blocks.TTBlocks;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.crafting.BlockRecipes;
 import uk.artdude.tweaks.twisted.common.creativetabs.TTCreativeTab;
@@ -54,11 +52,6 @@ public class TwistedTweaks {
         configPath = event.getModConfigurationDirectory() + "/" + References.modName.replace(" ", "_") + "/";
         /* Create our configuration files or read from them is already created. */
         TTConfiguration.initialiseConfig(event);
-        /* Set up the mods version checking. */
-        if (ConfigurationHelper.enableVersionChecking) {
-            // Send the runtime message to FML for the version checking.
-            FMLInterModComms.sendRuntimeMessage(References.modID, "VersionChecker", "addVersionCheck", References.modVersionFile);
-        }
         /* Initialize CreativeTabs */
         creativeTab = new TTCreativeTab(CreativeTabs.getNextID(), References.modID);
     }

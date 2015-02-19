@@ -11,6 +11,7 @@ import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.MobAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.PlayerAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.modifications.IgniteBlocks;
 import uk.artdude.tweaks.twisted.common.addons.modifications.StarveDeath;
+import uk.artdude.tweaks.twisted.common.addons.modifications.XPVoid;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 public class TTAddons {
@@ -47,6 +48,11 @@ public class TTAddons {
         if (ConfigurationHelper.enableIgniteBlocks) {
             // Load the add-on.
             IgniteBlocks.init();
+        }
+        // Check to see if the config is set to enable the XP Void modification.
+        if (ConfigurationHelper.enableXPVoid) {
+            XPVoid.init();
+            MinecraftForge.EVENT_BUS.register(new XPVoid());
         }
     }
 }
