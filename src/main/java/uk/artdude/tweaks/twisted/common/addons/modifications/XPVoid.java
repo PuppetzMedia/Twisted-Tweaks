@@ -1,6 +1,5 @@
 package uk.artdude.tweaks.twisted.common.addons.modifications;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.world.BlockEvent;
@@ -29,14 +28,8 @@ public class XPVoid {
             Block oreBlock = TTUtilities.getBlock(oreInfo[0], oreInfo[1]);
             // Check to see if the block is not null.
             if (oreBlock != null) {
-                // If the block is a Minecraft block add it to the arrayList.
-                if (oreInfo[0].equals("minecraft")) {
-                    // Add the block to the arrayList.
-                    blockList.add(oreBlock);
-                } else if (Loader.isModLoaded(oreInfo[0])) {
-                    // If the block is from a mod check (above) that the mod is loaded, if so add the block to the arrayList.
-                    blockList.add(oreBlock);
-                }
+                // The block is valid so add it to the arrayList to be used by the block break event.
+                blockList.add(oreBlock);
             } else {
                 // Log an error to the game to alert the user.
                 TwistedTweaks.logger.log(Level.ERROR, blockOre + " is not a valid block in the game. Please check that the " +
