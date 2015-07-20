@@ -13,3 +13,5 @@ You're free to include this mod in any modpack
 ##Notice
 Some code is borrowed from [Hunger Overhaul](https://github.com/progwml6/HungerOverhaul) (Not straight copies but adapted to work for the mod)
 We also use some functions/events from [Apple Core](https://github.com/squeek502/AppleCore/) to help with making this mod even more twisted!
+
+Testing Jenkins
