@@ -1,5 +1,7 @@
 package uk.artdude.tweaks.twisted.common;
 
+import net.minecraft.item.Item;
+
 public class ProxyCommon {
 
     /**
@@ -10,4 +12,6 @@ public class ProxyCommon {
         // Return false
         return false;
     }
+
+    public void registerItemVariantModel(Item item, String name, int metadata) {};
 }

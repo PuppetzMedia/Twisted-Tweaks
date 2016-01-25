@@ -1,8 +1,8 @@
 package uk.artdude.tweaks.twisted.common.addons.modifications;
 
-import cpw.mods.fml.common.Loader;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.Loader;
 import uk.artdude.tweaks.twisted.common.util.TTUtilities;
 
 public class IgniteBlocks {

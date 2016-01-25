@@ -1,11 +1,11 @@
 package uk.artdude.tweaks.twisted.common.potions;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.util.References;
 
@@ -16,9 +16,9 @@ public class TTPotions extends Potion {
     // Create the resource location to get the texture sprites to use for the potion icon.
     public static ResourceLocation textureResource = new ResourceLocation(References.modID, "textures/gui/potion_effects.png");
 
-    public TTPotions(int par1, boolean par2, int par3) {
+    public TTPotions(ResourceLocation resourceLocation, boolean badEffect, int potionColour) {
         // Set the super.
-        super(par1, par2, par3);
+        super(resourceLocation, badEffect, potionColour);
     }
 
     /**
@@ -26,7 +26,7 @@ public class TTPotions extends Potion {
      */
     public static void init() {
         // Create the acid burn potion effect.
-        TTPotions.acid_burn = ((TTPotions)new TTPotions(ConfigurationHelper.acidBurnPotionID, true, 11583258).setPotionName("potion.tweaks.twisted.acid.burn")).setIconIndex(0, 0);
+        TTPotions.acid_burn = ((TTPotions)new TTPotions(textureResource, true, 11583258).setPotionName("potion.tweaks.twisted.acid.burn")).setIconIndex(0, 0);
         // Register our event use for applying potion effects to entities.
         MinecraftForge.EVENT_BUS.register(new TTPotionEvent());
     }

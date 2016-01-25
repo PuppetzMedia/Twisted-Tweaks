@@ -1,14 +1,11 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.MathHelper;
+import net.minecraft.block.*;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import squeek.applecore.api.plants.PlantGrowthEvent;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
@@ -44,17 +41,18 @@ public class CropAcidRain {
             return;
         }
         // Get the boolean value to see if the crop meets our conditions for applying evil effects.
-        boolean isCropUnderSky = world.canLightningStrikeAt(MathHelper.floor_double(event.x),
-                MathHelper.floor_double(event.y), MathHelper.floor_double(event.z));
+        boolean isCropUnderSky = world.canLightningStrike(event.pos);
         // Check to see if the world is raining and if the crop meets our conditions and apply our effects.
         if ((world.getWorldInfo().isRaining()) && (isCropUnderSky)) {
             // Get the current meta value of the crop.
-            int currentMeta = world.getBlockMetadata(event.x, event.y, event.z);
+            IBlockState currentState = world.getBlockState(event.pos);
+            Block currentCrop = currentState.getBlock();
+            int currentAge = currentCrop.getMetaFromState(currentState);
             /*
             If the meta of the current crop is more than 0 process the crop for the chance of going back a stage or
             destroying the crop (With the chance of getting back the seed)
             */
-            if (currentMeta > 0) {
+            if (currentAge > 0) {
                 // Get the chance of the seed dropping from the configs.
                 if (ConfigurationHelper.enableDebug) {
                     seedDropChance = 1.0;
@@ -66,12 +64,12 @@ public class CropAcidRain {
                     // If debugging is enabled log the activity.
                     if (ConfigurationHelper.enableDebug) {
                         TwistedTweaks.logger.log(Level.INFO, "Seed Drop: " + crop.getLocalizedName() + " Cords: " +
-                                event.x + ", " + event.y + ", " + event.z);
+                                event.pos.getX() + ", " + event.pos.getY() + ", " + event.pos.getZ());
                     }
                     // Break the crop and return the seed (Dependant on the chance of getting back the seed (Per mod)).
-                    crop.dropBlockAsItem(world, event.x, event.y, event.z, world.getBlockMetadata(event.x, event.y, event.z), 0);
+                    crop.dropBlockAsItem(world, event.pos, world.getBlockState(event.pos), 0);
                     // Set the position of where the crop was to air.
-                    world.setBlock(event.x, event.y, event.z, Blocks.air, 0, 2);
+                    world.setBlockToAir(event.pos);
                 } else {
                     // Create the random.
                     Random random = new Random();
@@ -82,10 +80,14 @@ public class CropAcidRain {
                         // If debugging is enabled log the activity.
                         if (ConfigurationHelper.enableDebug) {
                             TwistedTweaks.logger.log(Level.INFO, "Crop Growth Backwards: " + crop.getLocalizedName() + " Cords: " +
-                                    event.x + ", " + event.y + ", " + event.z);
+                                    event.pos.getX() + ", " + event.pos.getY() + ", " + event.pos.getZ());
                         }
                         // Update the crops meta value.
-                        world.setBlockMetadataWithNotify(event.x, event.y, event.z, (currentMeta - 1), 2);
+                        for (IProperty property : currentState.getProperties().keySet()) {
+                            if (property.getName().equals("age")) {
+                                world.setBlockState(event.pos, currentState.withProperty(property, currentAge - 1), 2);
+                            }
+                        }
                     }
                 }
             }

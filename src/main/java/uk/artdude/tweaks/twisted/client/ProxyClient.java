@@ -1,6 +1,12 @@
 package uk.artdude.tweaks.twisted.client;
 
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import uk.artdude.tweaks.twisted.common.ProxyCommon;
+import uk.artdude.tweaks.twisted.common.util.References;
 
 public class ProxyClient extends ProxyCommon {
 
@@ -12,5 +18,13 @@ public class ProxyClient extends ProxyCommon {
     public boolean isClient() {
         // Return true
         return true;
+    }
+
+    @Override
+    public void registerItemVariantModel(Item item, String name, int metadata) {
+        if (item != null) {
+            ModelBakery.registerItemVariants(item, new ResourceLocation(References.modID + ":" + name));
+            ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(References.modID + ":" + name, "inventory"));
+        }
     }
 }

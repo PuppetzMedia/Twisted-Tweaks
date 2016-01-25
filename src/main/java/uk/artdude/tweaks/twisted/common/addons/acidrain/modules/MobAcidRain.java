@@ -1,15 +1,16 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
@@ -83,8 +84,8 @@ public class MobAcidRain {
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isEntityUnderSky = world.canLightningStrikeAt(MathHelper.floor_double(entity.posX),
-                MathHelper.floor_double(entity.posY + entity.height), MathHelper.floor_double(entity.posZ));
+        boolean isEntityUnderSky = world.canLightningStrike(new BlockPos(MathHelper.floor_double(entity.posX),
+                MathHelper.floor_double(entity.posY + entity.height), MathHelper.floor_double(entity.posZ)));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the entity.

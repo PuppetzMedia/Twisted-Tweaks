@@ -1,7 +1,7 @@
 package uk.artdude.tweaks.twisted.common.tileentity;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -10,12 +10,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 public class TileEntityLiquidVoid extends TileEntity implements IFluidHandler {
 
     @Override
-    public boolean canUpdate() {
-        return false;
-    }
-
-    @Override
-    public int fill(ForgeDirection forgeDirection, FluidStack fluidStack, boolean doFill) {
+    public int fill(EnumFacing from, FluidStack fluidStack, boolean doFill) {
         if (fluidStack != null) {
             return fluidStack.amount;
         }
@@ -23,27 +18,27 @@ public class TileEntityLiquidVoid extends TileEntity implements IFluidHandler {
     }
 
     @Override
-    public FluidStack drain(ForgeDirection forgeDirection, FluidStack fluidStack, boolean doDrain) {
+    public FluidStack drain(EnumFacing from, FluidStack fluidStack, boolean doDrain) {
         return null;
     }
 
     @Override
-    public FluidStack drain(ForgeDirection forgeDirection, int maxDrain, boolean doFill) {
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doFill) {
         return null;
     }
 
     @Override
-    public boolean canFill(ForgeDirection forgeDirection, Fluid fluid) {
+    public boolean canFill(EnumFacing from, Fluid fluid) {
         return true;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection forgeDirection, Fluid fluid) {
+    public boolean canDrain(EnumFacing from, Fluid fluid) {
         return false;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection forgeDirection) {
+    public FluidTankInfo[] getTankInfo(EnumFacing from) {
         return new FluidTankInfo[] {
                 new FluidTankInfo(null, 10000)
         };

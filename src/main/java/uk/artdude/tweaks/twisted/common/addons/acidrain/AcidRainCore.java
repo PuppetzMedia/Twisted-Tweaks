@@ -1,11 +1,10 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.Level;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
@@ -26,18 +25,18 @@ public class AcidRainCore {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         // If the event phase is not equal to the start of the phase return.
-        if (event.phase != Phase.START) {
+        if (event.phase != TickEvent.Phase.START) {
             return;
         }
         // Get the world information.
         World world = event.world;
         // Set the dimension ID for the current world.
-        Integer dimensionID = world.provider.dimensionId;
+        Integer dimensionID = world.provider.getDimensionId();
         // We only want to run this code on the server side of things.
         if (world.isRemote) {
             return;
         }
-        if (world.provider.hasNoSky) {
+        if (world.provider.getHasNoSky()) {
             return;
         }
         /* Check to see if the boolean value is different to the actual value in game.
@@ -46,8 +45,8 @@ public class AcidRainCore {
         if (worldTracking.get(dimensionID) == null || rainTracking.get(dimensionID) == null || rainTracking.get(dimensionID) != world.isRaining()) {
             // Set the current state of the world which is raining.
             rainTracking.put(dimensionID,  world.isRaining());
-            // Set the value of whether it is raining in the world.
-            worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < ConfigurationHelper.acidRainChance);
+            // Set the value of whether it is raining in the world. ConfigurationHelper.acidRainChance
+            worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < 1);
         }
     }
 
@@ -57,7 +56,7 @@ public class AcidRainCore {
      * @return boolean
      */
     public static boolean getIsAcidRain(World world) {
-        return worldTracking.get(world.provider.dimensionId) == null || worldTracking.get(world.provider.dimensionId);
+        return worldTracking.get(world.provider.getDimensionId()) == null || worldTracking.get(world.provider.getDimensionId());
     }
 
     @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
@@ -94,7 +93,7 @@ public class AcidRainCore {
         Check that the world directory is null and that the code is being fired server side, and that the dimension is "0" as this
         stops the file being saved per world save.
         */
-        if (!world.isRemote && worldDirectory != null && world.provider.dimensionId == 0) {
+        if (!world.isRemote && worldDirectory != null && world.provider.getDimensionId() == 0) {
             // Create the save directory location if it not found.
             new File(worldDirectory, "data/").mkdirs();
             // Save the current Acid rain settings to the data file.

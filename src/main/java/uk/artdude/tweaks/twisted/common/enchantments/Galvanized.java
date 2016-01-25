@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public class Galvanized extends Enchantment {
 
@@ -12,9 +13,7 @@ public class Galvanized extends Enchantment {
     public static Enchantment ENCHANTMENT;
 
     protected Galvanized() {
-        super(Enchantment_ID, 8, EnumEnchantmentType.armor);
-        // Set the un-localized name for the enchant.
-        this.setName("galvanized");
+        super(Enchantment_ID, new ResourceLocation("galvanized"), 1, EnumEnchantmentType.ARMOR);
     }
 
     @Override

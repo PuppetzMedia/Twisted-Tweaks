@@ -1,11 +1,11 @@
 package uk.artdude.tweaks.twisted.common.potions;
 
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 

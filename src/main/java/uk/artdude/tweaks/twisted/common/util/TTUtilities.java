@@ -1,8 +1,8 @@
 package uk.artdude.tweaks.twisted.common.util;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TTUtilities {
 

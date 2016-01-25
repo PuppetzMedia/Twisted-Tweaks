@@ -1,14 +1,15 @@
 package uk.artdude.tweaks.twisted;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import org.apache.logging.log4j.Logger;
 import uk.artdude.tweaks.twisted.common.ProxyCommon;
 import uk.artdude.tweaks.twisted.common.achievement.TTAchievement;
@@ -59,11 +60,11 @@ public class TwistedTweaks {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         /* Add our mod instance via a subscribed event to track config changes */
-        FMLCommonHandler.instance().bus().register(instance);
+        MinecraftForge.EVENT_BUS.register(instance);
         /* Load our enchantments. */
         TTEnchantments.init();
         /* Load our items */
-        //TTItems.init();
+        TTItems.init();
         /* Load our blocks */
         TTBlocks.init();
         /* Load our potions */
@@ -75,9 +76,6 @@ public class TwistedTweaks {
         /* Load our achievements */
         TTAchievement.init();
     }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {}
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {

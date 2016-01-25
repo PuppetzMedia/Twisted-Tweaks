@@ -1,8 +1,9 @@
 package uk.artdude.tweaks.twisted.common.addons.modifications;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
@@ -45,7 +46,7 @@ public class XPVoid {
     @SubscribeEvent
     public void blockBreak(BlockEvent.BreakEvent event) {
         // Set a block variable for easy referencing.
-        Block blockMined = event.block;
+        Block blockMined = event.state.getBlock();
         // For each of the blocks in the config list see if the block being mined is in the config.
         for (Block oreBlock : blockList) {
             // If the current block being mined is in the config list, prevent any XP from dropping from the ore.

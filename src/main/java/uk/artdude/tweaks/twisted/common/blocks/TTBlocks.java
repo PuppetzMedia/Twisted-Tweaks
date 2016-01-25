@@ -1,7 +1,10 @@
 package uk.artdude.tweaks.twisted.common.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.tileentity.TileEntityLiquidVoid;
 import uk.artdude.tweaks.twisted.common.util.Strings;
@@ -25,7 +28,7 @@ public class TTBlocks {
         // Check to see if the user has enabled the Liquid Void.
         if (ConfigurationHelper.enableLiquidVoid) {
             // Register the block to the game.
-            liquidVoid = registerBlock(new LiquidVoid().setBlockName(Strings.blockLiquidVoid));
+            liquidVoid = registerBlock(new LiquidVoid(), Strings.blockLiquidVoid);
             // Register the TileEntity to the game.
             GameRegistry.registerTileEntity(TileEntityLiquidVoid.class, Strings.blockLiquidVoid);
         }
@@ -35,10 +38,16 @@ public class TTBlocks {
      * This function allows you to add blocks easily.
      * @param block The block you want to register to the game.
      */
-    public static Block registerBlock(Block block) {
-        // Register the block to the game.
-        GameRegistry.registerBlock(block, block.getLocalizedName().replace("tile.", ""));
-        // Return the block back.
+    public static Block registerBlock(Block block, String blockName) {
+        block.setUnlocalizedName(blockName);
+        block.setCreativeTab(TwistedTweaks.creativeTab);
+        GameRegistry.registerBlock(block, ItemBlock.class, blockName);
+        registerBlockVariant(block, blockName, 0);
         return block;
+    }
+
+    public static void registerBlockVariant(Block block, String stateName, int stateMeta) {
+        Item item = Item.getItemFromBlock(block);
+        TwistedTweaks.proxy.registerItemVariantModel(item, stateName, stateMeta);
     }
 }
