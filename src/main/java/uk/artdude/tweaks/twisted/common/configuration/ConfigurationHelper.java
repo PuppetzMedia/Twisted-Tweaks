@@ -50,6 +50,10 @@ public class ConfigurationHelper {
     public static boolean enableAcidBurnPotion;
     public static int acidBurnPotionID = 26;
 
+    // Starting inventory.
+    public static boolean enableStartingInventory;
+    public static String[] startingItems;
+
     // Settings
     public static boolean enableDebug;
     public static boolean enableVersionChecking;

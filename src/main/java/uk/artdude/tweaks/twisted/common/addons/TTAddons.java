@@ -12,6 +12,7 @@ import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.PlayerAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.modifications.IgniteBlocks;
 import uk.artdude.tweaks.twisted.common.addons.modifications.StarveDeath;
 import uk.artdude.tweaks.twisted.common.addons.modifications.XPVoid;
+import uk.artdude.tweaks.twisted.common.addons.startinginventory.StartingInventory;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 
 public class TTAddons {
@@ -20,12 +21,10 @@ public class TTAddons {
      * This is the main function call to this class.
      */
     public static void init() {
-        AcidRainCore acidRainCore = new AcidRainCore();
         // Register the core acid rain.
-        FMLCommonHandler.instance().bus().register(acidRainCore);
-        MinecraftForge.EVENT_BUS.register(acidRainCore);
+        MinecraftForge.EVENT_BUS.register(new AcidRainCore());
         // Register the player acid rain to FML.
-        FMLCommonHandler.instance().bus().register(new PlayerAcidRain());
+        MinecraftForge.EVENT_BUS.register(new PlayerAcidRain());
         // Register the mob acid rain to MinecraftForge.
         MinecraftForge.EVENT_BUS.register(new MobAcidRain());
         // Check to see if AppleCore is installed/loaded.
@@ -53,6 +52,11 @@ public class TTAddons {
         if (ConfigurationHelper.enableXPVoid) {
             XPVoid.init();
             MinecraftForge.EVENT_BUS.register(new XPVoid());
+        }
+        //
+        if (ConfigurationHelper.enableStartingInventory) {
+            StartingInventory.init();
+            MinecraftForge.EVENT_BUS.register(new StartingInventory());
         }
     }
 }

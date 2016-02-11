@@ -97,6 +97,15 @@ public class TTConfiguration {
                     "to use for the custom potion set this to false and the poison effect will be used as a replacement.");
             acidBurnPotionID = config.getInt("Acid Burn ID", CATEGORY_POTIONS, 26, 26, 32, "The ID to use for registering the potion.");
 
+            // Starting inventory.
+            enableStartingInventory = config.getBoolean("Enable Starting Inventory", CATEGORY_TWEAKS, true, "If the starting inventory " +
+                    "module should be enabled.");
+            startingItems = config.getStringList("Starting Inventory", CATEGORY_TWEAKS,
+                    new String[] {
+                            "minecraft:apple:3"
+                    },
+                    "Items to give players when the join the world for the first time. Format: modid:item/block:quantity");
+
             // Settings configurations.
             enableDebug = config.getBoolean("Enable Debug", CATEGORY_SETTINGS, false, "Toggle debug mode in the mod, this is for experienced " +
                     "users only!");
