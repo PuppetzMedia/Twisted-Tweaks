@@ -23,14 +23,14 @@ public class StartingInventory {
     public static void init() {
         for (String item : ConfigurationHelper.startingItems) {
             String[] parts = item.split(":");
-            int quantity = Integer.valueOf(parts[0]);
+            int quantity = Integer.valueOf(parts[2]);
             int meta = -1;
             TwistedTweaks.logger.info("TTTTTTTTTTT " + item);
             if (parts.length >= 4) {
-                meta = Integer.valueOf(parts[3]);
+                meta = Integer.valueOf(parts[4]);
             }
             if (quantity > 0 && quantity <= 64) {
-                items.add(new StartingItem(quantity, parts[1], parts[2], meta));
+                items.add(new StartingItem(quantity, parts[0], parts[1], meta));
             }
         }
     }
@@ -45,7 +45,7 @@ public class StartingInventory {
     }
 
     public static boolean isPlayerNewToWorld(EntityPlayer player) {
-        MinecraftServer server = MinecraftServer.getServer();
+        MinecraftServer server = player.getServer();
         SaveHandler saveHandler = (SaveHandler) server.worldServerForDimension(0).getSaveHandler();
         File dir = new File(saveHandler.getWorldDirectory(), "/twisted-tweaks-inv");
         return !dir.exists() || !(new File(dir, player.getGameProfile().getName() + ".tw")).exists();
@@ -53,7 +53,7 @@ public class StartingInventory {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static boolean createPlayerFile(EntityPlayer player) {
-        MinecraftServer server = MinecraftServer.getServer();
+        MinecraftServer server = player.getServer();
         SaveHandler saveHandler = (SaveHandler) server.worldServerForDimension(0).getSaveHandler();
         File dir = new File(saveHandler.getWorldDirectory(), "/twisted-tweaks-inv");
         if (!dir.exists() && !dir.mkdir()) {

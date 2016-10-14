@@ -41,7 +41,7 @@ public class CropAcidRain {
             return;
         }
         // Get the boolean value to see if the crop meets our conditions for applying evil effects.
-        boolean isCropUnderSky = world.canLightningStrike(event.pos);
+        boolean isCropUnderSky = world.isRainingAt(event.pos);
         // Check to see if the world is raining and if the crop meets our conditions and apply our effects.
         if ((world.getWorldInfo().isRaining()) && (isCropUnderSky)) {
             // Get the current meta value of the crop.

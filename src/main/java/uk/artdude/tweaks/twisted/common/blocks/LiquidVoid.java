@@ -1,36 +1,40 @@
 package uk.artdude.tweaks.twisted.common.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.world.World;
 import uk.artdude.tweaks.twisted.common.tileentity.TileEntityLiquidVoid;
 
-public class LiquidVoid extends Block implements ITileEntityProvider {
+public class LiquidVoid extends BlockLiquid implements ITileEntityProvider {
 
     public LiquidVoid() {
-        super(Material.iron);
-        setStepSound(Block.soundTypeMetal);
+        super(Material.WATER);
+        setSoundType(SoundType.METAL);
         setHardness(2.0F);
         setResistance(10.0F);
         setHarvestLevel("pickaxe", 2);
     }
 
     @Override
-    public EnumWorldBlockLayer getBlockLayer() {
-        return EnumWorldBlockLayer.SOLID;
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.SOLID;
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public int getRenderType() {
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.LIQUID;
     }
 
     @Override

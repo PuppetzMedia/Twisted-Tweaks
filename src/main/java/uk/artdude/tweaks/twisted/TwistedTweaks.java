@@ -79,7 +79,7 @@ public class TwistedTweaks {
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if(event.modID.equals(References.modID)) {
+        if(event.getModID().equals(References.modID)) {
             TTConfiguration.init();
         }
     }

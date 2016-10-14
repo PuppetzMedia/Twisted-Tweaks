@@ -7,7 +7,7 @@ public class References {
     public static final String modName = "Twisted Tweaks";
     public static final String modVersion = "@VERSION@";
     public static final String modDependencies = "required-after:Forge@[11.15.0.1718,);";
-    public static final String mcVersion = "[1.8.9]";
+    public static final String mcVersion = "[1.10.2]";
 
     /* Config References */
     public static final String configMain = modName.replace(" ", "_") + ".cfg";

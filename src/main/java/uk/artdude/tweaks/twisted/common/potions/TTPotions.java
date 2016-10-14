@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
@@ -18,7 +19,8 @@ public class TTPotions extends Potion {
 
     public TTPotions(ResourceLocation resourceLocation, boolean badEffect, int potionColour) {
         // Set the super.
-        super(resourceLocation, badEffect, potionColour);
+        super(badEffect, potionColour);
+        REGISTRY.register(-1, resourceLocation, this);
     }
 
     /**

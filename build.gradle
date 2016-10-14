@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -21,6 +21,11 @@ plugins {
 }
 */
 
+sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
 ext.artifact_version = 'NFG'
 artifact_version = "${mod_version}-${System.getenv().BUILD_NUMBER}"
 
@@ -29,12 +34,18 @@ group= "uk.artdude.tweaks.twisted"
 archivesBaseName = "twistedtweaks"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
+    version = "1.10.2-12.18.2.2099"
     runDir = "run"
-    mappings = "stable_20"
+    mappings = "snapshot_20160518"
 	
 	replaceIn "References.java"
     replace "@VERSION@", project.version
+}
+
+repositories {
+	maven {
+		url "http://www.ryanliptak.com/maven/"
+	}
 }
 
 dependencies {
@@ -42,6 +53,8 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
+	
+	deobfCompile "applecore:AppleCore:1.10.2-2.0.1:deobf"
       
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

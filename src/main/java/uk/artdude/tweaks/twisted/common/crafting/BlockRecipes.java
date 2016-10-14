@@ -17,7 +17,7 @@ public class BlockRecipes {
         if (ConfigurationHelper.enableLiquidVoid) {
             // Add the recipe for the block to the game.
             GameRegistry.addRecipe(new ItemStack(TTCBlocks.liquidVoid, 1, 0),
-                    "ibi", "bcb", "ibi", 'i', Items.iron_ingot, 'b', Blocks.iron_bars, 'c', Blocks.ender_chest);
+                    "ibi", "bcb", "ibi", 'i', Items.IRON_INGOT, 'b', Blocks.IRON_BARS, 'c', Blocks.ENDER_CHEST);
         }
     }
 }

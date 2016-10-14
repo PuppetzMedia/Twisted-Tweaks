@@ -1,14 +1,18 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
 
+import java.util.HashMap;
+import java.util.Random;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -17,9 +21,6 @@ import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.enchantments.Galvanized;
 import uk.artdude.tweaks.twisted.common.potions.TTPotions;
-
-import java.util.HashMap;
-import java.util.Random;
 
 public class PlayerAcidRain {
 
@@ -78,7 +79,7 @@ public class PlayerAcidRain {
     private int checkArmour(ItemStack stack) {
         int lvl;
         // Check/Get the level of the Galvanized on the amour piece.
-        lvl = EnchantmentHelper.getEnchantmentLevel(Galvanized.Enchantment_ID, stack);
+        lvl = EnchantmentHelper.getEnchantmentLevel(Galvanized.ENCHANTMENT, stack);
         // Return the level back.
         return lvl;
     }
@@ -103,7 +104,7 @@ public class PlayerAcidRain {
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isPlayerUnderSky = world.canLightningStrike(new BlockPos(MathHelper.floor_double(player.posX),
+        boolean isPlayerUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor_double(player.posX),
                 MathHelper.floor_double(player.posY + player.height), MathHelper.floor_double(player.posZ)));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
@@ -128,16 +129,16 @@ public class PlayerAcidRain {
                 acidPotion = TTPotions.acid_burn;
                 potionEffectAcid = player.getActivePotionEffect(TTPotions.acid_burn);
             } else {
-                acidPotion = Potion.poison;
-                potionEffectAcid = player.getActivePotionEffect(Potion.poison);
+                acidPotion = MobEffects.POISON;
+                potionEffectAcid = player.getActivePotionEffect(MobEffects.POISON);
             }
             // Check to see if the player already has the effect.
             if (potionEffectAcid == null) {
                 // If the player does not have the effect create the potion effect to be applied to the player.
-                potionEffectAcid = new PotionEffect(acidPotion.id, initialDuration);
+                potionEffectAcid = new PotionEffect(acidPotion, initialDuration);
             } else if (potionEffectAcid.getDuration() < maxDuration) {
                 if (potionEffectAcid.getDuration() < 300) {
-                    potionEffectAcid = new PotionEffect(acidPotion.id, Math.max(potionEffectAcid.getDuration() +
+                    potionEffectAcid = new PotionEffect(acidPotion, Math.max(potionEffectAcid.getDuration() +
                             addedDuration, maxDuration), potionEffectAcid.getAmplifier() + 1);
                 }
             }
@@ -150,9 +151,9 @@ public class PlayerAcidRain {
             blindness effect to simulate having your eyes blinded by the acid rain.
             */
             if (player.rotationPitch < -45.0) {
-                PotionEffect potionEffectBlindness = player.getActivePotionEffect(Potion.blindness);
+                PotionEffect potionEffectBlindness = player.getActivePotionEffect(MobEffects.BLINDNESS);
                 if (potionEffectBlindness == null) {
-                    potionEffectBlindness = new PotionEffect(Potion.blindness.id, 600);
+                    potionEffectBlindness = new PotionEffect(MobEffects.BLINDNESS, 600);
                 }
                 player.addPotionEffect(potionEffectBlindness);
                 // Add the achievement of getting blindness to the player.

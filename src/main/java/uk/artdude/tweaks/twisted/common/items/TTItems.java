@@ -1,7 +1,11 @@
 package uk.artdude.tweaks.twisted.common.items;
 
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import static uk.artdude.tweaks.twisted.api.TTCItems.record_test;
+
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -10,8 +14,6 @@ import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
 import uk.artdude.tweaks.twisted.common.items.records.TTRecords;
 import uk.artdude.tweaks.twisted.common.util.References;
-
-import static uk.artdude.tweaks.twisted.api.TTCItems.record_test;
 
 public class TTItems {
 
@@ -22,7 +24,7 @@ public class TTItems {
         // Check with the config values to see if the user has enabled the music records.
         if (ConfigurationHelper.enableMusicRecords) {
             // Register the records to the game.
-            record_test = registerItem(new TTRecords("test"), "record_test");
+            record_test = registerItem(new TTRecords("test", SoundEvent.REGISTRY.getObject(new ResourceLocation(References.modID, "records.test"))), "record_test");
         }
     }
 

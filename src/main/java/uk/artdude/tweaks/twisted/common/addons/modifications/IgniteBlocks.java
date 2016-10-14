@@ -14,7 +14,7 @@ public class IgniteBlocks {
      */
     public static void init() {
         // Set the crafting table to be able to catch fire.
-        setFireValues(Blocks.crafting_table, 5, 20);
+        setFireValues(Blocks.CRAFTING_TABLE, 5, 20);
 
         // Check to see if Chisel 2 is loaded.
         if (Loader.isModLoaded("chisel")) {
@@ -45,6 +45,6 @@ public class IgniteBlocks {
      * @param flammability The flammability of the block to catch fire.
      */
     public static void setFireValues(Block block, int encouragement, int flammability) {
-        Blocks.fire.setFireInfo(block, encouragement, flammability);
+        Blocks.FIRE.setFireInfo(block, encouragement, flammability);
     }
 }

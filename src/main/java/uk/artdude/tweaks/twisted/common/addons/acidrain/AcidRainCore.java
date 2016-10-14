@@ -31,7 +31,7 @@ public class AcidRainCore {
         // Get the world information.
         World world = event.world;
         // Set the dimension ID for the current world.
-        Integer dimensionID = world.provider.getDimensionId();
+        Integer dimensionID = world.provider.getDimension();
         // We only want to run this code on the server side of things.
         if (world.isRemote) {
             return;
@@ -56,18 +56,18 @@ public class AcidRainCore {
      * @return boolean
      */
     public static boolean getIsAcidRain(World world) {
-        return worldTracking.get(world.provider.getDimensionId()) == null || worldTracking.get(world.provider.getDimensionId());
+        return worldTracking.get(world.provider.getDimension()) == null || worldTracking.get(world.provider.getDimension());
     }
 
     @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         // Get the world information.
-        World world = event.world;
+        World world = event.getWorld();
         // Check that the world directory is null and that the code is being fired server side.
         if (!world.isRemote && worldDirectory == null) {
             // Get the server object.
-            MinecraftServer server = MinecraftServer.getServer();
+            MinecraftServer server = world.getMinecraftServer();
             /*
             If the client is running the server (I.E. Playing single player) set the world directory to the saves folder,
             otherwise get the location of the servers world directory.
@@ -88,12 +88,12 @@ public class AcidRainCore {
     @SubscribeEvent
     public void onWorldSave(WorldEvent.Save event) {
         // Get the world information.
-        World world = event.world;
+        World world = event.getWorld();
         /*
         Check that the world directory is null and that the code is being fired server side, and that the dimension is "0" as this
         stops the file being saved per world save.
         */
-        if (!world.isRemote && worldDirectory != null && world.provider.getDimensionId() == 0) {
+        if (!world.isRemote && worldDirectory != null && world.provider.getDimension() == 0) {
             // Create the save directory location if it not found.
             new File(worldDirectory, "data/").mkdirs();
             // Save the current Acid rain settings to the data file.
@@ -104,7 +104,7 @@ public class AcidRainCore {
     @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
-        if(!event.world.isRemote && worldDirectory != null && !MinecraftServer.getServer().isServerRunning()) {
+        if(!event.getWorld().isRemote && worldDirectory != null && !event.getWorld().getMinecraftServer().isServerRunning()) {
             // Create the save directory location if it not found.
             new File(worldDirectory, "data/").mkdirs();
             // Save the current Acid rain settings to the data file.

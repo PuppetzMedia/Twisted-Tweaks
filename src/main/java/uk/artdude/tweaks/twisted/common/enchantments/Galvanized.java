@@ -2,6 +2,7 @@ package uk.artdude.tweaks.twisted.common.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +14,8 @@ public class Galvanized extends Enchantment {
     public static Enchantment ENCHANTMENT;
 
     protected Galvanized() {
-        super(Enchantment_ID, new ResourceLocation("galvanized"), 1, EnumEnchantmentType.ARMOR);
+        super(Rarity.VERY_RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
+		REGISTRY.register(Enchantment_ID, new ResourceLocation("galvanized"), this);
     }
 
     @Override

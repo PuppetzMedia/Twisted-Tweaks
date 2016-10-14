@@ -1,20 +1,21 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
+import java.util.HashMap;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
-
-import java.util.HashMap;
 
 public class MobAcidRain {
 
@@ -31,9 +32,9 @@ public class MobAcidRain {
             return;
         }
         // Get the world information.
-        World world = event.entityLiving.worldObj;
+        World world = event.getEntityLiving().worldObj;
         // Get the entity information.
-        Entity entity = event.entity;
+        Entity entity = event.getEntity();
         // We only want to run this code on the server side of things.
         if (world.isRemote) {
             return;
@@ -84,7 +85,7 @@ public class MobAcidRain {
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isEntityUnderSky = world.canLightningStrike(new BlockPos(MathHelper.floor_double(entity.posX),
+        boolean isEntityUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor_double(entity.posX),
                 MathHelper.floor_double(entity.posY + entity.height), MathHelper.floor_double(entity.posZ)));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
@@ -98,11 +99,11 @@ public class MobAcidRain {
         the conditions meet whats needed begin the process to add the poison effect the entity.
         */
         if ((world.getWorldInfo().isRaining()) && (isEntityUnderSky)) {
-            PotionEffect potionEffect = entity.getActivePotionEffect(Potion.poison);
+            PotionEffect potionEffect = entity.getActivePotionEffect(MobEffects.POISON);
             if (potionEffect == null) {
-                potionEffect = new PotionEffect(Potion.poison.id, initialDuration);
+                potionEffect = new PotionEffect(MobEffects.POISON, initialDuration);
             } else if (potionEffect.getDuration() < 300) {
-                potionEffect = new PotionEffect(Potion.poison.id, Math.max(potionEffect.getDuration() +
+                potionEffect = new PotionEffect(MobEffects.POISON, Math.max(potionEffect.getDuration() +
                         addedDuration, maxDuration), potionEffect.getAmplifier() + 1);
             }
             // Add the potion effect to the entity.
