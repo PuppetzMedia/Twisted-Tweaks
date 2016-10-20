@@ -31,7 +31,10 @@ public class IgniteBlocks {
             };
             for (String plank: blocks) {
                 Block chiselPlank = TTUtilities.getBlock("chisel", plank);
-                if (plank != null) {
+                if(chiselPlank == Blocks.AIR){
+                	TwistedTweaks.logger.log(Level.WARN, "[TT] Chisel plank %s returned AIR.", plank);
+                }
+                else if (plank != null) {
                     setFireValues(chiselPlank, 5, 20);
                 }
             }
