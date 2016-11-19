@@ -34,7 +34,7 @@ group= "uk.artdude.tweaks.twisted"
 archivesBaseName = "twistedtweaks"
 
 minecraft {
-    version = "1.10.2-12.18.2.2099"
+    version = "${minecraft_version}-${forge_version}"
     runDir = "run"
     mappings = "snapshot_20160518"
 	
