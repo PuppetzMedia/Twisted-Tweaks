@@ -41,6 +41,7 @@ public class ConfigurationHelper {
     // Block Changes
     public static boolean enableXPVoid;
     public static String[] oreXPDisabled;
+    public static double infestedLeavesSpiderChance;
 
     // Enchantments
     public static boolean enableGalvanized;

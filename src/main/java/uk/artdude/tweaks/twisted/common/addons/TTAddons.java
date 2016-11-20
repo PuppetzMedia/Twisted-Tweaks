@@ -10,6 +10,7 @@ import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.CropAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.MobAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.modules.PlayerAcidRain;
 import uk.artdude.tweaks.twisted.common.addons.modifications.IgniteBlocks;
+import uk.artdude.tweaks.twisted.common.addons.modifications.InfestedSpiders;
 import uk.artdude.tweaks.twisted.common.addons.modifications.StarveDeath;
 import uk.artdude.tweaks.twisted.common.addons.modifications.XPVoid;
 import uk.artdude.tweaks.twisted.common.addons.startinginventory.StartingInventory;
@@ -58,5 +59,7 @@ public class TTAddons {
             StartingInventory.init();
             MinecraftForge.EVENT_BUS.register(new StartingInventory());
         }
+        // Register spiders spawning from infested leaves.
+        MinecraftForge.EVENT_BUS.register(new InfestedSpiders());
     }
 }

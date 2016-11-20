@@ -85,6 +85,8 @@ public class TTConfiguration {
                             "minecraft:emerald_ore"
                     },
                     "This is the list of ores that you want to stop XP dropping upon mining.");
+            infestedLeavesSpiderChance = config.get("Infested Leaves Spider Chance", CATEGORY_TWEAKS, true, "Sets the chance of cave " +
+                    "spiders spawning from infested leaves when broken.").getDouble(0.02);
 
             // Enchantment configurations
             enableGalvanized = config.getBoolean("Enable Galvanized", CATEGORY_ENCHANTMENTS, true, "You can enable or disable the galvanized " +
