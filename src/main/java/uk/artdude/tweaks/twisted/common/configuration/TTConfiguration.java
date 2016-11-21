@@ -85,8 +85,6 @@ public class TTConfiguration {
                             "minecraft:emerald_ore"
                     },
                     "This is the list of ores that you want to stop XP dropping upon mining.");
-            infestedLeavesSpiderChance = config.get("Infested Leaves Spider Chance", CATEGORY_TWEAKS, true, "Sets the chance of cave " +
-                    "spiders spawning from infested leaves when broken.").getDouble(0.02);
 
             // Enchantment configurations
             enableGalvanized = config.getBoolean("Enable Galvanized", CATEGORY_ENCHANTMENTS, true, "You can enable or disable the galvanized " +
@@ -107,6 +105,10 @@ public class TTConfiguration {
                             "minecraft:apple:3"
                     },
                     "Items to give players when the join the world for the first time. Format: modid:item/block:quantity");
+
+            // Spawning
+            spiderInfestedLeavesChance = config.get("Spider Infested Leaves Chance", CATEGORY_SPAWNING, 0.05, "Sets the chance of " +
+                    "cave spiders spawning from infested leaves when broken by a player (0.0 to 1.0).").getDouble(0.05);
 
             // Settings configurations.
             enableDebug = config.getBoolean("Enable Debug", CATEGORY_SETTINGS, false, "Toggle debug mode in the mod, this is for experienced " +

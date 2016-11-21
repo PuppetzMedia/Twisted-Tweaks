@@ -23,7 +23,7 @@ public class InfestedSpiders {
         // player is breaking an infested leaves block, ...
         if (!world.isRemote && isInfestedLeaves) {
             // Get the chance for a spider to spawn from it.
-            double chance = ConfigurationHelper.infestedLeavesSpiderChance;
+            double chance = ConfigurationHelper.spiderInfestedLeavesChance;
             // Generate a random number between 0.0 and 1.0 and see if the player is unlucky. >:)
             if (world.rand.nextFloat() < chance) {
                 // Create the spider and set its position.
