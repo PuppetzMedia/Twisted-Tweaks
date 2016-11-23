@@ -11,6 +11,7 @@ public class ConfigurationHelper {
     public static String CATEGORY_SETTINGS = "settings";
     public static String CATEGORY_ENCHANTMENTS = "enchantments";
     public static String CATEGORY_POTIONS = "potions";
+    public static String CATEGORY_SPAWNING = "spawning";
 
     // Blocks
     public static boolean enableLiquidVoid;
@@ -41,7 +42,6 @@ public class ConfigurationHelper {
     // Block Changes
     public static boolean enableXPVoid;
     public static String[] oreXPDisabled;
-    public static double infestedLeavesSpiderChance;
 
     // Enchantments
     public static boolean enableGalvanized;
@@ -54,6 +54,9 @@ public class ConfigurationHelper {
     // Starting inventory.
     public static boolean enableStartingInventory;
     public static String[] startingItems;
+
+    // Spawning
+    public static double spiderInfestedLeavesChance;
 
     // Settings
     public static boolean enableDebug;
