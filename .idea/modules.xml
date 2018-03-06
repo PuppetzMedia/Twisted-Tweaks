@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Twisted-Tweaks.iml" filepath="$PROJECT_DIR$/Twisted-Tweaks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_api.iml" filepath="$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_api.iml" group="Twisted-Tweaks" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_main.iml" group="Twisted-Tweaks" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Twisted-Tweaks_test.iml" group="Twisted-Tweaks" />
+    </modules>
+  </component>
+</project>

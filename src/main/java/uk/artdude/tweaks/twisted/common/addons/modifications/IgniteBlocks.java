@@ -29,7 +29,8 @@ public class IgniteBlocks {
                     "livingwood-planks",
                     "dreamwood-planks"
             };
-            for (String plank: blocks) {
+            for (String plank: blocks)
+            {
                 Block chiselPlank = TTUtilities.getBlock("chisel", plank);
                 if(chiselPlank == Blocks.AIR){
                 	TwistedTweaks.logger.log(Level.WARN, "[TT] Chisel plank %s returned AIR.", plank);

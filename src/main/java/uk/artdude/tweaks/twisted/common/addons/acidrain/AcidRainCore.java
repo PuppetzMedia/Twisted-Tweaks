@@ -1,52 +1,44 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain;
 
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.apache.logging.log4j.Level;
-import uk.artdude.tweaks.twisted.TwistedTweaks;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
-
-import java.io.*;
-import java.util.ArrayList;
+import uk.artdude.tweaks.twisted.common.util.References;
 import java.util.HashMap;
+import java.util.Map;
 
-public class AcidRainCore {
+@Mod.EventBusSubscriber
+public class AcidRainCore
+{
 
-    // Set up the world directory variable.
-    public static File worldDirectory;
     // This HashMap stores extra data to whether acid rain is enabled in a world.
-    private static HashMap<Integer, Boolean> rainTracking = new HashMap<Integer, Boolean>();
+    private static HashMap<Integer, Boolean> rainTracking = new HashMap<>();
     // This HashMap stores the worlds which are added on world tick, and then enables use to toggle acid rain on or off.
-    private static HashMap<Integer, Boolean> worldTracking = new HashMap<Integer, Boolean>();
+    private static HashMap<Integer, Boolean> worldTracking = new HashMap<>();
 
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-        // If the event phase is not equal to the start of the phase return.
-        if (event.phase != TickEvent.Phase.START) {
+    public static void onWorldTick(TickEvent.WorldTickEvent event)
+	{
+		World world = event.world;
+
+        if (event.phase != TickEvent.Phase.START)
             return;
-        }
-        // Get the world information.
-        World world = event.world;
-        // Set the dimension ID for the current world.
-        Integer dimensionID = world.provider.getDimension();
-        // We only want to run this code on the server side of things.
-        if (world.isRemote) {
-            return;
-        }
-        if (world.provider.getHasNoSky()) {
-            return;
-        }
-        /* Check to see if the boolean value is different to the actual value in game.
-        (I.E. If the boolean does is not valid anymore)
-        */
-        if (worldTracking.get(dimensionID) == null || rainTracking.get(dimensionID) == null || rainTracking.get(dimensionID) != world.isRaining()) {
-            // Set the current state of the world which is raining.
+		if (world.isRemote || !world.provider.isSurfaceWorld())
+			return;
+
+		int dimensionID = world.provider.getDimension();
+
+        if (worldTracking.get(dimensionID) == null || rainTracking.get(dimensionID) == null || rainTracking.get(dimensionID) != world.isRaining())
+        {
             rainTracking.put(dimensionID,  world.isRaining());
-            // Set the value of whether it is raining in the world. ConfigurationHelper.acidRainChance
             worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < 1);
+
+            AcidSavedData.get(world).markDirty();
         }
     }
 
@@ -55,136 +47,91 @@ public class AcidRainCore {
      * @param world The world you want to check for if it is raining acid.
      * @return boolean
      */
-    public static boolean getIsAcidRain(World world) {
+	public static boolean getIsAcidRain(World world)
+	{
         return worldTracking.get(world.provider.getDimension()) == null || worldTracking.get(world.provider.getDimension());
     }
 
-    @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
-        // Get the world information.
-        World world = event.getWorld();
-        // Check that the world directory is null and that the code is being fired server side.
-        if (!world.isRemote && worldDirectory == null) {
-            // Get the server object.
-            MinecraftServer server = world.getMinecraftServer();
-            /*
-            If the client is running the server (I.E. Playing single player) set the world directory to the saves folder,
-            otherwise get the location of the servers world directory.
-            */
-            if (TwistedTweaks.proxy.isClient()) {
-                worldDirectory = server.getFile("saves/" + server.getFolderName());
-            } else {
-                worldDirectory = server.getFile(server.getFolderName());
-            }
-            // Create the save directory location if it not found.
-            new File(worldDirectory, "data/").mkdirs();
-            // Try to load the saved data.
-            loadWorldData(new File(worldDirectory, "data/ttAcidRain"));
-        }
-    }
+    public static class AcidSavedData extends WorldSavedData
+	{
+		private static final String DATA_NAME = References.modID + "_acidtracking";
 
-    @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
-    @SubscribeEvent
-    public void onWorldSave(WorldEvent.Save event) {
-        // Get the world information.
-        World world = event.getWorld();
-        /*
-        Check that the world directory is null and that the code is being fired server side, and that the dimension is "0" as this
-        stops the file being saved per world save.
-        */
-        if (!world.isRemote && worldDirectory != null && world.provider.getDimension() == 0) {
-            // Create the save directory location if it not found.
-            new File(worldDirectory, "data/").mkdirs();
-            // Save the current Acid rain settings to the data file.
-            saveWorldData(new File(worldDirectory, "data/ttAcidRain"));
-        }
-    }
+		public AcidSavedData()
+		{
+			super(DATA_NAME);
+		}
 
-    @SuppressWarnings({"ignored", "ResultOfMethodCallIgnored"})
-    @SubscribeEvent
-    public void onWorldUnload(WorldEvent.Unload event) {
-        if(!event.getWorld().isRemote && worldDirectory != null && !event.getWorld().getMinecraftServer().isServerRunning()) {
-            // Create the save directory location if it not found.
-            new File(worldDirectory, "data/").mkdirs();
-            // Save the current Acid rain settings to the data file.
-            saveWorldData(new File(worldDirectory, "data/ttAcidRain"));
-            // Null the world directory.
-            worldDirectory = null;
-            // Clear the rain tracking HashMap.
-            rainTracking.clear();
-            // Clear the world tracking HashMap.
-            worldTracking.clear();
-        }
-    }
+		public AcidSavedData(String name)
+		{
+			super(name);
+		}
 
-    /**
-     * This function loads data from the data file in the world data directory to load the states of the Acid rain.
-     * @param file The file name + location to save the data too.
-     */
-    @SuppressWarnings("unchecked")
-    public static void loadWorldData(File file) {
-        try {
-            // If the file does not exist create one.
-            if (!file.exists()) {
-                // Try to create the file, if it errors throw an exception.
-                if (!file.createNewFile()) {
-                    throw new Exception("Failed to create the world data file");
-                }
-            }
-            // Create our file input stream.
-            FileInputStream fileInputStream = new FileInputStream(file);
-            // If there is no data to load from the file return out of the function.
-            if (fileInputStream.available() <= 0) {
-                fileInputStream.close();
-                return;
-            }
-            // Create our object input stream.
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            // Get our arrayList from the data file.
-            ArrayList<HashMap<Integer, Boolean>> arrayList = (ArrayList<HashMap<Integer, Boolean>>)objectInputStream.readObject();
-            // Set the rain tracking from the data loaded from the file.
-            rainTracking = arrayList.get(0);
-            // Set the world tracking from the data loaded from the file.
-            worldTracking = arrayList.get(1);
-            // Close the object input stream.
-            objectInputStream.close();
-            // Close the file input stream.
-            fileInputStream.close();
-        } catch (Exception err) {
-            TwistedTweaks.logger.log(Level.ERROR, "There was a problem loading the data file.", err);
-        }
-    }
+		@Override
+		public void readFromNBT(NBTTagCompound nbt)
+		{
+			NBTTagList rainList = nbt.getTagList("rain", 9);
+			rainTracking = createMapFromTagList(rainList);
 
-    /**
-     * This function saves data to an arrayList which is then saved to a data file in the world data directory.
-     * @param file The file name + location to save the data too.
-     */
-    public static void saveWorldData(File file) {
-        try {
-            if (!file.exists()) {
-                if (!file.createNewFile()) {
-                    throw new Exception("Failed to create the save file.");
-                }
-            }
-            // Create our file output stream.
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            // Create our object output stream.
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            // Create the arrayList which we will use to save our data to.
-            ArrayList<HashMap<Integer, Boolean>> arrayList = new ArrayList<HashMap<Integer, Boolean>>();
-            // Add the rain tracking HashMap to the arrayList.
-            arrayList.add(rainTracking);
-            // Add the world tracking HashMap to the arrayList.
-            arrayList.add(worldTracking);
-            // Write the arrayList to the data file.
-            objectOutputStream.writeObject(arrayList);
-            // Close the object output stream.
-            objectOutputStream.close();
-            // Close the file output stream.
-            fileOutputStream.close();
-        } catch(Exception err) {
-            TwistedTweaks.logger.log(Level.ERROR, "There was a problem saving the data file.", err);
-        }
-    }
+			NBTTagList worldList = nbt.getTagList("world", 9);
+			worldTracking = createMapFromTagList(worldList);
+		}
+
+		@Override
+		public NBTTagCompound writeToNBT(NBTTagCompound compound)
+		{
+			NBTTagList rainList = createTagListFromMap(rainTracking);
+			compound.setTag("rain", rainList);
+			NBTTagList worldList = createTagListFromMap(worldTracking);
+			compound.setTag("world", worldList);
+			return compound;
+		}
+
+		public static AcidSavedData get(World world)
+		{
+			MapStorage storage = world.getMapStorage();
+			AcidSavedData instance = (AcidSavedData) storage.getOrLoadData(AcidSavedData.class, DATA_NAME);
+
+			if(instance == null)
+			{
+				instance = new AcidSavedData();
+				storage.setData(DATA_NAME, instance);
+			}
+
+			return instance;
+		}
+	}
+
+	private static NBTTagList createTagListFromMap(Map<Integer, Boolean> map)
+	{
+		NBTTagList list = new NBTTagList();
+		for(Map.Entry<Integer, Boolean> entry : map.entrySet())
+		{
+			int key = entry.getKey();
+			boolean val = entry.getValue();
+
+			NBTTagCompound tag = new NBTTagCompound();
+			tag.setInteger("key", key);
+			tag.setBoolean("val", val);
+
+			list.appendTag(tag);
+		}
+
+		return list;
+
+	}
+
+	private static HashMap<Integer, Boolean> createMapFromTagList(NBTTagList list)
+	{
+		HashMap<Integer, Boolean> map = new HashMap<>();
+		for(int i = 0; i < list.tagCount(); i++)
+		{
+			NBTTagCompound tags = (NBTTagCompound) list.get(i);
+			int key = tags.getInteger("key");
+			boolean val = tags.getBoolean("val");
+
+			map.put(key, val);
+		}
+
+		return map;
+	}
 }

@@ -2,6 +2,8 @@ package uk.artdude.tweaks.twisted.common.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TTUtilities {
@@ -12,8 +14,9 @@ public class TTUtilities {
      * @param blockName The block name of the block you want to get.
      * @return The block data from the information passed or null if it was not found.
      */
-    public static Block getBlock(String modID, String blockName) {
-        return GameRegistry.findBlock(modID, blockName);
+    public static Block getBlock(String modID, String blockName)
+    {
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(modID, blockName));
     }
 
     /**
@@ -23,6 +26,6 @@ public class TTUtilities {
      * @return The item data from the information passed or null if it was not found.
      */
     public static Item getItem(String modID, String itemName) {
-        return GameRegistry.findItem(modID, itemName);
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(modID, itemName));
     }
 }

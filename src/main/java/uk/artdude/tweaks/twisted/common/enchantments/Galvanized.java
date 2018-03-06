@@ -9,13 +9,10 @@ import net.minecraft.util.ResourceLocation;
 
 public class Galvanized extends Enchantment {
 
-    // The enchantment ID of the enchant. (Can be changed via the configs)
-    public static int Enchantment_ID = 200;
     public static Enchantment ENCHANTMENT;
 
     protected Galvanized() {
-        super(Rarity.VERY_RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		REGISTRY.register(Enchantment_ID, new ResourceLocation("galvanized"), this);
+        super(Rarity.RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET});
     }
 
     @Override

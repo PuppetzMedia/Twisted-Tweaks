@@ -1,46 +1,44 @@
 package uk.artdude.tweaks.twisted.common.items;
 
-import static uk.artdude.tweaks.twisted.api.TTCItems.record_test;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistry;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
+import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.items.records.TTRecords;
-import uk.artdude.tweaks.twisted.common.util.References;
+import uk.artdude.tweaks.twisted.common.sound.TTSounds;
 
-public class TTItems {
+@Mod.EventBusSubscriber
+public class TTItems
+{
+	@GameRegistry.ObjectHolder("twistedtweaks:test")
+	public static Item RECORD_TEST = Items.AIR;
 
-    /**
-     * This is the main function which performs the adding of items to the game.
-     */
-    public static void init() {
-        // Check with the config values to see if the user has enabled the music records.
-        if (ConfigurationHelper.enableMusicRecords) {
-            // Register the records to the game.
-            record_test = registerItem(new TTRecords("test", SoundEvent.REGISTRY.getObject(new ResourceLocation(References.modID, "records.test"))), "record_test");
-        }
-    }
+	@SubscribeEvent
+	public static void onRegisterItem(RegistryEvent.Register<Item> event)
+	{
+		IForgeRegistry<Item> registry = event.getRegistry();
 
-    /**
-     * This function allows us to easily register items to the game.
-     * @param item The new Item you want to register to the game.
-     * @return Returns the item after being registered.
-     */
-    public static Item registerItem(Item item, String name) {
-        item.setUnlocalizedName(name);
-        item.setCreativeTab(TwistedTweaks.creativeTab);
-        GameRegistry.registerItem(item, name);
+		// Check with the config values to see if the user has enabled the music records.
+		if (TTConfiguration.Items.enableMusicRecords)
+		{
+			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setUnlocalizedName("record"));
+		}
+	}
 
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(References.modID + ":" + name, "inventory"));
-        }
-        return item;
-    }
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void onRegisterItemModel(ModelRegistryEvent event)
+	{
+		ModelLoader.setCustomModelResourceLocation(RECORD_TEST, 0, new ModelResourceLocation(RECORD_TEST.getRegistryName(), "inventory"));
+	}
 }

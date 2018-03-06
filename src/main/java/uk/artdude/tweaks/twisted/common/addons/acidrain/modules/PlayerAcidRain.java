@@ -1,11 +1,10 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
 
-import java.util.HashMap;
-import java.util.Random;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -14,57 +13,48 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import uk.artdude.tweaks.twisted.common.achievement.TTAchievement;
+import uk.artdude.tweaks.twisted.common.achievement.TTTriggers;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
+import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.enchantments.Galvanized;
 import uk.artdude.tweaks.twisted.common.potions.TTPotions;
 
+@Mod.EventBusSubscriber
 public class PlayerAcidRain {
 
-    // Create a new random to use.
-    private Random random = new Random();
-    /*
-    Create our HashMap which will store the player information and the current time. Used for tracking
-    to whether we need to add poison to the player or not.
-    */
-    private HashMap<EntityPlayer, Long> lastTickTimes = new HashMap<EntityPlayer, Long>();
-
     @SubscribeEvent
-    public void tick(TickEvent.PlayerTickEvent event) {
+    public static void tick(TickEvent.PlayerTickEvent event)
+    {
         // If player acid rain is disabled via the config return.
-        if (!ConfigurationHelper.enablePlayerAcidRain) {
+        if (!TTConfiguration.AcidRain.enablePlayerAcidRain) {
             return;
         }
         if (!event.phase.equals(TickEvent.Phase.END)) {
             return;
         }
+
         // Get the player information.
         EntityPlayer player = event.player;
         // We only want to run this code on the server side of things.
-        if (player.worldObj.isRemote) {
+        if (player.world.isRemote){
             return;
         }
+
         // Check if the acid rain is enabled for the current rain fall on the world.
-        if (!AcidRainCore.getIsAcidRain(event.player.worldObj)) {
+        if (!AcidRainCore.getIsAcidRain(event.player.world)){
             return;
         }
-        Long time = this.lastTickTimes.get(player);
-        if (time == null) {
-            this.lastTickTimes.put(player, System.currentTimeMillis());
-            time = this.lastTickTimes.get(player);
-        }
-        Long current = System.currentTimeMillis();
-        if (Math.abs(time - current) >= 1000L) {
-            this.lastTickTimes.put(player, current);
+
+        if (player.ticksExisted % 20 == 0) {
             int resistant = 1;
             InventoryPlayer inventoryPlayer = player.inventory;
             for (ItemStack stack : inventoryPlayer.armorInventory) {
                 resistant += checkArmour(stack) * 5;
             }
-            if ((resistant == 1) || (this.random.nextInt(resistant) == 0)) {
+            if ((resistant == 1) || (player.getRNG().nextInt(resistant) == 0)) {
                 addAcidRain(player);
             }
         }
@@ -76,7 +66,7 @@ public class PlayerAcidRain {
      * @param stack ItemStack: This is the current ItemStack of the armour piece being checked.
      * @return The level of the uncorrodible enchant on the armour piece.
      */
-    private int checkArmour(ItemStack stack) {
+    private static int checkArmour(ItemStack stack) {
         int lvl;
         // Check/Get the level of the Galvanized on the amour piece.
         lvl = EnchantmentHelper.getEnchantmentLevel(Galvanized.ENCHANTMENT, stack);
@@ -89,9 +79,9 @@ public class PlayerAcidRain {
      * I.E. The player needs to be under the sky and in a biome which lightning can strike at (Can rain at basically)
      * @param player EntityPlayer: The current player which the poison will be added to.
      */
-    public void addAcidRain(EntityPlayer player) {
+    public static void addAcidRain(EntityPlayer player) {
         // Get the world information.
-        World world = player.worldObj;
+        World world = player.world;
         // We only want to run this code on the server side of things.
         if (world.isRemote) {
             return;
@@ -104,15 +94,15 @@ public class PlayerAcidRain {
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isPlayerUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor_double(player.posX),
-                MathHelper.floor_double(player.posY + player.height), MathHelper.floor_double(player.posZ)));
+        boolean isPlayerUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor(player.posX),
+                MathHelper.floor(player.posY + player.height), MathHelper.floor(player.posZ)));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the player.
         */
-        int initialDuration = ConfigurationHelper.acidRainInitialDuration;
-        int maxDuration = ConfigurationHelper.acidRainMaxDuration;
-        int addedDuration = ConfigurationHelper.acidRainAddedDuration;
+        int initialDuration = TTConfiguration.AcidRain.acidRainInitialDuration;
+        int maxDuration = TTConfiguration.AcidRain.acidRainMaxDuration;
+        int addedDuration = TTConfiguration.AcidRain.acidRainAddedDuration;
         /*
         Check that the world the player is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the player.
@@ -125,9 +115,9 @@ public class PlayerAcidRain {
             Check to see if we are using our custom potion effect if so use that to apply to the player otherwise fall
             back and use the Vanilla poison effect.
             */
-            if (ConfigurationHelper.enableAcidBurnPotion) {
-                acidPotion = TTPotions.acid_burn;
-                potionEffectAcid = player.getActivePotionEffect(TTPotions.acid_burn);
+            if (TTConfiguration.Potions.enableAcidBurnPotion) {
+                acidPotion = TTPotions.ACID_BURN;
+                potionEffectAcid = player.getActivePotionEffect(TTPotions.ACID_BURN);
             } else {
                 acidPotion = MobEffects.POISON;
                 potionEffectAcid = player.getActivePotionEffect(MobEffects.POISON);
@@ -145,7 +135,7 @@ public class PlayerAcidRain {
             // Add the potion effect the player.
             player.addPotionEffect(potionEffectAcid);
             // Add the achievement to the player.
-            player.addStat(TTAchievement.acidRainFall, 1);
+            TTTriggers.TRIGGER_BURN_ACID.trigger((EntityPlayerMP) player);
             /*
             Check to see the where the player is looking at the sky, if they are looking up at the sky apply the
             blindness effect to simulate having your eyes blinded by the acid rain.
@@ -157,7 +147,7 @@ public class PlayerAcidRain {
                 }
                 player.addPotionEffect(potionEffectBlindness);
                 // Add the achievement of getting blindness to the player.
-                player.addStat(TTAchievement.acidBlind, 1);
+                TTTriggers.TRIGGER_BLIND_ACID.trigger((EntityPlayerMP) player);
             }
         }
     }

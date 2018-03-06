@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:spider_eye"
+        },
+        "title": {
+            "translate": "advancements.twistedtweaks.blind_acid.title"
+        },
+        "description": {
+            "translate": "advancements.twistedtweaks.blind_acid.description"
+        }
+    },
+    "parent": "twistedtweaks:twistedtweaks/root",
+    "criteria": {
+        "blind_acid": {
+            "trigger": "twistedtweaks:blind_acid"
+        }
+    }
+}

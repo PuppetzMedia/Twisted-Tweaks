@@ -1,20 +1,27 @@
 package uk.artdude.tweaks.twisted.common.addons.modifications;
 
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import squeek.applecore.api.hunger.StarvationEvent;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
+import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 
+@Mod.EventBusSubscriber
 public class StarveDeath {
 
     @SubscribeEvent
-    public void onStarve(StarvationEvent.Starve event) {
+    public static void onStarve(LivingDamageEvent event)
+    {
+        if(event.getSource() != DamageSource.STARVE)
+            return;
+
         // If player acid rain is disabled via the config return.
-        if (!ConfigurationHelper.enablestarveDeathDamage) {
-            event.starveDamage = 0f;
+        if (!TTConfiguration.StarveDeath.enableStarveDeath) {
+            event.setAmount(0F);
             event.setResult(Event.Result.DEFAULT);
         }
         // Apply the damage to the player. (Set via the config.)
-        event.starveDamage = ConfigurationHelper.starveDeathDamage;
+        event.setAmount(TTConfiguration.StarveDeath.starveDeathDamage);
     }
 }

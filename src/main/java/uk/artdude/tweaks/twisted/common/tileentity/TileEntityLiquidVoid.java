@@ -1,46 +1,23 @@
 package uk.artdude.tweaks.twisted.common.tileentity;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fluids.capability.TileFluidHandler;
+import uk.artdude.tweaks.twisted.common.blocks.FluidTankTile;
 
-public class TileEntityLiquidVoid extends TileEntity implements IFluidHandler {
+import javax.annotation.Nullable;
 
-    @Override
-    public int fill(EnumFacing from, FluidStack fluidStack, boolean doFill) {
-        if (fluidStack != null) {
-            return fluidStack.amount;
-        }
-        return 0;
-    }
+public class TileEntityLiquidVoid extends TileFluidHandler
+{
+	public static final int CAPACITY = Integer.MAX_VALUE;
 
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack fluidStack, boolean doDrain) {
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doFill) {
-        return null;
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid) {
-        return true;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid) {
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from) {
-        return new FluidTankInfo[] {
-                new FluidTankInfo(null, 10000)
-        };
-    }
+	public TileEntityLiquidVoid() {
+		tank = new FluidTankTile(this, CAPACITY);
+	}
 }

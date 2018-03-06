@@ -10,16 +10,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.world.World;
+import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.tileentity.TileEntityLiquidVoid;
 
-public class LiquidVoid extends BlockLiquid implements ITileEntityProvider {
+public class LiquidVoid extends Block implements ITileEntityProvider {
 
     public LiquidVoid() {
-        super(Material.WATER);
+        super(Material.IRON);
         setSoundType(SoundType.METAL);
         setHardness(2.0F);
         setResistance(10.0F);
         setHarvestLevel("pickaxe", 2);
+        setUnlocalizedName("liquid_void");
+        setCreativeTab(TwistedTweaks.creativeTab);
     }
 
     @Override
@@ -28,13 +31,8 @@ public class LiquidVoid extends BlockLiquid implements ITileEntityProvider {
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.LIQUID;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override

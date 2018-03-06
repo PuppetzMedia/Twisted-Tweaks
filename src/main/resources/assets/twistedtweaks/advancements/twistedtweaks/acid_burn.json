@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:bucket"
+        },
+        "title": {
+            "translate": "advancements.twistedtweaks.burn_acid.title"
+        },
+        "description": {
+            "translate": "advancements.twistedtweaks.burn_acid.description"
+        }
+    },
+    "parent": "twistedtweaks:twistedtweaks/root",
+    "criteria": {
+        "burn_acid": {
+            "trigger": "twistedtweaks:burn_acid"
+        }
+    }
+}

@@ -1,5 +1,6 @@
 {
+  "parent": "block/cube_all",
   "textures": {
-    "texture": "twistedtweaks:blocks/liquid_void"
+    "all": "twistedtweaks:blocks/liquid_void"
   }
 }

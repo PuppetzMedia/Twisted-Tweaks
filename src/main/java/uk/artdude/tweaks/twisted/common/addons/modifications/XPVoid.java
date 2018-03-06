@@ -3,15 +3,17 @@ package uk.artdude.tweaks.twisted.common.addons.modifications;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
-import uk.artdude.tweaks.twisted.common.configuration.ConfigurationHelper;
+import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.util.TTUtilities;
 
+@Mod.EventBusSubscriber
 public class XPVoid {
 
     // Set the ArrayList which will contain the blocks to prevent XP from dropping from.
@@ -20,9 +22,13 @@ public class XPVoid {
     /**
      * This is the main function call to this class.
      */
-    public static void init() {
+    public static void init()
+    {
+        blockList.clear();
+
         // For each of the values set in the config check that the block is a valid block in the game.
-        for (String blockOre : ConfigurationHelper.oreXPDisabled) {
+        for (String blockOre : TTConfiguration.Tweaks.oreXPDisabled)
+        {
             // Split the block information to the mod id and the block id.
             String[] oreInfo = blockOre.split(":");
             // Try and get the block information from the GameRegistry.
@@ -44,7 +50,7 @@ public class XPVoid {
      * @param event The event of the block break.
      */
     @SubscribeEvent
-    public void blockBreak(BlockEvent.BreakEvent event) {
+    public static void blockBreak(BlockEvent.BreakEvent event) {
         // Set a block variable for easy referencing.
         Block blockMined = event.getState().getBlock();
         // For each of the blocks in the config list see if the block being mined is in the config.

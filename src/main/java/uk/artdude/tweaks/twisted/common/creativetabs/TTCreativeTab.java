@@ -1,11 +1,9 @@
 package uk.artdude.tweaks.twisted.common.creativetabs;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import uk.artdude.tweaks.twisted.api.TTCBlocks;
+
+import uk.artdude.tweaks.twisted.common.blocks.TTBlocks;
 
 public class TTCreativeTab extends CreativeTabs {
 
@@ -14,11 +12,9 @@ public class TTCreativeTab extends CreativeTabs {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack() {
-        return new ItemStack(TTCBlocks.liquidVoid);
+    public ItemStack getTabIconItem()
+    {
+        return new ItemStack(TTBlocks.LIQUID_VOID);
     }
 
-    @Override
-    public Item getTabIconItem() { return null; }
 }

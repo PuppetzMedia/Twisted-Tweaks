@@ -1,7 +1,14 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "twistedtweaks:liquid_void"
+  },
   "variants": {
-    "normal": {
-      "model": "twistedtweaks:liquid_void"
-    }
+    "normal": [ { } ],
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ]
   }
 }
