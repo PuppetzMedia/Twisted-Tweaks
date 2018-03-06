@@ -23,7 +23,7 @@ public class MobAcidRain
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent event)
     {
-        if (!TTConfiguration.AcidRain.enableMobAcidRain || event.getEntityLiving() == null || event.getEntityLiving().world == null)
+        if (!TTConfiguration.acid_rain.enableMobAcidRain || event.getEntityLiving() == null || event.getEntityLiving().world == null)
             return;
 
 		World world = event.getEntityLiving().world;
@@ -37,7 +37,7 @@ public class MobAcidRain
         if(entity.ticksExisted % 40 == 0)
 		{
 			double minimumChance;
-			minimumChance = TTConfiguration.AcidRain.acidRainMobMinimumChance;
+			minimumChance = TTConfiguration.acid_rain.acidRainMobMinimumChance;
 			// Perform the random chance to see if the mob is going to get effected by the rain.
 			if (world.rand.nextFloat() < minimumChance  && entity instanceof EntityAnimal) {
 				// Add the acid rain the mob.
@@ -74,9 +74,9 @@ public class MobAcidRain
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the entity.
         */
-        int initialDuration = TTConfiguration.AcidRain.acidRainInitialDuration;
-        int maxDuration = TTConfiguration.AcidRain.acidRainMaxDuration;
-        int addedDuration = TTConfiguration.AcidRain.acidRainAddedDuration;
+        int initialDuration = TTConfiguration.acid_rain.acidRainInitialDuration;
+        int maxDuration = TTConfiguration.acid_rain.acidRainMaxDuration;
+        int addedDuration = TTConfiguration.acid_rain.acidRainAddedDuration;
         /*
         Check that the world the entity is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the entity.

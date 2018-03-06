@@ -27,7 +27,7 @@ public class XPVoid {
         blockList.clear();
 
         // For each of the values set in the config check that the block is a valid block in the game.
-        for (String blockOre : TTConfiguration.Tweaks.oreXPDisabled)
+        for (String blockOre : TTConfiguration.tweaks.oreXPDisabled)
         {
             // Split the block information to the mod id and the block id.
             String[] oreInfo = blockOre.split(":");

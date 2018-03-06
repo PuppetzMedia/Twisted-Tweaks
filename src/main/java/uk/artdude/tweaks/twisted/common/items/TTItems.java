@@ -29,7 +29,7 @@ public class TTItems
 		IForgeRegistry<Item> registry = event.getRegistry();
 
 		// Check with the config values to see if the user has enabled the music records.
-		if (TTConfiguration.Items.enableMusicRecords)
+		if (TTConfiguration.items.enableMusicRecords)
 		{
 			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setUnlocalizedName("record"));
 		}

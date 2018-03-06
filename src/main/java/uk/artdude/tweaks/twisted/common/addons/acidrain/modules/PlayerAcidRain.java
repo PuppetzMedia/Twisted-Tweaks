@@ -29,7 +29,7 @@ public class PlayerAcidRain {
     public static void tick(TickEvent.PlayerTickEvent event)
     {
         // If player acid rain is disabled via the config return.
-        if (!TTConfiguration.AcidRain.enablePlayerAcidRain) {
+        if (!TTConfiguration.acid_rain.enablePlayerAcidRain) {
             return;
         }
         if (!event.phase.equals(TickEvent.Phase.END)) {
@@ -100,9 +100,9 @@ public class PlayerAcidRain {
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the player.
         */
-        int initialDuration = TTConfiguration.AcidRain.acidRainInitialDuration;
-        int maxDuration = TTConfiguration.AcidRain.acidRainMaxDuration;
-        int addedDuration = TTConfiguration.AcidRain.acidRainAddedDuration;
+        int initialDuration = TTConfiguration.acid_rain.acidRainInitialDuration;
+        int maxDuration = TTConfiguration.acid_rain.acidRainMaxDuration;
+        int addedDuration = TTConfiguration.acid_rain.acidRainAddedDuration;
         /*
         Check that the world the player is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the player.
@@ -115,7 +115,7 @@ public class PlayerAcidRain {
             Check to see if we are using our custom potion effect if so use that to apply to the player otherwise fall
             back and use the Vanilla poison effect.
             */
-            if (TTConfiguration.Potions.enableAcidBurnPotion) {
+            if (TTConfiguration.potions.enableAcidBurnPotion) {
                 acidPotion = TTPotions.ACID_BURN;
                 potionEffectAcid = player.getActivePotionEffect(TTPotions.ACID_BURN);
             } else {

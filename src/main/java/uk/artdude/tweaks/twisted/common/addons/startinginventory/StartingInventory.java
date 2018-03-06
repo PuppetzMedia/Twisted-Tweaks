@@ -28,7 +28,7 @@ public class StartingInventory
     public static void init()
     {
         items.clear();
-        for (String item : TTConfiguration.Tweaks.startingItems) {
+        for (String item : TTConfiguration.tweaks.startingItems) {
             String[] parts = item.split(":");
             int quantity = Integer.valueOf(parts[2]);
             int meta = -1;

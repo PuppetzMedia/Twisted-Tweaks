@@ -25,7 +25,7 @@ public class CropAcidRain {
     public static void growthTickAllowed(BlockEvent.CropGrowEvent.Pre event)
     {
         // If player acid rain is disabled via the config return.
-        if (!TTConfiguration.AcidRain.enableCropAcidRain) {
+        if (!TTConfiguration.acid_rain.enableCropAcidRain) {
             return;
         }
         // Set the block we are currently dealing with.
@@ -60,15 +60,15 @@ public class CropAcidRain {
             */
             if (currentAge > 0) {
                 // Get the chance of the seed dropping from the configs.
-                if (TTConfiguration.Settings.enableDebug) {
+                if (TTConfiguration.settings.enableDebug) {
                     seedDropChance = 1.0;
                 } else {
-                    seedDropChance = TTConfiguration.AcidRain.acidRainSeedDropChance;
+                    seedDropChance = TTConfiguration.acid_rain.acidRainSeedDropChance;
                 }
                 // If the chance is lower then the current random drop the seed for the current crop and replace the crop with air.
                 if (world.rand.nextFloat() < seedDropChance) {
                     // If debugging is enabled log the activity.
-                    if (TTConfiguration.Settings.enableDebug) {
+                    if (TTConfiguration.settings.enableDebug) {
                         TwistedTweaks.logger.log(Level.INFO, "Seed Drop: " + crop.getLocalizedName() + " Cords: " +
                                 event.getPos().getX() + ", " + event.getPos().getY() + ", " + event.getPos().getZ());
                     }
@@ -80,11 +80,11 @@ public class CropAcidRain {
                     // Create the random.
                     Random random = new Random();
                     // Get the chance of turning back a stage from the config.
-                    double returnStageChance = TTConfiguration.AcidRain.acidRainCropReturnChance;
+                    double returnStageChance = TTConfiguration.acid_rain.acidRainCropReturnChance;
                     // Check to see if the chance meets to return a growth stage of a crop.
                     if (random.nextDouble() < returnStageChance) {
                         // If debugging is enabled log the activity.
-                        if (TTConfiguration.Settings.enableDebug) {
+                        if (TTConfiguration.settings.enableDebug) {
                             TwistedTweaks.logger.log(Level.INFO, "Crop Growth Backwards: " + crop.getLocalizedName() + " Cords: " +
                                     event.getPos().getX() + ", " + event.getPos().getY() + ", " + event.getPos().getZ());
                         }

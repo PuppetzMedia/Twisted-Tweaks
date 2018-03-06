@@ -12,17 +12,17 @@ public class TTAddons {
      */
     public static void init()
     {
-        if (TTConfiguration.Tweaks.enableIgniteBlocks)
+        if (TTConfiguration.tweaks.enableIgniteBlocks)
         {
             IgniteBlocks.init();
         }
 
-        if (TTConfiguration.Tweaks.enableXPVoid)
+        if (TTConfiguration.tweaks.enableXPVoid)
         {
             XPVoid.init();
         }
 
-        if (TTConfiguration.Tweaks.enableStartingInventory)
+        if (TTConfiguration.tweaks.enableStartingInventory)
         {
             StartingInventory.init();
         }

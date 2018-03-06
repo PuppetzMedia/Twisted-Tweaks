@@ -29,7 +29,7 @@ public class TTBlocks
         IForgeRegistry<Block> registry = event.getRegistry();
 
         // Check to see if the user has enabled the Liquid Void.
-        if (TTConfiguration.Blocks.enableLiquidVoid)
+        if (TTConfiguration.blocks.enableLiquidVoid)
         {
             registry.register(new LiquidVoid().setRegistryName("liquid_void"));
             GameRegistry.registerTileEntity(TileEntityLiquidVoid.class, "liquid_void");
@@ -40,7 +40,7 @@ public class TTBlocks
     public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event)
     {
         IForgeRegistry<Item> registry = event.getRegistry();
-        if (TTConfiguration.Blocks.enableLiquidVoid)
+        if (TTConfiguration.blocks.enableLiquidVoid)
         {
             registry.register(new ItemBlock(LIQUID_VOID).setRegistryName("liquid_void"));
         }
@@ -50,7 +50,7 @@ public class TTBlocks
     @SideOnly(Side.CLIENT)
     public static void onRegisterModels(ModelRegistryEvent event)
     {
-        if (TTConfiguration.Blocks.enableLiquidVoid)
+        if (TTConfiguration.blocks.enableLiquidVoid)
         {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(LIQUID_VOID), 0, new ModelResourceLocation(LIQUID_VOID.getRegistryName(), "inventory"));
         }
