@@ -34,7 +34,7 @@ public class TTConfiguration
 
     public static class Items
     {
-        @Config.Comment("These records are using music from '' of which this mod " + "has permission to distribute the music. But if you don't like them you can use this config to turn them off.")
+        @Config.Comment("These records are using music from 'Csiers17' of which this mod " + "has permission to distribute the music. But if you don't like them you can use this config to turn them off.")
         @Config.Name("Enable Records")
         @Config.RequiresMcRestart
         public  boolean enableMusicRecords = true;
