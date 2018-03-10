@@ -28,7 +28,7 @@ public class TTPotionEvent {
         // Check to see if the entity has our potion effect, if so apply the effect of the "damage" to the entity.
         if (event.getEntityLiving().isPotionActive(TTPotions.ACID_BURN))
         {
-            if (event.getEntityLiving().getHealth() > 1.0F || TTConfiguration.acid_rain.enableAcidFullDeath)
+            if (event.getEntityLiving().getHealth() > 1.0F || TTConfiguration.acid_rain.player.enableAcidFullDeath)
             {
                 event.getEntityLiving().attackEntityFrom(damageSourceAcidRain, 1.0F);
             }
@@ -37,7 +37,7 @@ public class TTPotionEvent {
         // Check to see if the player has the poison effect and the config is toggled to kill the player.
         if (	event.getEntityLiving().isPotionActive(MobEffects.POISON)
 				&& AcidRainCore.getIsAcidRain(event.getEntityLiving().world)
-				&& TTConfiguration.acid_rain.enableAcidFullDeath)
+				&& TTConfiguration.acid_rain.player.enableAcidFullDeath)
         {
             event.getEntityLiving().attackEntityFrom(damageSourceAcidRain, 1.0F);
         }

@@ -26,7 +26,7 @@ public class TTEnchantments
         Check to see if the Galvanized enchant is enabled in the configuration file and that the player acid rain is
         enabled as we don't want to load an enchant which does not have a use in game.
         */
-		if(TTConfiguration.enchantments.enableGalvanized && TTConfiguration.acid_rain.enablePlayerAcidRain)
+		if(TTConfiguration.enchantments.enableGalvanized && TTConfiguration.acid_rain.player.enablePlayerAcidRain)
 		{
 			registry.register(new Galvanized().setName("galvanised").setRegistryName(References.modID, "galvanised"));
 		}

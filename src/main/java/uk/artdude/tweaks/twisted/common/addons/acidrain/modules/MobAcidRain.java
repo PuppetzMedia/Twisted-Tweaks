@@ -23,7 +23,7 @@ public class MobAcidRain
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent event)
     {
-        if (!TTConfiguration.acid_rain.enableMobAcidRain || event.getEntityLiving() == null || event.getEntityLiving().world == null)
+        if (!TTConfiguration.acid_rain.animals.enableMobAcidRain || event.getEntityLiving() == null || event.getEntityLiving().world == null)
             return;
 
 		World world = event.getEntityLiving().world;
@@ -37,7 +37,7 @@ public class MobAcidRain
         if(entity.ticksExisted % 40 == 0)
 		{
 			double minimumChance;
-			minimumChance = TTConfiguration.acid_rain.acidRainMobMinimumChance;
+			minimumChance = TTConfiguration.acid_rain.animals.acidRainMobMinimumChance;
 			// Perform the random chance to see if the mob is going to get effected by the rain.
 			if (world.rand.nextFloat() < minimumChance  && entity instanceof EntityAnimal) {
 				// Add the acid rain the mob.

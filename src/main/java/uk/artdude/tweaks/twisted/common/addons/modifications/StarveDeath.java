@@ -17,11 +17,11 @@ public class StarveDeath {
             return;
 
         // If player acid rain is disabled via the config return.
-        if (!TTConfiguration.stave_death.enableStarveDeath) {
+        if (!TTConfiguration.starve_death.enableStarveDeath) {
             event.setAmount(0F);
             event.setResult(Event.Result.DEFAULT);
         }
         // Apply the damage to the player. (Set via the config.)
-        event.setAmount(TTConfiguration.stave_death.starveDeathDamage);
+        event.setAmount(TTConfiguration.starve_death.starveDeathDamage);
     }
 }

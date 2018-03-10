@@ -25,7 +25,7 @@ public class CropAcidRain {
     public static void growthTickAllowed(BlockEvent.CropGrowEvent.Pre event)
     {
         // If player acid rain is disabled via the config return.
-        if (!TTConfiguration.acid_rain.enableCropAcidRain) {
+        if (!TTConfiguration.acid_rain.crops.enableCropAcidRain) {
             return;
         }
         // Set the block we are currently dealing with.
@@ -63,7 +63,7 @@ public class CropAcidRain {
                 if (TTConfiguration.settings.enableDebug) {
                     seedDropChance = 1.0;
                 } else {
-                    seedDropChance = TTConfiguration.acid_rain.acidRainSeedDropChance;
+                    seedDropChance = TTConfiguration.acid_rain.crops.acidRainSeedDropChance;
                 }
                 // If the chance is lower then the current random drop the seed for the current crop and replace the crop with air.
                 if (world.rand.nextFloat() < seedDropChance) {
@@ -80,7 +80,7 @@ public class CropAcidRain {
                     // Create the random.
                     Random random = new Random();
                     // Get the chance of turning back a stage from the config.
-                    double returnStageChance = TTConfiguration.acid_rain.acidRainCropReturnChance;
+                    double returnStageChance = TTConfiguration.acid_rain.crops.acidRainCropReturnChance;
                     // Check to see if the chance meets to return a growth stage of a crop.
                     if (random.nextDouble() < returnStageChance) {
                         // If debugging is enabled log the activity.

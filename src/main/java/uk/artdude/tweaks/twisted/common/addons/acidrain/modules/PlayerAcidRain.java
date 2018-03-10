@@ -29,7 +29,7 @@ public class PlayerAcidRain {
     public static void tick(TickEvent.PlayerTickEvent event)
     {
         // If player acid rain is disabled via the config return.
-        if (!TTConfiguration.acid_rain.enablePlayerAcidRain) {
+        if (!TTConfiguration.acid_rain.player.enablePlayerAcidRain) {
             return;
         }
         if (!event.phase.equals(TickEvent.Phase.END)) {
