@@ -1,7 +1,5 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
-
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

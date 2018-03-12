@@ -1,4 +1,4 @@
-package uk.artdude.tweaks.twisted.command;
+package uk.artdude.tweaks.twisted.common.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

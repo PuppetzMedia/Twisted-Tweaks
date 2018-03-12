@@ -1,8 +1,6 @@
 package uk.artdude.tweaks.twisted.common.enchantments;
 
-
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Enchantments;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

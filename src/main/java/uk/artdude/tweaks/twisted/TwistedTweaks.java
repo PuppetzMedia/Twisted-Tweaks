@@ -1,7 +1,6 @@
 package uk.artdude.tweaks.twisted;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -9,10 +8,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
-import uk.artdude.tweaks.twisted.command.CommandTT;
 import uk.artdude.tweaks.twisted.common.ProxyCommon;
 import uk.artdude.tweaks.twisted.common.achievement.TTTriggers;
 import uk.artdude.tweaks.twisted.common.addons.TTAddons;
+import uk.artdude.tweaks.twisted.common.command.CommandTT;
 import uk.artdude.tweaks.twisted.common.creativetabs.TTCreativeTab;
 import uk.artdude.tweaks.twisted.common.util.References;
 

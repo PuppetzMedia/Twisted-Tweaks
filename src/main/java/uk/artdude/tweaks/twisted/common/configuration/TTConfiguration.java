@@ -1,13 +1,11 @@
 package uk.artdude.tweaks.twisted.common.configuration;
 
-import jdk.nashorn.internal.ir.Block;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.TTAddons;
-import uk.artdude.tweaks.twisted.common.addons.modifications.XPVoid;
 import uk.artdude.tweaks.twisted.common.util.References;
 
 @Mod.EventBusSubscriber
