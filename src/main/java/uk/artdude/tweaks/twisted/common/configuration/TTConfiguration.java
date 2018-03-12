@@ -205,5 +205,4 @@ public class TTConfiguration
             TTAddons.init();
         }
     }
-
 }
