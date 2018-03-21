@@ -35,3 +35,6 @@ tt.command.error.invalidclear=Please Enter A Player's Name!
 tt.command.error.invalidinventory=Invalid Option!
 tt.command.success.clearall=Cleared All Starter Inventory Data!
 tt.command.success.clearplayer=Cleared Player Data!
+
+tt.info.torch.litamount=Lit Amount
+tt.info.torch.littime=Lit Time

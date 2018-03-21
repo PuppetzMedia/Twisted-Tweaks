@@ -1,5 +1,6 @@
 package uk.artdude.tweaks.twisted.common.configuration;
 
+import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -16,10 +17,12 @@ public class TTConfiguration
     public static Items items = new Items();
     public static AcidRain acid_rain = new AcidRain();
     public static StarveDeath starve_death = new StarveDeath();
+    public static Torch torch = new Torch();
     public static Tweaks tweaks = new Tweaks();
     public static Enchantments enchantments = new Enchantments();
     public static Potions potions = new Potions();
     public static Spawning spawning = new Spawning();
+    public static AI ai = new AI();
     public static Settings settings = new Settings();
 
     public static class Blocks
@@ -37,6 +40,35 @@ public class TTConfiguration
         @Config.RequiresMcRestart
         public  boolean enableMusicRecords = true;
     }
+
+    public static class Torch
+	{
+		public int maxLitTime = 10000;
+		public int maxLitAmount = 4;
+		public float litChance = 0.5F;
+		public float destroyChance = 1F;
+		public boolean rainExtinguish = true;
+		public boolean onlyDestroyUnusable = false;
+		public boolean alwaysDestroyUnusable = true;
+		public boolean showTorchTooltip = true;
+		public boolean enableTorchBurnout = true;
+	}
+
+	public static class AI
+	{
+		public boolean aiAttackBlocks = true;
+		public String[] attackBlockMobs = new String[]
+				{
+						"Zombie"
+				};
+		public String[] attackableBlocks = new String[]
+				{
+						"minecraft:torch",
+						"twistedtweaks:unlit_torch",
+						"twistedtweaks:glowstone_torch"
+				};
+		public EnumDifficulty minAttackBlockDifficulty = EnumDifficulty.EASY;
+	}
 
     public static class AcidRain
     {

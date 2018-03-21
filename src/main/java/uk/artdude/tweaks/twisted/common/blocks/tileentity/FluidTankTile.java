@@ -1,4 +1,4 @@
-package uk.artdude.tweaks.twisted.common.blocks;
+package uk.artdude.tweaks.twisted.common.blocks.tileentity;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.Fluid;
