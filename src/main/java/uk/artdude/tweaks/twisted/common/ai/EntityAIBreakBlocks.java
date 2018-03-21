@@ -31,8 +31,6 @@ public class EntityAIBreakBlocks extends EntityAIBlockInteract
 			return false;
 		}
 
-		System.out.println("STARTING???");
-
 		return true;
 	}
 
@@ -102,6 +100,6 @@ public class EntityAIBreakBlocks extends EntityAIBlockInteract
 
 	public double getBreakTime()
 	{
-		return 10D;
+		return TTConfiguration.ai.aiAttackBlocksBreakSpeed;
 	}
 }

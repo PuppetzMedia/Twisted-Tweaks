@@ -43,31 +43,75 @@ public class TTConfiguration
 
     public static class Torch
 	{
+		@Config.Comment("The total amount of time a torch will be lit, in ticks")
+		@Config.Name("Max Lit Time")
 		public int maxLitTime = 10000;
+
+		@Config.Comment("The total amount of times a torch can be lit")
+		@Config.Name("Max Lit Amount")
 		public int maxLitAmount = 4;
+
+		@Config.Comment("The chance to successfully light a torch")
+		@Config.Name("Light success chance")
+		@Config.RangeDouble(min = 0, max = 1)
 		public float litChance = 0.5F;
-		public float destroyChance = 1F;
+
+		@Config.Comment("Chance that a torch will be destroyed when it burns out")
+		@Config.Name("Enable Player Acid Rain")
+		@Config.RangeDouble(min = 0, max = 1)
+		public float destroyChance = 0F;
+
+		@Config.Comment("Does rain put out torches")
+		@Config.Name("Enable Player Acid Rain")
 		public boolean rainExtinguish = true;
+
+		@Config.Comment("Will only have a chance to destroy unusable torches")
+		@Config.Name("Only destroy unusable torches")
 		public boolean onlyDestroyUnusable = false;
+
+		@Config.Comment("Always destroy unusable torches, regardless of destroy chance")
+		@Config.Name("Always destroy unusable torches")
 		public boolean alwaysDestroyUnusable = true;
+
+		@Config.Comment("Show a tooltip on torches")
+		@Config.Name("Show torch tooltip")
 		public boolean showTorchTooltip = true;
+
+		@Config.Comment("Should torches burnout")
+		@Config.Name("Enable torch burnout")
 		public boolean enableTorchBurnout = true;
 	}
 
 	public static class AI
 	{
+		@Config.Comment("Should mobs attack target blocks?")
+		@Config.Name("Enable mob block attacking")
 		public boolean aiAttackBlocks = true;
+
+		@Config.Comment("List of mobs that should attack blocks")
+		@Config.Name("Block attack entities")
 		public String[] attackBlockMobs = new String[]
 				{
 						"Zombie"
 				};
+
+		@Config.Comment("List of attackable blocks")
+		@Config.Name("Attackable blocks")
 		public String[] attackableBlocks = new String[]
 				{
 						"minecraft:torch",
 						"twistedtweaks:unlit_torch",
 						"twistedtweaks:glowstone_torch"
 				};
+
+		@Config.Comment("The minimum difficulty that mobs will break blocks")
+		@Config.Name("Minimum block break difficulty")
 		public EnumDifficulty minAttackBlockDifficulty = EnumDifficulty.EASY;
+
+		@Config.Comment("The speed at which blocks will be broken")
+		@Config.Name("Entity block break speed")
+		@Config.RangeDouble(min = 0)
+		public double aiAttackBlocksBreakSpeed = 10D;
 	}
 
     public static class AcidRain

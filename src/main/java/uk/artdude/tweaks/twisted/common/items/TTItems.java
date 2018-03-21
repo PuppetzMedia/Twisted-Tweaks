@@ -23,6 +23,12 @@ public class TTItems
 	@GameRegistry.ObjectHolder("twistedtweaks:test")
 	public static Item RECORD_TEST = Items.AIR;
 
+	@GameRegistry.ObjectHolder("twistedtweaks:torch_oil")
+	public static Item TORCH_OIL = Items.AIR;
+
+	@GameRegistry.ObjectHolder("twistedtweaks:torch_paste")
+	public static Item TORCH_PASTE = Items.AIR;
+
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event)
 	{
@@ -33,6 +39,12 @@ public class TTItems
 		{
 			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setUnlocalizedName("record"));
 		}
+
+		registry.registerAll(
+				new Item().setUnlocalizedName("twisted_tweaks:torch_oil").setRegistryName("torch_oil"),
+				new Item().setUnlocalizedName("twisted_tweaks:torch_paste").setRegistryName("torch_paste")
+
+		);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -11,6 +11,7 @@ Starve Death.tooltip=Configure starve death settings and features.
 Tweaks.tooltip=Configure tweak config.
 
 tile.liquid_void.name=Liquid Void
+tile.glowstone_torch.name=Glowstone Torch
 
 enchantment.galvanised=Galvanized
 
@@ -28,6 +29,8 @@ advancements.twistedtweaks.blind_acid.description=Looking up at the sky during a
 death.attack.tweaks.twisted.acid.rain=%s corroded away
 
 item.record.test.desc=Csiers17 - Bring Down The Walls
+item.twistedtweaks:torch_oil.name=Torch Oil
+item.twistedtweaks:torch_paste.name=Torch Paste
 
 tt.command.error.generic=Invalid Command!
 tt.command.error.invalidoption=Invalid Option!

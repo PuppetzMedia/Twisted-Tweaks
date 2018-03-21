@@ -25,12 +25,10 @@ public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
 		Block block = iblockstate.getBlock();
 
 		String regName = block.getRegistryName().toString();
-		System.out.println(regName);
 
 		for(String s : TTConfiguration.ai.attackableBlocks)
 			if(s.equalsIgnoreCase(regName))
 			{
-				System.out.println("tes");
 				return true;
 			}
 
