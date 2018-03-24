@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathPoint;
@@ -44,6 +45,23 @@ public class EntityAIBlockInteract extends EntityAIBase
 		if(!TTConfiguration.ai.aiAttackBlocks)
 			return false;
 
+		for(int i = -6; i < 7; i++)
+		{
+			for(int j = -1; j < 3; j++)
+			{
+				for(int k = -6; k < 7; k++)
+				{
+					if(getTargetBlock(new BlockPos(entity.posX + i, entity.posY + j, entity.posZ + k)) != null)
+					{
+						if(entity.getNavigator().canEntityStandOnPos(new BlockPos(entity.posX + i, entity.posY + j, entity.posZ + k)))
+						{
+							this.entity.getNavigator().tryMoveToXYZ(entity.posX + i, entity.posY + j, entity.posZ + k, 1.0F);
+						}
+					}
+				}
+			}
+		}
+
 		PathNavigateGround pathnavigateground = (PathNavigateGround)this.entity.getNavigator();
 		Path path = pathnavigateground.getPath();
 
@@ -58,6 +76,19 @@ public class EntityAIBlockInteract extends EntityAIBase
 				if (this.entity.getDistanceSq((double)this.targetPos.getX(), this.entity.posY, (double)this.targetPos.getZ()) <= 2.25D)
 				{
 					this.target = this.getTargetBlock(this.targetPos);
+					if(target == null)
+					{
+						this.target = this.getTargetBlock(this.targetPos.down());
+						this.targetPos = targetPos.down();
+					}
+
+					if(target == null)
+					{
+						this.target = this.getTargetBlock(this.targetPos.up(2));
+						this.targetPos = targetPos.up(2);
+
+					}
+
 					if (this.target != null)
 					{
 						return true;
@@ -99,6 +130,8 @@ public class EntityAIBlockInteract extends EntityAIBase
 	 */
 	public void updateTask()
 	{
+
+
 		float f = (float)((double)((float)this.targetPos.getX() + 0.5F) - this.entity.posX);
 		float f1 = (float)((double)((float)this.targetPos.getZ() + 0.5F) - this.entity.posZ);
 		float f2 = this.entityPositionX * f + this.entityPositionZ * f1;

@@ -93,6 +93,7 @@ public class EntityAIBreakBlocks extends EntityAIBlockInteract
 		if (this.breakingTime == getBreakTime() && this.entity.world.getDifficulty().getDifficultyId() >= TTConfiguration.ai.minAttackBlockDifficulty.getDifficultyId())
 		{
 			this.entity.world.setBlockToAir(this.targetPos);
+			this.entity.setCanPickUpLoot(true);
 			this.entity.world.playEvent(1021, this.targetPos, 0);
 			this.entity.world.playEvent(2001, this.targetPos, Block.getIdFromBlock(this.target));
 		}

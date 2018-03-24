@@ -41,8 +41,8 @@ public class TTItems
 		}
 
 		registry.registerAll(
-				new Item().setUnlocalizedName("twisted_tweaks:torch_oil").setRegistryName("torch_oil"),
-				new Item().setUnlocalizedName("twisted_tweaks:torch_paste").setRegistryName("torch_paste")
+				new Item().setUnlocalizedName("twistedtweaks:torch_oil").setRegistryName("torch_oil").setCreativeTab(TwistedTweaks.creativeTab),
+				new Item().setUnlocalizedName("twistedtweaks:torch_paste").setRegistryName("torch_paste").setCreativeTab(TwistedTweaks.creativeTab)
 
 		);
 	}
@@ -52,5 +52,7 @@ public class TTItems
 	public static void onRegisterItemModel(ModelRegistryEvent event)
 	{
 		ModelLoader.setCustomModelResourceLocation(RECORD_TEST, 0, new ModelResourceLocation(RECORD_TEST.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TORCH_OIL, 0, new ModelResourceLocation(TORCH_OIL.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TORCH_PASTE, 0, new ModelResourceLocation(TORCH_PASTE.getRegistryName(), "inventory"));
 	}
 }

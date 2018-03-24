@@ -28,10 +28,8 @@ public class AttachAIHandler
 					EntityAIBreakBlocks breakBlocks = new EntityAIBreakBlocks(living);
 					EntityAIFindTargetBlock moveTo = new EntityAIFindTargetBlock(living);
 
-					System.out.println("Found: " + s);
 					living.tasks.addTask(living.tasks.taskEntries.size() + 1, breakBlocks);
 					living.tasks.addTask(living.tasks.taskEntries.size() + 1, moveTo);
-
 				}
 			}
 		}

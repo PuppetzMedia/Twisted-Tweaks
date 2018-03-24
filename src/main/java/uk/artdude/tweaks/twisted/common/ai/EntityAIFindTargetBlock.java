@@ -18,6 +18,13 @@ public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
 		super(creature, 1D, 8);
 	}
 
+	public boolean shouldExecute()
+	{
+		return TTConfiguration.ai.aiAttackBlocks;
+	}
+
+
+
 	@Override
 	protected boolean shouldMoveTo(World worldIn, BlockPos pos)
 	{
@@ -29,6 +36,8 @@ public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
 		for(String s : TTConfiguration.ai.attackableBlocks)
 			if(s.equalsIgnoreCase(regName))
 			{
+				System.out.println("??");
+
 				return true;
 			}
 
