@@ -8,6 +8,7 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.util.References;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,13 +26,24 @@ public class AcidRainCore
     public static void onWorldTick(TickEvent.WorldTickEvent event)
 	{
 		World world = event.world;
+		int dimensionID = world.provider.getDimension();
+		boolean found = false;
+		for(int i = 0; i < TTConfiguration.acid_rain.dimension_whitelist.length; i++)
+		{
+			if(TTConfiguration.acid_rain.dimension_whitelist[i] == dimensionID)
+			{
+				found = true;
+				break;
+			}
+		}
 
+		if(!found)
+			return;
         if (event.phase != TickEvent.Phase.START)
             return;
 		if (world.isRemote || !world.provider.isSurfaceWorld())
 			return;
 
-		int dimensionID = world.provider.getDimension();
 
         if (worldTracking.get(dimensionID) == null || rainTracking.get(dimensionID) == null || rainTracking.get(dimensionID) != world.isRaining())
         {

@@ -119,6 +119,7 @@ public class TTConfiguration
 		public Player player = new Player();
 		public Animals animals = new Animals();
 		public Crops crops = new Crops();
+		public int[] dimension_whitelist = new int[] {0};
 
     	public class Player
 		{
