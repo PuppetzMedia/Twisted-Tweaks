@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
@@ -120,11 +121,13 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 
 			if(world.isAirBlock(pos) && !world.isRemote)
 			{
-				ItemStack stack = new ItemStack(TTBlocks.TWISTED_UNLIT_TORCH);
-				NBTTagCompound tags = new NBTTagCompound();
-				te.writeToNBT(tags);
-
-				stack.setTagInfo("BlockEntityTag", tags);
+				ItemStack stack = new ItemStack(TTConfiguration.torch.enableTorchBurnout ? TTBlocks.TWISTED_UNLIT_TORCH : Blocks.TORCH);
+				if(TTConfiguration.torch.enableTorchBurnout)
+				{
+					NBTTagCompound tags = new NBTTagCompound();
+					te.writeToNBT(tags);
+					stack.setTagInfo("BlockEntityTag", tags);
+				}
 				spawnAsEntity(world, pos, stack);
 			}
 		}

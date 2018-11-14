@@ -61,7 +61,19 @@ public class AcidRainCore
      */
 	public static boolean getIsAcidRain(World world)
 	{
-        return worldTracking.get(world.provider.getDimension()) == null || worldTracking.get(world.provider.getDimension());
+		boolean found = false;
+		for(int i = 0; i < TTConfiguration.acid_rain.dimension_whitelist.length; i++)
+		{
+			if(TTConfiguration.acid_rain.dimension_whitelist[i] == world.provider.getDimension())
+			{
+				found = true;
+				break;
+			}
+		}
+		if(!found)
+			return false;
+
+		return worldTracking.get(world.provider.getDimension()) == null || worldTracking.get(world.provider.getDimension());
     }
 
     public static class AcidSavedData extends WorldSavedData
