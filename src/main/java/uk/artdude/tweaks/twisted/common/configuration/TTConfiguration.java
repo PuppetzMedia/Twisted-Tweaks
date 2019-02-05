@@ -119,6 +119,9 @@ public class TTConfiguration
 		public Player player = new Player();
 		public Animals animals = new Animals();
 		public Crops crops = new Crops();
+
+		@Config.Comment("Whitelist the dimensions to allow the acid rain to occur")
+        @Config.Name("Whitelisted Dimensions")
 		public int[] dimension_whitelist = new int[] {0};
 
     	public class Player
@@ -177,7 +180,7 @@ public class TTConfiguration
         @Config.RangeInt(min = 0, max = 600)
         public int acidRainAddedDuration = 600;
 
-        @Config.Comment("Set the chance of the rain fall to beacidified. (Default: 25%)")
+        @Config.Comment("Set the chance of the rain fall to be acidified. (Default: 45%)")
         @Config.Name("Chance Of Acid Rain")
         @Config.RangeDouble(min = 0D, max = 1D)
         public double acidRainChance = 0.45;

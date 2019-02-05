@@ -48,7 +48,7 @@ public class AcidRainCore
         if (worldTracking.get(dimensionID) == null || rainTracking.get(dimensionID) == null || rainTracking.get(dimensionID) != world.isRaining())
         {
             rainTracking.put(dimensionID,  world.isRaining());
-            worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < 1);
+            worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < TTConfiguration.acid_rain.acidRainChance);
 
             AcidSavedData.get(world).markDirty();
         }
