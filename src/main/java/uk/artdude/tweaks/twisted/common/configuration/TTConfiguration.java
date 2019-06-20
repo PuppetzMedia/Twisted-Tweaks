@@ -203,6 +203,7 @@ public class TTConfiguration
     {
         public XpVoid xpVoid = new XpVoid();
         public StartingInventory startingInventory = new StartingInventory();
+        public IgniteBlocks igniteBlocks = new IgniteBlocks();
 
         public class XpVoid
         {
@@ -231,10 +232,18 @@ public class TTConfiguration
             public String[] startingItems = { "minecraft:apple:3" };
         }
 
-        @Config.Comment("This mod adds a selection of blocks from mods to set to be burnable. (I.E. Tinkers Construct Crafting Station) [Default = true]")
-        @Config.Name("Enable Ignite Blocks")
-        @Config.RequiresMcRestart
-        public boolean enableIgniteBlocks = true;
+        public class IgniteBlocks
+        {
+            @Config.Comment("Enable the custom integration for setting blocks on fire.")
+            @Config.Name("Enable Modification")
+            @Config.RequiresMcRestart
+            public boolean enabled = true;
+
+            @Config.Comment("Listing of blocks to add fire properties too. Example minecraft:dirt Note: Meta data is NOT supported in any form. You can also change the encouragement & flammability. Example: minecraft:dirt,5,1")
+            @Config.Name("Custom blocks")
+            @Config.RequiresMcRestart
+            public String[] customBlocks = {};
+        }
 
     }
 

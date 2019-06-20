@@ -12,7 +12,7 @@ public class TTAddons {
      */
     public static void init()
     {
-        if (TTConfiguration.tweaks.enableIgniteBlocks)
+        if (TTConfiguration.tweaks.igniteBlocks.enabled)
         {
             IgniteBlocks.init();
         }
