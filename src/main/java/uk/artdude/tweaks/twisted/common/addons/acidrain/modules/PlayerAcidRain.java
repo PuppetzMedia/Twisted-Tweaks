@@ -1,5 +1,6 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -142,7 +143,7 @@ public class PlayerAcidRain {
             Check to see the where the player is looking at the sky, if they are looking up at the sky apply the
             blindness effect to simulate having your eyes blinded by the acid rain.
             */
-            if (player.rotationPitch < -45.0) {
+            if (player.rotationPitch < -45.0 || player.isInWater() && player.isInsideOfMaterial(Material.WATER)) {
                 PotionEffect potionEffectBlindness = player.getActivePotionEffect(MobEffects.BLINDNESS);
                 if (potionEffectBlindness == null) {
                     potionEffectBlindness = new PotionEffect(MobEffects.BLINDNESS, 600);
