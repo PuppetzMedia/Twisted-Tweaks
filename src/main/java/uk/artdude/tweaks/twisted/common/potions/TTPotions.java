@@ -16,6 +16,6 @@ public class TTPotions
     public static void onRegisterPotion(RegistryEvent.Register<Potion> event)
     {
         event.getRegistry().register(
-                new PotionAcidBurn(true, 11583258).setPotionName("potion.tweaks.twisted.acid.burn").setRegistryName("acid_burn"));
+                new PotionAcidBurn(true, 13223819).setPotionName("potion.tweaks.twisted.acid.burn").setRegistryName("acid_burn"));
     }
 }
