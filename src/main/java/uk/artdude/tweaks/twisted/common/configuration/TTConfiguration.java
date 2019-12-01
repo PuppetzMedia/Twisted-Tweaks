@@ -57,7 +57,7 @@ public class TTConfiguration
 		public float litChance = 0.5F;
 
 		@Config.Comment("Chance that a torch will be destroyed when it burns out [Default = 0]")
-		@Config.Name("Enable Player Acid Rain")
+		@Config.Name("Destroy Chance")
 		@Config.RangeDouble(min = 0, max = 1)
 		public float destroyChance = 0F;
 
