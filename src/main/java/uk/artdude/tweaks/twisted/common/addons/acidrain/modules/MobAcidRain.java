@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
@@ -19,7 +20,7 @@ import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 public class MobAcidRain
 {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingUpdate(LivingEvent event)
     {
         if (!TTConfiguration.acid_rain.animals.enableMobAcidRain || event.getEntityLiving() == null || event.getEntityLiving().world == null)
@@ -51,7 +52,7 @@ public class MobAcidRain
      * mob in stages similar to how the player acid rain works but more random.
      * @param entity The entity we want to apply the potion effect onto.
      */
-    public static void addAcidRain(EntityLivingBase entity)
+    private static void addAcidRain(EntityLivingBase entity)
     {
         // Get the world information.
         World world = entity.world;

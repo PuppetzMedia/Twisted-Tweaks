@@ -20,12 +20,11 @@ public class LiquidVoid extends Block implements ITileEntityProvider {
         setHardness(2.0F);
         setResistance(10.0F);
         setHarvestLevel("pickaxe", 2);
-        setUnlocalizedName("liquid_void");
         setCreativeTab(TwistedTweaks.creativeTab);
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.SOLID;
     }
 

@@ -78,7 +78,7 @@ public class PlayerAcidRain {
      * I.E. The player needs to be under the sky and in a biome which lightning can strike at (Can rain at basically)
      * @param player EntityPlayer: The current player which the poison will be added to.
      */
-    public static void addAcidRain(EntityPlayer player) {
+    private static void addAcidRain(EntityPlayer player) {
         // Get the world information.
         World world = player.world;
         // We only want to run this code on the server side of things.

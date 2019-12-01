@@ -29,7 +29,7 @@ archivesBaseName = "twistedtweaks"
 minecraft {
     version = "${minecraft_version}-${forge_version}"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "stable_39"
 	
 	replaceIn "References.java"
     replace "@VERSION@", project.version

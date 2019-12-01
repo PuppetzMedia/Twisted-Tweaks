@@ -3,6 +3,7 @@ package uk.artdude.tweaks.twisted.common.items;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -21,13 +22,13 @@ import uk.artdude.tweaks.twisted.common.sound.TTSounds;
 public class TTItems
 {
 	@GameRegistry.ObjectHolder("twistedtweaks:test")
-	public static Item RECORD_TEST = Items.AIR;
+	private static Item RECORD_TEST = Items.AIR;
 
 	@GameRegistry.ObjectHolder("twistedtweaks:torch_oil")
-	public static Item TORCH_OIL = Items.AIR;
+	private static Item TORCH_OIL = Items.AIR;
 
 	@GameRegistry.ObjectHolder("twistedtweaks:torch_paste")
-	public static Item TORCH_PASTE = Items.AIR;
+	private static Item TORCH_PASTE = Items.AIR;
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event)
@@ -37,13 +38,12 @@ public class TTItems
 		// Check with the config values to see if the user has enabled the music records.
 		if (TTConfiguration.items.enableMusicRecords)
 		{
-			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setUnlocalizedName("record"));
+			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setTranslationKey("record"));
 		}
 
 		registry.registerAll(
-				new Item().setUnlocalizedName("twistedtweaks:torch_oil").setRegistryName("torch_oil").setCreativeTab(TwistedTweaks.creativeTab),
-				new Item().setUnlocalizedName("twistedtweaks:torch_paste").setRegistryName("torch_paste").setCreativeTab(TwistedTweaks.creativeTab)
-
+				new Item().setRegistryName(new ResourceLocation("twistedtweaks", "torch_oil")).setCreativeTab(TwistedTweaks.creativeTab).setTranslationKey("torch_oil"),
+				new Item().setRegistryName(new ResourceLocation("twistedtweaks", "torch_paste")).setCreativeTab(TwistedTweaks.creativeTab).setTranslationKey("torch_paste")
 		);
 	}
 

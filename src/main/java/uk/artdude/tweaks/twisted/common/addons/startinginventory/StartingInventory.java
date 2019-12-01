@@ -1,6 +1,7 @@
 package uk.artdude.tweaks.twisted.common.addons.startinginventory;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -51,16 +52,19 @@ public class StartingInventory
             return;
         }
         PlayerInventorySavedData.Add(event.player);
-        addItems(event.player);
+        boolean result = addItems(event.player);
+        if (!result) {
+            TwistedTweaks.logger.warn(String.format("Failed to add items to %s!", event.player.getName()));
+        }
     }
 
-    public static boolean isPlayerNewToWorld(EntityPlayer player)
+    private static boolean isPlayerNewToWorld(EntityPlayer player)
 	{
 		return !PlayerInventorySavedData.playerHasStarter(player);
     }
 
 
-    public static boolean addItems(EntityPlayer player) {
+    private static boolean addItems(EntityPlayer player) {
         for (StartingItem item : items)
         {
             ItemStack itemStack;
@@ -72,34 +76,35 @@ public class StartingInventory
 			{
                 itemStack = new ItemStack(TTUtilities.getItem(item.modId, item.item), item.quantity);
             }
-            if (itemStack.getItem() == null)
+            if (itemStack.getItem() == null || itemStack.getItem() == Items.AIR)
             {
                 TwistedTweaks.logger.error("The item " + item.modId + ":" + item.item + " was not found in the game or is invalid! Please check your config.");
                 continue;
             }
             player.inventory.addItemStackToInventory(itemStack);
         }
+
         return true;
     }
 
-    public static class NamePair
+    private static class NamePair
     {
-        public UUID uuid;
-        public String username;
+        private UUID uuid;
+        private String username;
 
-        public NamePair(UUID uuid, String name)
+        private NamePair(UUID uuid, String name)
         {
             this.uuid = uuid;
             this.username = name;
         }
 
-        public NamePair(NBTTagCompound tags)
+        private NamePair(NBTTagCompound tags)
         {
             uuid = NBTUtil.getUUIDFromTag(tags.getCompoundTag("uuid"));
             username = tags.getString("name");
         }
 
-        public NBTTagCompound toTagCompound()
+        private NBTTagCompound toTagCompound()
         {
             NBTTagCompound tags = new NBTTagCompound();
             tags.setString("name", username);
@@ -115,7 +120,7 @@ public class StartingInventory
 
         private static final String DATA_NAME = References.modID + "_startertracking";
 
-        public PlayerInventorySavedData()
+        private PlayerInventorySavedData()
         {
             super(DATA_NAME);
         }
@@ -126,7 +131,7 @@ public class StartingInventory
         }
 
 
-        public static void Add(EntityPlayer player)
+        private static void Add(EntityPlayer player)
 		{
 			PlayerInventorySavedData instance = get(player.world);
 			NamePair name = new NamePair(player.getUniqueID(), player.getName());
@@ -135,7 +140,7 @@ public class StartingInventory
 			instance.markDirty();
 		}
 
-		public static boolean playerHasStarter(EntityPlayer player)
+        private static boolean playerHasStarter(EntityPlayer player)
 		{
 			PlayerInventorySavedData instance = get(player.world);
 			for(NamePair name : instance.givenPairs)
@@ -231,12 +236,12 @@ public class StartingInventory
 
 	static class StartingItem
 	{
-		public int quantity;
-		public String modId;
+        private int quantity;
+        private String modId;
 		public String item;
-		public int meta;
+        private int meta;
 
-		public StartingItem(int quantity, String modId, String item, int meta) {
+        private StartingItem(int quantity, String modId, String item, int meta) {
 			this.quantity = quantity;
 			this.modId = modId;
 			this.item = item;

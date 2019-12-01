@@ -110,7 +110,7 @@ public class IgniteBlocks {
                 flammability = Integer.parseInt(modifications[2]);
             }
         }
-        TwistedTweaks.logger.log(Level.INFO, String.format("[TT] Custom block was found! Adding fire properties to %s.", block.getUnlocalizedName()));
+        TwistedTweaks.logger.log(Level.INFO, String.format("[TT] Custom block was found! Adding fire properties to %s.", block.getLocalizedName()));
         setFireValues(block, encouragement, flammability);
     }
 

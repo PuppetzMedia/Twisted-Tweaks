@@ -89,7 +89,6 @@ public class CommandTT extends CommandBase
 				break;
 			default:
 				complainTo(sender);
-				return;
 
 		}
 	}

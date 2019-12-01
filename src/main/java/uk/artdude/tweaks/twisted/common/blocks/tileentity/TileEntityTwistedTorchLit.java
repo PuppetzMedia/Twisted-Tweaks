@@ -44,11 +44,7 @@ public class TileEntityTwistedTorchLit extends TileEntityTwistedTorch implements
 			float amt = world.rand.nextFloat();
 			if(amt < destroyChance)
 			{
-				destroy = true;
-				if(newLitAmount <= TTConfiguration.torch.maxLitAmount && TTConfiguration.torch.onlyDestroyUnusable)
-				{
-					destroy = false;
-				}
+				destroy = newLitAmount > TTConfiguration.torch.maxLitAmount || !TTConfiguration.torch.onlyDestroyUnusable;
 			}
 		}
 

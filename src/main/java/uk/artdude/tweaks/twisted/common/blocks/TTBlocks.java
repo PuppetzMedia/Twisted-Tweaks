@@ -1,12 +1,11 @@
 package uk.artdude.tweaks.twisted.common.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -28,13 +27,13 @@ public class TTBlocks
     public static Block LIQUID_VOID = Blocks.AIR;
 
     @GameRegistry.ObjectHolder("minecraft:torch")
-    public static Block TWISTED_TORCH = Blocks.TORCH;
+    static Block TWISTED_TORCH = Blocks.TORCH;
 
     @GameRegistry.ObjectHolder("twistedtweaks:unlit_torch")
     public static Block TWISTED_UNLIT_TORCH = Blocks.TORCH;
 
     @GameRegistry.ObjectHolder("twistedtweaks:glowstone_torch")
-    public static Block GLOWSTONE_TORCH = Blocks.TORCH;
+    private static Block GLOWSTONE_TORCH = Blocks.TORCH;
 
     @SubscribeEvent
     public static void onRegisterBlocks(RegistryEvent.Register<Block> event)
@@ -44,15 +43,15 @@ public class TTBlocks
         // Check to see if the user has enabled the Liquid Void.
         if (TTConfiguration.blocks.enableLiquidVoid)
         {
-            registry.register(new LiquidVoid().setRegistryName("liquid_void"));
-            GameRegistry.registerTileEntity(TileEntityLiquidVoid.class, "liquid_void");
+            registry.register(new LiquidVoid().setRegistryName("twistedtweaks", "liquid_void").setTranslationKey("liquid_void"));
+            GameRegistry.registerTileEntity(TileEntityLiquidVoid.class, new ResourceLocation("twistedtweaks", "liquid_void"));
         }
 
-        registry.register(new BlockTwistedTorch(true).setRegistryName("minecraft", "torch").setUnlocalizedName("torch"));
-        registry.register(new BlockTwistedTorch(false).setRegistryName("twistedtweaks", "unlit_torch").setUnlocalizedName("torch"));
-        registry.register(new BlockGlowstoneTorch().setRegistryName("twistedtweaks", "glowstone_torch").setUnlocalizedName("glowstone_torch"));
-        GameRegistry.registerTileEntity(TileEntityTwistedTorch.class, "tt:torch");
-        GameRegistry.registerTileEntity(TileEntityTwistedTorchLit.class, "tt:torch_lit");
+        registry.register(new BlockTwistedTorch(true).setRegistryName("minecraft", "torch").setTranslationKey("torch"));
+        registry.register(new BlockTwistedTorch(false).setRegistryName("twistedtweaks", "unlit_torch").setTranslationKey("unlit_torch"));
+        registry.register(new BlockGlowstoneTorch().setRegistryName("twistedtweaks", "glowstone_torch").setTranslationKey("glowstone_torch"));
+        GameRegistry.registerTileEntity(TileEntityTwistedTorch.class, new ResourceLocation("twistedtweaks", "torch"));
+        GameRegistry.registerTileEntity(TileEntityTwistedTorchLit.class, new ResourceLocation("twistedtweaks", "torch_lit"));
     }
 
     @SubscribeEvent
@@ -61,10 +60,10 @@ public class TTBlocks
         IForgeRegistry<Item> registry = event.getRegistry();
         if (TTConfiguration.blocks.enableLiquidVoid)
         {
-            registry.register(new ItemBlock(LIQUID_VOID).setRegistryName("liquid_void"));
+            registry.register(new ItemBlock(LIQUID_VOID).setRegistryName("twistedtweaks", "liquid_void"));
         }
-        registry.register(new ItemBlock(TWISTED_UNLIT_TORCH).setRegistryName("unlit_torch"));
-        registry.register(new ItemBlock(GLOWSTONE_TORCH).setRegistryName("glowstone_torch"));
+        registry.register(new ItemBlock(TWISTED_UNLIT_TORCH).setRegistryName("twistedtweaks", "unlit_torch"));
+        registry.register(new ItemBlock(GLOWSTONE_TORCH).setRegistryName("twistedtweaks", "glowstone_torch"));
 
     }
 

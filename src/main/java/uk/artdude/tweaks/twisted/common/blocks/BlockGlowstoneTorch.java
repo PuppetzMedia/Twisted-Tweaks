@@ -36,9 +36,9 @@ public class BlockGlowstoneTorch extends BlockTorch
 		if (enumfacing.getAxis().isHorizontal())
 		{
 			EnumFacing opp = enumfacing.getOpposite();
-			d0 = d0 + 0.27D * (double)opp.getFrontOffsetX();
+			d0 = d0 + 0.27D * (double)opp.getXOffset();
 			d1 = d1 + 0.22D;
-			d2 = d2 + 0.27D * (double)opp.getFrontOffsetZ();
+			d2 = d2 + 0.27D * (double)opp.getYOffset();
 		}
 		worldIn.spawnParticle(type, d0, d1, d2, 0, 1, 0);
 	}

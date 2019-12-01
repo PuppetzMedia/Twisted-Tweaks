@@ -12,9 +12,7 @@ public class TTCreativeTab extends CreativeTabs {
     }
 
     @Override
-    public ItemStack getTabIconItem()
-    {
+    public ItemStack createIcon() {
         return new ItemStack(TTBlocks.LIQUID_VOID);
     }
-
 }
