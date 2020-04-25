@@ -1,16 +1,14 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.state.IProperty;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
@@ -30,10 +28,10 @@ public class CropAcidRain {
         }
 
         Block crop = event.getWorld().getBlockState(event.getPos()).getBlock();
-        World world = event.getWorld();
+        World world = world.getWorld();
 
 
-        if (world.isRemote) {
+        if (world.isRemote()) {
             return;
         }
 
@@ -42,7 +40,7 @@ public class CropAcidRain {
         }
 
         // Check to see if the crop is a cactus or reed, we won't handle these crops yet. (Maybe later down the line)
-        if (crop instanceof BlockCactus || crop instanceof BlockReed || crop instanceof BlockSapling) {
+        if (crop instanceof Blocks.CACTUS || crop instanceof Blocks.SUGAR_CANE || crop instanceof Blocks.SPRUCE_SAPLING) {
             return;
         }
 
@@ -50,9 +48,9 @@ public class CropAcidRain {
 
         if (isCropUnderSky) {
 
-            IBlockState currentState = world.getBlockState(event.getPos());
+            BlockState currentState = world.getBlockState(event.getPos());
             Block currentCrop = currentState.getBlock();
-            int currentAge = currentCrop.getMetaFromState(currentState);
+            int currentAge = currentCrop.getHarvestLevel(currentState);
 
             double seedDropChance = TTConfiguration.settings.enableDebug ? 1.0 : TTConfiguration.acid_rain.crops.acidRainSeedDropChance;
 
@@ -64,15 +62,16 @@ public class CropAcidRain {
 
                     // If debugging is enabled log the activity.
                     if (TTConfiguration.settings.enableDebug) {
-                        TwistedTweaks.logger.log(Level.INFO, "Seed Drop: " + crop.getLocalizedName() + " Cords: " +
+                        TwistedTweaks.logger.log(Level.INFO, "Seed Drop: " + crop.getTranslationKey() + " Cords: " +
                                 event.getPos().getX() + ", " + event.getPos().getY() + ", " + event.getPos().getZ());
                     }
 
                     // Break the crop and return the seed (Dependant on the chance of getting back the seed (Per mod)).
-                    crop.dropBlockAsItem(world, event.getPos(), world.getBlockState(event.getPos()), 0);
+//                    crop.asItem(world, event.getPos(), world.getBlockState(event.getPos()), 0);
 
                     // Set the position of where the crop was to air.
-                    world.setBlockToAir(event.getPos());
+//                    world.setBlockToAir(event.getPos());
+                    world.destroyBlock(event.getPos(), true);
 
                 }
                 else {
@@ -87,7 +86,7 @@ public class CropAcidRain {
 
                         // If debugging is enabled log the activity.
                         if (TTConfiguration.settings.enableDebug) {
-                            TwistedTweaks.logger.log(Level.INFO, "Crop Growth Backwards: " + crop.getLocalizedName() + " Cords: " +
+                            TwistedTweaks.logger.log(Level.INFO, "Crop Growth Backwards: " + crop.getTranslationKey() + " Cords: " +
                                     event.getPos().getX() + ", " + event.getPos().getY() + ", " + event.getPos().getZ());
                         }
 
@@ -95,7 +94,7 @@ public class CropAcidRain {
                         for (IProperty property : currentState.getProperties().keySet()) {
                             if (property.getName().equals("age"))
                             {
-                                world.setBlockState(event.getPos(), currentState.withProperty(property, currentAge - 1), 2);
+                                world.setBlockState(event.getPos(), currentState.with(property, currentAge - 1), 2);
                             }
                         }
 

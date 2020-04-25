@@ -1,9 +1,9 @@
 package uk.artdude.tweaks.twisted.common.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 
 public class Galvanized extends Enchantment {
@@ -11,7 +11,7 @@ public class Galvanized extends Enchantment {
     public static Enchantment ENCHANTMENT;
 
     protected Galvanized() {
-        super(Rarity.RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET});
+        super(Rarity.RARE, EnchantmentType.ARMOR, new EquipmentSlotType[] {EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET});
     }
 
     @Override
@@ -31,6 +31,6 @@ public class Galvanized extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ItemArmor;
+        return stack.getItem() instanceof ArmorItem;
     }
 }

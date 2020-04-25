@@ -1,18 +1,17 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 
@@ -39,9 +38,9 @@ public class MobAcidRain
 			double minimumChance;
 			minimumChance = TTConfiguration.acid_rain.animals.acidRainMobMinimumChance;
 			// Perform the random chance to see if the mob is going to get effected by the rain.
-			if (world.rand.nextFloat() < minimumChance  && entity instanceof EntityAnimal) {
+			if (world.rand.nextFloat() < minimumChance  && entity.getClassification(true) == EntityClassification.CREATURE) {
 				// Add the acid rain the mob.
-				addAcidRain((EntityLivingBase) entity);
+				addAcidRain((LivingEntity) entity);
 			}
 		}
     }
@@ -52,7 +51,7 @@ public class MobAcidRain
      * mob in stages similar to how the player acid rain works but more random.
      * @param entity The entity we want to apply the potion effect onto.
      */
-    private static void addAcidRain(EntityLivingBase entity)
+    private static void addAcidRain(LivingEntity entity)
     {
         // Get the world information.
         World world = entity.world;
@@ -61,15 +60,15 @@ public class MobAcidRain
             return;
         }
         // We only want to effect passive mobs so if the mob is undead just return back.
-        if (entity.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
+        if (entity.getClassification(true) == EntityClassification.MONSTER) {
             return;
         }
         /*
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isEntityUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor(entity.posX),
-                MathHelper.floor(entity.posY + entity.height), MathHelper.floor(entity.posZ)));
+        boolean isEntityUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor(entity.getPosition().getX()),
+                MathHelper.floor(entity.getPosition().getY() + entity.getHeight()), MathHelper.floor(entity.getPosition().getZ())));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the entity.
@@ -82,11 +81,11 @@ public class MobAcidRain
         the conditions meet whats needed begin the process to add the poison effect the entity.
         */
         if ((world.getWorldInfo().isRaining()) && (isEntityUnderSky)) {
-            PotionEffect potionEffect = entity.getActivePotionEffect(MobEffects.POISON);
+            EffectInstance potionEffect = entity.getActivePotionEffect(Effects.POISON);
             if (potionEffect == null) {
-                potionEffect = new PotionEffect(MobEffects.POISON, initialDuration);
+                potionEffect = new EffectInstance(Effects.POISON, initialDuration);
             } else if (potionEffect.getDuration() < 300) {
-                potionEffect = new PotionEffect(MobEffects.POISON, Math.max(potionEffect.getDuration() +
+                potionEffect = new EffectInstance(Effects.POISON, Math.max(potionEffect.getDuration() +
                         addedDuration, maxDuration), potionEffect.getAmplifier() + 1);
             }
             // Add the potion effect to the entity.

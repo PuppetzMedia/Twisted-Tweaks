@@ -1,20 +1,18 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain.modules;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import uk.artdude.tweaks.twisted.common.achievement.TTTriggers;
 import uk.artdude.tweaks.twisted.common.addons.acidrain.AcidRainCore;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
@@ -36,7 +34,7 @@ public class PlayerAcidRain {
         }
 
         // Get the player information.
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         // We only want to run this code on the server side of things.
         if (player.world.isRemote){
             return;
@@ -49,7 +47,7 @@ public class PlayerAcidRain {
 
         if (player.ticksExisted % 20 == 0) {
             int resistant = 1;
-            InventoryPlayer inventoryPlayer = player.inventory;
+            PlayerInventory inventoryPlayer = player.inventory;
             for (ItemStack stack : inventoryPlayer.armorInventory) {
                 resistant += checkArmour(stack) * 5;
             }
@@ -78,7 +76,7 @@ public class PlayerAcidRain {
      * I.E. The player needs to be under the sky and in a biome which lightning can strike at (Can rain at basically)
      * @param player EntityPlayer: The current player which the poison will be added to.
      */
-    private static void addAcidRain(EntityPlayer player) {
+    private static void addAcidRain(PlayerEntity player) {
         // Get the world information.
         World world = player.world;
         // We only want to run this code on the server side of things.
@@ -86,15 +84,15 @@ public class PlayerAcidRain {
             return;
         }
         // If the player is in creative mode don't apply the Acid Rain.
-        if (player.capabilities.isCreativeMode) {
+        if (player.isCreative()) {
             return;
         }
         /*
         Check to see if the player is under the sky and that lighting is able to strike in the area.
         I.E: Biomes which do rain.
         */
-        boolean isPlayerUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor(player.posX),
-                MathHelper.floor(player.posY + player.height), MathHelper.floor(player.posZ)));
+        boolean isPlayerUnderSky = world.isRainingAt(new BlockPos(MathHelper.floor(player.getPosition().getX()),
+                MathHelper.floor(player.getPosition().getY() + player.getHeight()), MathHelper.floor(player.getPosition().getZ())));
         /*
         Get the values for the following variables, depending on these configs will effect how long the poison
         effect will last on the player.
@@ -112,8 +110,8 @@ public class PlayerAcidRain {
         */
         if ((world.getWorldInfo().isRaining()) && (isPlayerUnderSky || isPlayerInWater)) {
             // Set the the variables for the potions.
-            PotionEffect potionEffectAcid;
-            Potion acidPotion;
+            EffectInstance potionEffectAcid;
+            Effect acidPotion;
             /*
             Check to see if we are using our custom potion effect if so use that to apply to the player otherwise fall
             back and use the Vanilla poison effect.
@@ -122,35 +120,35 @@ public class PlayerAcidRain {
                 acidPotion = TTPotions.ACID_BURN;
                 potionEffectAcid = player.getActivePotionEffect(TTPotions.ACID_BURN);
             } else {
-                acidPotion = MobEffects.POISON;
-                potionEffectAcid = player.getActivePotionEffect(MobEffects.POISON);
+                acidPotion = Effects.POISON;
+                potionEffectAcid = player.getActivePotionEffect(Effects.POISON);
             }
             // Check to see if the player already has the effect.
             if (potionEffectAcid == null) {
                 // If the player does not have the effect create the potion effect to be applied to the player.
-                potionEffectAcid = new PotionEffect(acidPotion, initialDuration);
+                potionEffectAcid = new EffectInstance(acidPotion, initialDuration);
             } else if (potionEffectAcid.getDuration() < maxDuration) {
                 if (potionEffectAcid.getDuration() < 300) {
-                    potionEffectAcid = new PotionEffect(acidPotion, Math.max(potionEffectAcid.getDuration() +
+                    potionEffectAcid = new EffectInstance(acidPotion, Math.max(potionEffectAcid.getDuration() +
                             addedDuration, maxDuration), potionEffectAcid.getAmplifier() + 1);
                 }
             }
             // Add the potion effect the player.
             player.addPotionEffect(potionEffectAcid);
             // Add the achievement to the player.
-            TTTriggers.TRIGGER_BURN_ACID.trigger((EntityPlayerMP) player);
+            TTTriggers.TRIGGER_BURN_ACID.trigger(player);
             /*
             Check to see the where the player is looking at the sky, if they are looking up at the sky apply the
             blindness effect to simulate having your eyes blinded by the acid rain.
             */
-            if (player.rotationPitch < -45.0 || player.isInWater() && player.isInsideOfMaterial(Material.WATER)) {
-                PotionEffect potionEffectBlindness = player.getActivePotionEffect(MobEffects.BLINDNESS);
+            if (player.rotationPitch < -45.0 || player.isInWater()) {
+                EffectInstance potionEffectBlindness = player.getActivePotionEffect(Effects.BLINDNESS);
                 if (potionEffectBlindness == null) {
-                    potionEffectBlindness = new PotionEffect(MobEffects.BLINDNESS, 600);
+                    potionEffectBlindness = new EffectInstance(Effects.BLINDNESS, 600);
                 }
                 player.addPotionEffect(potionEffectBlindness);
                 // Add the achievement of getting blindness to the player.
-                TTTriggers.TRIGGER_BLIND_ACID.trigger((EntityPlayerMP) player);
+                TTTriggers.TRIGGER_BLIND_ACID.trigger(player);
             }
         }
     }

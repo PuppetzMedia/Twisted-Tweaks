@@ -1,7 +1,7 @@
 package uk.artdude.tweaks.twisted.common.ai;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.LivingEntity;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 
 /**
@@ -12,7 +12,7 @@ public class EntityAIBreakBlocks extends EntityAIBlockInteract
 	private int breakingTime;
 	private int previousBreakProgress = -1;
 
-	public EntityAIBreakBlocks(EntityLiving entityIn)
+	public EntityAIBreakBlocks(LivingEntity entityIn)
 	{
 		super(entityIn);
 	}
@@ -92,7 +92,7 @@ public class EntityAIBreakBlocks extends EntityAIBlockInteract
 
 		if (this.breakingTime == getBreakTime() && this.entity.world.getDifficulty().getId() >= TTConfiguration.ai.minAttackBlockDifficulty.getId())
 		{
-			this.entity.world.setBlockToAir(this.targetPos);
+			this.entity.world.destroyBlock(this.targetPos, false);
 			this.entity.setCanPickUpLoot(true);
 			this.entity.world.playEvent(1021, this.targetPos, 0);
 			this.entity.world.playEvent(2001, this.targetPos, Block.getIdFromBlock(this.target));

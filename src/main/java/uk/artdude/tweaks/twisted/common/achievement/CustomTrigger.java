@@ -7,8 +7,8 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.critereon.AbstractCriterionInstance;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import uk.artdude.tweaks.twisted.common.util.References;
 
@@ -66,14 +66,14 @@ public class CustomTrigger implements ICriterionTrigger<CustomTrigger.Instance>
 		return new CustomTrigger.Instance(this.ID);
 	}
 
-	public static class Instance extends AbstractCriterionInstance {
+	public static class Instance extends CriterionInstance {
 
 		public Instance(ResourceLocation id) {
 			super(id);
 		}
 	}
 
-	public void trigger(EntityPlayerMP player) {
+	public void trigger(PlayerEntity player) {
 		CustomTrigger.Listeners enterblocktrigger$listeners = this.listeners.get(player.getAdvancements());
 
 		if (enterblocktrigger$listeners != null) {
@@ -83,7 +83,7 @@ public class CustomTrigger implements ICriterionTrigger<CustomTrigger.Instance>
 
 	static class Listeners {
 		private final PlayerAdvancements playerAdvancements;
-		private final Set<Listener<CustomTrigger.Instance>> listeners = Sets.<Listener<CustomTrigger.Instance>>newHashSet();
+		private final Set<Listener<Instance>> listeners = Sets.<Listener<CustomTrigger.Instance>>newHashSet();
 
 		public Listeners(PlayerAdvancements playerAdvancementsIn) {
 			this.playerAdvancements = playerAdvancementsIn;
@@ -102,7 +102,7 @@ public class CustomTrigger implements ICriterionTrigger<CustomTrigger.Instance>
 		}
 
 		public void trigger() {
-			List<Listener<CustomTrigger.Instance>> list = null;
+			List<Listener<Instance>> list = null;
 
 			for (Listener<CustomTrigger.Instance> listener : this.listeners) {
 				if (list == null) {

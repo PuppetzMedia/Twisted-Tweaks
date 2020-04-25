@@ -1,8 +1,9 @@
 package uk.artdude.tweaks.twisted.common.addons.modifications;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
+import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.Level;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
@@ -18,7 +19,7 @@ public class IgniteBlocks {
         setFireValues(Blocks.CRAFTING_TABLE);
 
         // Check to see if Chisel is loaded.
-        if (Loader.isModLoaded("chisel")) {
+        if (ModList.get().isLoaded("chisel")) {
             TwistedTweaks.logger.log(Level.INFO, "[TT] Chisel was found! Adding the fire properties.");
             String[] blocks = new String[]{
                     "planks-acacia",
@@ -46,7 +47,7 @@ public class IgniteBlocks {
         }
 
         // Check to see if Tinkers is loaded.
-        if (Loader.isModLoaded("tconstruct")) {
+        if (ModList.get().isLoaded("tconstruct")) {
             TwistedTweaks.logger.log(Level.INFO, "[TT] Tinkers was found! Adding the fire properties.");
             Block tinkerToolTable = TTUtilities.getBlock("tconstruct", "tooltables");
             if(tinkerToolTable != Blocks.AIR && tinkerToolTable != null) {
@@ -75,7 +76,8 @@ public class IgniteBlocks {
      * @param flammability The flammability of the block to catch fire.
      */
     private static void setFireValues(Block block, int encouragement, int flammability) {
-        Blocks.FIRE.setFireInfo(block, encouragement, flammability);
+        FireBlock fireBlock = (FireBlock)Blocks.FIRE;
+        fireBlock.setFireInfo(block, encouragement, flammability);
     }
 
     /**
@@ -94,7 +96,7 @@ public class IgniteBlocks {
         Block block;
 
         if (entryParts.length > 2) {
-            block = TTUtilities.getBlockWithMeta(entryParts[0], getBlockName(entryParts[1]), Integer.parseInt(entryParts[2])).getBlock();
+            block = TTUtilities.getBlock(entryParts[0], getBlockName(entryParts[1])).getBlock();
         } else {
             block = TTUtilities.getBlock(entryParts[0], getBlockName(entryParts[1]));
         }
@@ -110,7 +112,7 @@ public class IgniteBlocks {
                 flammability = Integer.parseInt(modifications[2]);
             }
         }
-        TwistedTweaks.logger.log(Level.INFO, String.format("[TT] Custom block was found! Adding fire properties to %s.", block.getLocalizedName()));
+        TwistedTweaks.logger.log(Level.INFO, String.format("[TT] Custom block was found! Adding fire properties to %s.", block.getRegistryName()));
         setFireValues(block, encouragement, flammability);
     }
 

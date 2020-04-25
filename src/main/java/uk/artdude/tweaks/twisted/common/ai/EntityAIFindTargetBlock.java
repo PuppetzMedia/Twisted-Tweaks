@@ -2,7 +2,7 @@ package uk.artdude.tweaks.twisted.common.ai;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.EntityAIMoveToBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,7 +13,7 @@ import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
  */
 public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
 {
-	public EntityAIFindTargetBlock(EntityCreature creature)
+	public EntityAIFindTargetBlock(CreatureEntity creature)
 	{
 		super(creature, 1D, 8);
 	}

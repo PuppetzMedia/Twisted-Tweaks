@@ -3,8 +3,8 @@ package uk.artdude.tweaks.twisted.common.sound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.util.References;
 
 /**

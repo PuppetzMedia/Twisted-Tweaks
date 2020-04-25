@@ -1,14 +1,8 @@
 package uk.artdude.tweaks.twisted.common.ai;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.BlockPos;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
@@ -20,14 +14,14 @@ import java.util.Arrays;
  */
 public class EntityAIBlockInteract extends EntityAIBase
 {
-	protected EntityLiving entity;
+	protected LivingEntity entity;
 	protected BlockPos targetPos = BlockPos.ORIGIN;
 	protected Block target;
 	boolean hasStoppedDoorInteraction;
 	float entityPositionX;
 	float entityPositionZ;
 
-	public EntityAIBlockInteract(EntityLiving entityIn)
+	public EntityAIBlockInteract(LivingEntity entityIn)
 	{
 		this.entity = entityIn;
 
@@ -51,11 +45,11 @@ public class EntityAIBlockInteract extends EntityAIBase
 			{
 				for(int k = -6; k < 7; k++)
 				{
-					if(getTargetBlock(new BlockPos(entity.posX + i, entity.posY + j, entity.posZ + k)) != null)
+					if(getTargetBlock(new BlockPos(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k)) != null)
 					{
-						if(entity.getNavigator().canEntityStandOnPos(new BlockPos(entity.posX + i, entity.posY + j, entity.posZ + k)))
+						if(entity.getNavigator().canEntityStandOnPos(new BlockPos(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k)))
 						{
-							this.entity.getNavigator().tryMoveToXYZ(entity.posX + i, entity.posY + j, entity.posZ + k, 1.0F);
+							this.entity.getNavigator().tryMoveToXYZ(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k, 1.0F);
 						}
 					}
 				}

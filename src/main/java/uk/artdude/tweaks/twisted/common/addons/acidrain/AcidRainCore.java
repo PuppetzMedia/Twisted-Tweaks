@@ -1,15 +1,17 @@
 package uk.artdude.tweaks.twisted.common.addons.acidrain;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.util.References;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class AcidRainCore
     public static void onWorldTick(TickEvent.WorldTickEvent event)
 	{
 		World world = event.world;
-		int dimensionID = world.provider.getDimension();
+		int dimensionID = world.getDimension();
 		boolean found = false;
 		for(int i = 0; i < TTConfiguration.acid_rain.dimension_whitelist.length; i++)
 		{
@@ -41,7 +43,7 @@ public class AcidRainCore
 			return;
         if (event.phase != TickEvent.Phase.START)
             return;
-		if (world.isRemote || !world.provider.isSurfaceWorld())
+		if (world.isRemote || !world.getDimension().isSurfaceWorld())
 			return;
 
 
@@ -50,7 +52,7 @@ public class AcidRainCore
             rainTracking.put(dimensionID,  world.isRaining());
             worldTracking.put(dimensionID, world.isRaining() && world.rand.nextFloat() < TTConfiguration.acid_rain.acidRainChance);
 
-            AcidSavedData.get(world).markDirty();
+            AcidSavedData.set(world).markDirty();
         }
     }
 
@@ -64,7 +66,7 @@ public class AcidRainCore
 		boolean found = false;
 		for(int i = 0; i < TTConfiguration.acid_rain.dimension_whitelist.length; i++)
 		{
-			if(TTConfiguration.acid_rain.dimension_whitelist[i] == world.provider.getDimension())
+			if(TTConfiguration.acid_rain.dimension_whitelist[i] == world.getDimension())
 			{
 				found = true;
 				break;
@@ -73,7 +75,7 @@ public class AcidRainCore
 		if(!found)
 			return false;
 
-		return worldTracking.get(world.provider.getDimension()) == null || worldTracking.get(world.provider.getDimension());
+		return worldTracking.get(world.getDimension()) == null || worldTracking.get(world.getDimension());
     }
 
     public static class AcidSavedData extends WorldSavedData
@@ -91,66 +93,60 @@ public class AcidRainCore
 		}
 
 		@Override
-		public void readFromNBT(NBTTagCompound nbt)
+		public void readFromNBT(CompoundNBT nbt)
 		{
-			NBTTagList rainList = nbt.getTagList("rain", 9);
+			ListNBT rainList = nbt.getList("rain", 9);
 			rainTracking = createMapFromTagList(rainList);
 
-			NBTTagList worldList = nbt.getTagList("world", 9);
+			ListNBT worldList = nbt.getList("world", 9);
 			worldTracking = createMapFromTagList(worldList);
 		}
 
 		@Override
-		public NBTTagCompound writeToNBT(NBTTagCompound compound)
+		public CompoundNBT writeToNBT(CompoundNBT compound)
 		{
-			NBTTagList rainList = createTagListFromMap(rainTracking);
-			compound.setTag("rain", rainList);
-			NBTTagList worldList = createTagListFromMap(worldTracking);
-			compound.setTag("world", worldList);
+			ListNBT rainList = createTagListFromMap(rainTracking);
+			compound.putString("rain", String.valueOf(rainList));
+			ListNBT worldList = createTagListFromMap(worldTracking);
+			compound.putString("world", String.valueOf(worldList));
 			return compound;
 		}
 
-		public static AcidSavedData get(World world)
+		public static AcidSavedData getWorldData(ServerWorld serverWorld)
 		{
-			MapStorage storage = world.getMapStorage();
-			AcidSavedData instance = (AcidSavedData) storage.getOrLoadData(AcidSavedData.class, DATA_NAME);
-
-			if(instance == null)
-			{
-				instance = new AcidSavedData();
-				storage.setData(DATA_NAME, instance);
-			}
+			DimensionSavedDataManager storage = serverWorld.getSavedData();
+			AcidSavedData instance = (AcidSavedData) storage.getOrCreate(AcidSavedData::new, DATA_NAME);
 
 			return instance;
 		}
 	}
 
-	private static NBTTagList createTagListFromMap(Map<Integer, Boolean> map)
+	private static ListNBT createTagListFromMap(Map<Integer, Boolean> map)
 	{
-		NBTTagList list = new NBTTagList();
+		ListNBT list = new ListNBT();
 		for(Map.Entry<Integer, Boolean> entry : map.entrySet())
 		{
 			int key = entry.getKey();
 			boolean val = entry.getValue();
 
-			NBTTagCompound tag = new NBTTagCompound();
-			tag.setInteger("key", key);
-			tag.setBoolean("val", val);
+			CompoundNBT tag = new CompoundNBT();
+			tag.putInt("key", key);
+			tag.putBoolean("val", val);
 
-			list.appendTag(tag);
+			list.add(tag);
 		}
 
 		return list;
 
 	}
 
-	private static HashMap<Integer, Boolean> createMapFromTagList(NBTTagList list)
+	private static HashMap<Integer, Boolean> createMapFromTagList(ListNBT list)
 	{
 		HashMap<Integer, Boolean> map = new HashMap<>();
-		for(int i = 0; i < list.tagCount(); i++)
+		for(int i = 0; i < list.size(); i++)
 		{
-			NBTTagCompound tags = (NBTTagCompound) list.get(i);
-			int key = tags.getInteger("key");
+			CompoundNBT tags = (CompoundNBT) list.get(i);
+			int key = tags.getInt("key");
 			boolean val = tags.getBoolean("val");
 
 			map.put(key, val);

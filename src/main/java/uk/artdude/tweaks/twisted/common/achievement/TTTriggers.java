@@ -3,7 +3,7 @@ package uk.artdude.tweaks.twisted.common.achievement;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +27,7 @@ public class TTTriggers
 	private static Method CriterionRegister;
 	public static <T extends ICriterionInstance> ICriterionTrigger<T> registerAdvancementTrigger(ICriterionTrigger<T> trigger) {
 		if(CriterionRegister == null) {
-			CriterionRegister = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
+			CriterionRegister = ObfuscationReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
 			CriterionRegister.setAccessible(true);
 		}
 		try

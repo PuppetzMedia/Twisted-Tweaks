@@ -3,12 +3,12 @@ package uk.artdude.tweaks.twisted.common.addons.modifications;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 import uk.artdude.tweaks.twisted.common.util.TTUtilities;
