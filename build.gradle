@@ -48,7 +48,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                twistedtweaks {
                     source sourceSets.main
                 }
             }
@@ -82,7 +82,7 @@ minecraft {
             args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                examplemod {
+                twistedtweaks {
                     source sourceSets.main
                 }
             }
