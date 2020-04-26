@@ -1,16 +1,16 @@
 package uk.artdude.tweaks.twisted.common.potions;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.potion.Potion;
+import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.artdude.tweaks.twisted.common.util.References;
 
 /**
  * Created by Sam on 4/03/2018.
  */
-public class PotionAcidBurn extends Potion
+public class PotionAcidBurn extends Effect
 {
 	// Create the resource location to get the texture sprites to use for the potion icon.
 	public static ResourceLocation textureResource = new ResourceLocation(References.modID, "textures/gui/potion_effects.png");
@@ -19,18 +19,18 @@ public class PotionAcidBurn extends Potion
 		// Set the super.
 		super(badEffect, potionColour);
 		this.setIconIndex(0, 0);
-		this.setPotionName("acid_burn");
+		this.setRegistryName("acid_burn");
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public boolean hasStatusIcon() {
 		Minecraft.getMinecraft().renderEngine.bindTexture(textureResource);
 		return true;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public boolean isBadEffect() {
 		return true;
 	}

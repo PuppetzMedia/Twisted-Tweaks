@@ -1,26 +1,25 @@
 package uk.artdude.tweaks.twisted.common.blocks;
 
-import net.minecraft.block.BlockTorch;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.blocks.tileentity.TileEntityTwistedTorch;
 import uk.artdude.tweaks.twisted.common.blocks.tileentity.TileEntityTwistedTorchLit;
@@ -30,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
+public class BlockTwistedTorch extends TorchBlock implements ITileEntityProvider
 {
 	private boolean lit;
 
@@ -57,11 +56,11 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ)
 	{
 		ItemStack stack = playerIn.getHeldItem(hand);
 
-		if(stack.getItem() instanceof ItemFlintAndSteel || stack.getItem() instanceof ItemFireball)
+		if(stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ItemFireball)
 		{
 			if(!lit)
 			{
@@ -108,7 +107,7 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	public void breakBlock(World world, BlockPos pos, BlockState state)
 	{
 		TileEntity tile = world.getTileEntity(pos);
 		if(tile != null && tile instanceof TileEntityTwistedTorch)
@@ -124,7 +123,7 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 				ItemStack stack = new ItemStack(TTConfiguration.torch.enableTorchBurnout ? TTBlocks.TWISTED_UNLIT_TORCH : Blocks.TORCH);
 				if(TTConfiguration.torch.enableTorchBurnout)
 				{
-					NBTTagCompound tags = new NBTTagCompound();
+					CompoundNBT tags = new CompoundNBT();
 					te.writeToNBT(tags);
 					stack.setTagInfo("BlockEntityTag", tags);
 				}
@@ -133,19 +132,19 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 		}
 	}
 
-	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, BlockState state, float chance, int fortune)
 	{
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+	public void randomDisplayTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
 		if(lit)
 			super.randomDisplayTick(stateIn, worldIn, pos, rand);
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced)
 	{
 		if(TTConfiguration.torch.showTorchTooltip)
@@ -155,7 +154,7 @@ public class BlockTwistedTorch extends BlockTorch implements ITileEntityProvider
 
 			if(stack.hasTagCompound())
 			{
-				NBTTagCompound blockTags = stack.getTagCompound().getCompoundTag("BlockEntityTag");
+				CompoundNBT blockTags = stack.getTagCompound().getCompoundTag("BlockEntityTag");
 				litAmount = blockTags.getInteger("lit_amount");
 				litTime = blockTags.getInteger("lit_time");
 			}

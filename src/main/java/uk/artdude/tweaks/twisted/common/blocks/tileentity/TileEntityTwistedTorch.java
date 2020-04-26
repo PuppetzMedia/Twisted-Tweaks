@@ -1,6 +1,6 @@
 package uk.artdude.tweaks.twisted.common.blocks.tileentity;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityTwistedTorch extends TileEntity
@@ -13,7 +13,7 @@ public class TileEntityTwistedTorch extends TileEntity
 
 	}
 
-	public void readFromNBT(NBTTagCompound compound)
+	public void readFromNBT(CompoundNBT compound)
 	{
 		super.readFromNBT(compound);
 
@@ -21,7 +21,7 @@ public class TileEntityTwistedTorch extends TileEntity
 		litTime  = compound.getInteger("lit_time");
 	}
 
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	public CompoundNBT writeToNBT(CompoundNBT compound)
 	{
 		compound.setInteger("lit_amount", litAmount);
 		compound.setInteger("lit_time", litTime);

@@ -10,6 +10,6 @@ public class TileEntityLiquidVoid extends TileFluidHandler
 
 	public TileEntityLiquidVoid() {
 		tank = new FluidTank(CAPACITY);
-		super(TileEntityType);
+		super(TileEntityType.TANK);
 	}
 }

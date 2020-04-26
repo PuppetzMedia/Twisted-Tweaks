@@ -1,9 +1,9 @@
 package uk.artdude.tweaks.twisted.common.ai;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.ai.EntityAIMoveToBlock;
+import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
@@ -11,7 +11,7 @@ import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 /**
  * Created by Sam on 21/03/2018.
  */
-public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
+public class EntityAIFindTargetBlock extends MoveToBlockGoal
 {
 	public EntityAIFindTargetBlock(CreatureEntity creature)
 	{
@@ -28,7 +28,7 @@ public class EntityAIFindTargetBlock extends EntityAIMoveToBlock
 	@Override
 	protected boolean shouldMoveTo(World worldIn, BlockPos pos)
 	{
-		IBlockState iblockstate = worldIn.getBlockState(pos);
+		BlockState iblockstate = worldIn.getBlockState(pos);
 		Block block = iblockstate.getBlock();
 
 		String regName = block.getRegistryName().toString();

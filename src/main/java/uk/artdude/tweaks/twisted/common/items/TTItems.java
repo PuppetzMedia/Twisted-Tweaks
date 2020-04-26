@@ -3,6 +3,8 @@ package uk.artdude.tweaks.twisted.common.items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -35,7 +37,7 @@ public class TTItems
 		// Check with the config values to see if the user has enabled the music records.
 		if (TTConfiguration.items.enableMusicRecords)
 		{
-			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setCreativeTab(TwistedTweaks.creativeTab).setRegistryName("test").setTranslationKey("record"));
+			registry.register(new TTRecords("test", TTSounds.TEST_RECORD).setGroup(TwistedTweaks.creativeTab).setRegistryName("test").setTranslationKey("record"));
 		}
 
 		registry.registerAll(
@@ -44,7 +46,7 @@ public class TTItems
 		);
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void onRegisterItemModel(ModelRegistryEvent event)
 	{

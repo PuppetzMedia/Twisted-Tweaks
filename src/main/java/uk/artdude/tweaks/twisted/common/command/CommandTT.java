@@ -6,7 +6,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import uk.artdude.tweaks.twisted.common.addons.startinginventory.StartingInventory;
 
@@ -95,12 +95,12 @@ public class CommandTT extends CommandBase
 
 	public void sendMessage(ICommandSender to, String message)
 	{
-		to.sendMessage(new TextComponentTranslation(message).setStyle(new Style().setColor(TextFormatting.RED)));
+		to.sendMessage(new TranslationTextComponent(message).setStyle(new Style().setColor(TextFormatting.RED)));
 	}
 
 	public void complainTo(ICommandSender to)
 	{
-		to.sendMessage(new TextComponentTranslation(errorOut).setStyle(new Style().setColor(TextFormatting.RED)));
+		to.sendMessage(new TranslationTextComponent(errorOut).setStyle(new Style().setColor(TextFormatting.RED)));
 	}
 
 	@Override

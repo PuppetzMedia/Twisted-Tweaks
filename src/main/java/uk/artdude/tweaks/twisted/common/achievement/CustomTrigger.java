@@ -74,7 +74,7 @@ public class CustomTrigger implements ICriterionTrigger<CustomTrigger.Instance>
 	}
 
 	public void trigger(PlayerEntity player) {
-		CustomTrigger.Listeners enterblocktrigger$listeners = this.listeners.get(player.getAdvancements());
+		CustomTrigger.Listeners enterblocktrigger$listeners = this.listeners.get(player.getAdvancement());
 
 		if (enterblocktrigger$listeners != null) {
 			enterblocktrigger$listeners.trigger();

@@ -1,6 +1,6 @@
 package uk.artdude.tweaks.twisted;
 
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,7 +29,7 @@ public class TwistedTweaks {
     public static ProxyCommon proxy;
 
     /* Set up the CreativeTabs */
-    public static CreativeTabs creativeTab;
+    public static ItemGroup creativeTab;
 
     /* Set the logger variable */
     public static Logger logger;
@@ -39,7 +39,7 @@ public class TwistedTweaks {
         /* Get our logger */
         logger = event.getModLog();
         /* Initialize CreativeTabs */
-        creativeTab = new TTCreativeTab(CreativeTabs.getNextID(), References.modID);
+        creativeTab = new TTCreativeTab(ItemGroup.getNextID(), References.modID);
 
         TTTriggers.init();
     }

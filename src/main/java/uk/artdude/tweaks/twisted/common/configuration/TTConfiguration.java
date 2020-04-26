@@ -1,11 +1,11 @@
 package uk.artdude.tweaks.twisted.common.configuration;
 
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import uk.artdude.tweaks.twisted.common.addons.TTAddons;
 import uk.artdude.tweaks.twisted.common.util.References;
 
@@ -106,7 +106,7 @@ public class TTConfiguration
 
 		@Config.Comment("The minimum difficulty that mobs will break blocks [Default = EASY]")
 		@Config.Name("Minimum block break difficulty")
-		public EnumDifficulty minAttackBlockDifficulty = EnumDifficulty.EASY;
+		public Difficulty minAttackBlockDifficulty = Difficulty.EASY;
 
 		@Config.Comment("The speed at which blocks will be broken [Default = 10.0]")
 		@Config.Name("Entity block break speed")
