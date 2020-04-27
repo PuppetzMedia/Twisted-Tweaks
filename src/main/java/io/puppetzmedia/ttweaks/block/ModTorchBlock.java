@@ -1,6 +1,8 @@
 package io.puppetzmedia.ttweaks.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TorchBlock;
 
 public class ModTorchBlock extends TorchBlock {
 
