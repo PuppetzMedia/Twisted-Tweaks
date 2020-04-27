@@ -16,6 +16,8 @@ public class TwistedTweaks {
 
     public TwistedTweaks() {
         // Register the setup method for modloading
+        // Initialize mod logger
+        TTLogger.init(LogManager.getLogger());
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         // Register ourselves for game events we are interested in
