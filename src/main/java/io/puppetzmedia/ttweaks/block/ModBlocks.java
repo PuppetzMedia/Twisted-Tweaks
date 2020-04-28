@@ -5,15 +5,13 @@ import net.minecraft.block.Block;
 
 public enum ModBlocks {
 
-	TORCH(new ModTorchBlock(), "torch", true),
-	WALL_TORCH(new ModWallTorchBlock(), "wall_torch", false);
+	TORCH(new ModTorchBlock(), "torch"),
+	WALL_TORCH(new ModWallTorchBlock(), "wall_torch");
 
 	private final Block block;
-	private final boolean hasBlockItem;
 
-	ModBlocks(Block block, String name, boolean hasBlockItem) {
+	ModBlocks(Block block, String name) {
 		this.block = block.setRegistryName(TwistedTweaks.location(name));
-		this.hasBlockItem = hasBlockItem;
 	}
 
 	public static Block[] getAll() {
@@ -28,8 +26,5 @@ public enum ModBlocks {
 	}
 	public Block get() {
 		return block;
-	}
-	public boolean shouldRegisterAsBlockItem() {
-		return hasBlockItem;
 	}
 }
