@@ -4,9 +4,12 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ClientConfig {
 
+	public final TorchConfigSpec TORCH;
+
 	public ClientConfig(ForgeConfigSpec.Builder builder) {
 
-		// Enter our configurations here
+		// Enter torch configurations
+		TORCH = new TorchConfigSpec(builder);
 
 		// Finish building configurations
 		builder.build();
