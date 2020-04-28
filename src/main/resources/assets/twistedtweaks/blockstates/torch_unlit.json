@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=up": { "model": "twistedtweaks:block/torch_unlit" },
+    "facing=east": { "model": "twistedtweaks:block/wall_torch_unlit" },
+    "facing=south": { "model": "twistedtweaks:block/wall_torch_unlit", "y": 90 },
+    "facing=west": { "model": "twistedtweaks:block/wall_torch_unlit", "y": 180 },
+    "facing=north": { "model": "twistedtweaks:block/wall_torch_unlit", "y": 270 }
+  }
+}
