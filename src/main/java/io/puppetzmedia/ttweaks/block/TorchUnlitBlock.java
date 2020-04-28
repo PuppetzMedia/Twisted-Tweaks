@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TorchBlock;
 
-public class ModTorchBlock extends TorchBlock {
+public class TorchUnlitBlock extends TorchBlock {
 
-	public ModTorchBlock() {
+	public TorchUnlitBlock() {
 		super(Block.Properties.from(Blocks.TORCH));
 	}
 }

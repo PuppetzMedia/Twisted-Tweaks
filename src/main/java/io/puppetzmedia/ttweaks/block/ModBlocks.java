@@ -5,8 +5,8 @@ import net.minecraft.block.Block;
 
 public enum ModBlocks {
 
-	TORCH(new ModTorchBlock(), "torch"),
-	WALL_TORCH(new ModWallTorchBlock(), "wall_torch");
+	TORCH_UNLIT(new TorchUnlitBlock(), "torch_unlit"),
+	WALL_TORCH_UNLIT(new WallTorchUnlitBlock(), "wall_torch_unlit");
 
 	private final Block block;
 
