@@ -7,7 +7,9 @@ import net.minecraft.util.ResourceLocation;
 
 public enum ModBlocks {
 
+	TORCH(new ModTorchBlock(), "torch", true),
 	TORCH_UNLIT(new ModTorchBlock(0), "torch_unlit"),
+	WALL_TORCH(new ModWallTorchBlock(), "wall_torch", true),
 	WALL_TORCH_UNLIT(new ModWallTorchBlock(0), "wall_torch_unlit");
 
 	private final Block block;

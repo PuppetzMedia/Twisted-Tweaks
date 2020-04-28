@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 
 public enum ModItems {
 
+	TORCH(new WallOrFloorItem(ModBlocks.TORCH.get(),
+			ModBlocks.WALL_TORCH.get(), ModItemGroup.PROPERTIES), "torch", true),
 	TORCH_UNLIT(new WallOrFloorItem(ModBlocks.TORCH_UNLIT.get(),
 			ModBlocks.WALL_TORCH_UNLIT.get(), ModItemGroup.PROPERTIES), "torch_unlit");
 
