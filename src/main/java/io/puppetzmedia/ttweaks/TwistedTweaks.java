@@ -33,7 +33,9 @@ public class TwistedTweaks {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
+
         LOGGER.info("Post-initialization phase...");
+        ClientSetup.setRenderLayers();
     }
 
     /**
