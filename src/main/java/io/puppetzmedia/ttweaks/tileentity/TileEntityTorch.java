@@ -3,6 +3,7 @@ package io.puppetzmedia.ttweaks.tileentity;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -31,3 +32,40 @@ public class TileEntityTorch extends TileEntity {
 	public TileEntityTorch() {
 		this(0, 0);
 	}
+
+	@Override
+	public void read(CompoundNBT compound) {
+
+		super.read(compound);
+
+		litAmount = compound.getInt("lit_amount");
+		litTime  = compound.getInt("lit_time");
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT compound) {
+
+		compound.putInt("lit_amount", litAmount);
+		compound.putInt("lit_time", litTime);
+
+		return super.write(compound);
+	}
+
+	public void setLitAmount(int amt) {
+		this.litAmount = amt;
+		markDirty();
+	}
+
+	public void increaseLitTime(int amount) {
+		this.litTime += amount;
+		markDirty();
+	}
+
+	public int getLitTime() {
+		return litTime;
+	}
+
+	public int getLitAmount() {
+		return litAmount;
+	}
+}
