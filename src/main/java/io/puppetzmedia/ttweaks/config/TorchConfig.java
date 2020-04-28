@@ -25,38 +25,47 @@ public class TorchConfig {
 		enableTorchBurnout = TwistedTweaksConfig.CLIENT.TORCH.enableTorchBurnout.get();
 	}
 
+	/** @return Total amount of time a torch will be lit, in ticks */
 	public static int getMaxLitTime() {
 		return maxLitTime;
 	}
 
+	/** @return Total amount of times a torch can be lit */
 	public static int getMaxLitAmount() {
 		return maxLitAmount;
 	}
 
+	/** @return The chance to successfully light a torch */
 	public static double getLitChance() {
 		return litChance;
 	}
 
+	/** @return Chance that a torch will be destroyed when it burns out */
 	public static double getDestroyChance() {
 		return destroyChance;
 	}
 
+	/** @return {@code true} if rain should put out torches */
 	public static boolean isRainExtinguish() {
 		return rainExtinguish;
 	}
 
+	/** @return {@code true} if only unusable torches are affected by chance to destroy */
 	public static boolean isOnlyDestroyUnusable() {
 		return onlyDestroyUnusable;
 	}
 
+	/** @return {@code true} if unusable torches should always be destroyed, regardless of chance */
 	public static boolean isAlwaysDestroyUnusable() {
 		return alwaysDestroyUnusable;
 	}
 
+	/** @return {@code true} if torches should display tooltips */
 	public static boolean isShowTorchTooltip() {
 		return showTorchTooltip;
 	}
 
+	/** @return {@code true} if torches should burnout */
 	public static boolean isEnableTorchBurnout() {
 		return enableTorchBurnout;
 	}
