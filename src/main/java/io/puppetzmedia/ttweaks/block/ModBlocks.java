@@ -1,7 +1,9 @@
 package io.puppetzmedia.ttweaks.block;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
+import io.puppetzmedia.ttweaks.util.RLHelper;
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 
 public enum ModBlocks {
 
@@ -10,8 +12,11 @@ public enum ModBlocks {
 
 	private final Block block;
 
+	ModBlocks(Block block, String name, boolean override) {
+		this.block = block.setRegistryName(RLHelper.getResourceLocation(name, override));
+	}
 	ModBlocks(Block block, String name) {
-		this.block = block.setRegistryName(TwistedTweaks.location(name));
+		this(block, name, false);
 	}
 
 	public static Block[] getAll() {

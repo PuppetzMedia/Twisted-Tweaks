@@ -2,10 +2,12 @@ package io.puppetzmedia.ttweaks.item;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
+import io.puppetzmedia.ttweaks.util.RLHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.AirItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.util.ResourceLocation;
 
 public enum ModItems {
 
@@ -14,8 +16,11 @@ public enum ModItems {
 
 	private final Item item;
 
+	ModItems(Item item, String name, boolean override) {
+		this.item = item.setRegistryName(RLHelper.getResourceLocation(name, override));
+	}
 	ModItems(Item item, String name) {
-		this.item = item.setRegistryName(TwistedTweaks.location(name));
+		this(item, name, false);
 	}
 
 	public static Item[] getAll() {
