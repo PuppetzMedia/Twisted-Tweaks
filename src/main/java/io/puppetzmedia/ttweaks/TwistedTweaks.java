@@ -1,7 +1,6 @@
 package io.puppetzmedia.ttweaks;
 
 import io.puppetzmedia.ttweaks.config.TwistedTweaksConfig;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -41,12 +40,5 @@ public class TwistedTweaks {
 
         LOGGER.info("Post-initialization phase...");
         ClientSetup.setRenderLayers();
-    }
-
-    /**
-     * @return {@code ResourceLocation} pointing to provided path with {@link #MODID} as namespace
-     */
-    public static ResourceLocation location(String path) {
-        return new ResourceLocation(MODID, path);
     }
 }
