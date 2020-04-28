@@ -9,7 +9,7 @@ import net.minecraft.item.WallOrFloorItem;
 
 public enum ModItems {
 
-	TORCH(new WallOrFloorItem(ModBlocks.TORCH_UNLIT.get(),
+	TORCH_UNLIT(new WallOrFloorItem(ModBlocks.TORCH_UNLIT.get(),
 			ModBlocks.WALL_TORCH_UNLIT.get(), ModItemGroup.PROPERTIES), "torch_unlit");
 
 	private final Item item;
