@@ -12,7 +12,7 @@ public enum ModItems {
 	TORCH(new WallOrFloorItem(ModBlocks.TORCH_UNLIT.get(),
 			ModBlocks.WALL_TORCH_UNLIT.get(), ModItemGroup.PROPERTIES), "torch_unlit");
 
-	private Item item;
+	private final Item item;
 
 	ModItems(Item item, String name) {
 		this.item = item.setRegistryName(TwistedTweaks.location(name));
