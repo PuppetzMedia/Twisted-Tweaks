@@ -17,7 +17,7 @@ public class TileEntityTorchLit extends TileEntityTorch implements ITickableTile
 	public static final TileEntityType<TileEntityTorchLit> ENTITY_TYPE = null;
 
 	public static final Block[] VALID_BLOCKS = {
-			Blocks.TORCH, Blocks.WALL_TORCH
+			ModBlocks.TORCH, ModBlocks.WALL_TORCH
 	};
 	private boolean cachedCanSeeSky = false;
 
