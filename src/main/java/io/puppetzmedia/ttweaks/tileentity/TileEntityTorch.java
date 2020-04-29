@@ -15,7 +15,7 @@ public class TileEntityTorch extends TileEntity {
 	public static final TileEntityType<TileEntityTorch> ENTITY_TYPE = null;
 
 	public static final Block[] VALID_BLOCKS = {
-			ModBlocks.TORCH_UNLIT.get(), ModBlocks.WALL_TORCH_UNLIT.get()
+			ModBlocks.TORCH_UNLIT, ModBlocks.WALL_TORCH_UNLIT
 	};
 	private int litAmount;
 	private int litTime;

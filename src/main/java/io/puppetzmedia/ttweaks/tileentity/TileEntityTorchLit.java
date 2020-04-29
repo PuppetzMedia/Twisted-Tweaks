@@ -56,7 +56,7 @@ public class TileEntityTorchLit extends TileEntityTorch implements ITickableTile
 			}
 			else if (!destroy)
 			{
-				world.setBlockState(pos, ModBlocks.TORCH_UNLIT.get().getDefaultState());
+				world.setBlockState(pos, ModBlocks.TORCH_UNLIT.getDefaultState());
 				world.setTileEntity(pos, new TileEntityTorch(getLitAmount() + 1, 0));
 			}
 			else destroyTorch(world, pos);
