@@ -2,6 +2,7 @@ package io.puppetzmedia.ttweaks.tileentity;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
+import io.puppetzmedia.ttweaks.config.TorchConfig;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -51,9 +52,11 @@ public class TileEntityTorch extends TileEntity {
 		return super.write(compound);
 	}
 
-	public void setLitAmount(int amt) {
-		this.litAmount = amt;
-		markDirty();
+	/**
+	 * @return {@code true} if {@link #litAmount} has reached the maximum config value.
+	 */
+	public boolean hasReachedMaxLitAmount() {
+		return litAmount >= TorchConfig.getMaxLitAmount();
 	}
 
 	public void increaseLitTime(int amount) {
@@ -67,5 +70,14 @@ public class TileEntityTorch extends TileEntity {
 
 	public int getLitAmount() {
 		return litAmount;
+	}
+
+	/**
+	 * Copy all internal fields from given {@code TileEntityTorch}.
+	 */
+	public void cloneFrom(TileEntityTorch te) {
+
+		litTime = te.litTime;
+		litAmount = te.litAmount;
 	}
 }
