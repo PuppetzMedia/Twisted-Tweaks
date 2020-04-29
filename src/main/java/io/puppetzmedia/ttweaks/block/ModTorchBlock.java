@@ -1,9 +1,12 @@
 package io.puppetzmedia.ttweaks.block;
 
+import io.puppetzmedia.ttweaks.tileentity.TileEntityTorch;
+import io.puppetzmedia.ttweaks.tileentity.TileEntityTorchLit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TorchBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -12,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class ModTorchBlock extends TorchBlock {
+public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 
 	public ModTorchBlock(int lightValue) {
 		super(Block.Properties.from(Blocks.TORCH).lightValue(lightValue));
@@ -31,5 +34,13 @@ public class ModTorchBlock extends TorchBlock {
 		}
 	}
 
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return lightValue != 0 ? new TileEntityTorchLit() : new TileEntityTorch();
 	}
 }
