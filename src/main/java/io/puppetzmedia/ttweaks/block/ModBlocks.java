@@ -1,37 +1,37 @@
 package io.puppetzmedia.ttweaks.block;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.util.RLHelper;
+import io.puppetzmedia.ttweaks.util.RegHelper;
 import net.minecraft.block.Block;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 
-public enum ModBlocks {
+@ObjectHolder(TwistedTweaks.MODID)
+@Mod.EventBusSubscriber(modid = TwistedTweaks.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+public final class ModBlocks {
 
-	TORCH(new ModTorchBlock(), "torch", true),
-	TORCH_UNLIT(new ModTorchBlock(0), "torch_unlit"),
-	WALL_TORCH(new ModWallTorchBlock(), "wall_torch", true),
-	WALL_TORCH_UNLIT(new ModWallTorchBlock(0), "wall_torch_unlit");
+	@ObjectHolder("torch")
+	public static final Block TORCH = null;
 
-	private final Block block;
+	@ObjectHolder("torch_unlit")
+	public static final Block TORCH_UNLIT = null;
 
-	ModBlocks(Block block, String name, boolean override) {
-		this.block = block.setRegistryName(RLHelper.getResourceLocation(name, override));
-	}
-	ModBlocks(Block block, String name) {
-		this(block, name, false);
-	}
+	@ObjectHolder("wall_torch")
+	public static final Block WALL_TORCH = null;
 
-	public static Block[] getAll() {
+	@ObjectHolder("wall_torch_unlit")
+	public static final Block WALL_TORCH_UNLIT = null;
 
-		final ModBlocks[] values = ModBlocks.values();
-		Block[] blocks = new Block[values.length];
+	@SubscribeEvent
+	public static void onRegisterBlock(final RegistryEvent.Register<Block> event) {
 
-		for (int i = 0; i < values.length; i++) {
-			blocks[i] = values[i].block;
-		}
-		return blocks;
-	}
-	public Block get() {
-		return block;
+		event.getRegistry().registerAll(
+				RegHelper.setup(new ModTorchBlock(), "torch"),
+				RegHelper.setup(new ModTorchBlock(0), "torch_unlit"),
+				RegHelper.setup(new ModWallTorchBlock(), "wall_torch"),
+				RegHelper.setup(new ModWallTorchBlock(0), "wall_torch_unlit")
+		);
 	}
 }

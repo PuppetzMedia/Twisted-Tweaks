@@ -2,40 +2,33 @@ package io.puppetzmedia.ttweaks.item;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
-import io.puppetzmedia.ttweaks.util.RLHelper;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.AirItem;
+import io.puppetzmedia.ttweaks.util.RegHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 
-public enum ModItems {
+@ObjectHolder(TwistedTweaks.MODID)
+@Mod.EventBusSubscriber(modid = TwistedTweaks.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+public final class ModItems {
 
-	TORCH(new WallOrFloorItem(ModBlocks.TORCH.get(),
-			ModBlocks.WALL_TORCH.get(), ModItemGroup.PROPERTIES), "torch", true),
-	TORCH_UNLIT(new WallOrFloorItem(ModBlocks.TORCH_UNLIT.get(),
-			ModBlocks.WALL_TORCH_UNLIT.get(), ModItemGroup.PROPERTIES), "torch_unlit");
+	@ObjectHolder("torch")
+	public static final Item TORCH = null;
 
-	private final Item item;
+	@ObjectHolder("torch_unlit")
+	public static final Item TORCH_UNLIT = null;
 
-	ModItems(Item item, String name, boolean override) {
-		this.item = item.setRegistryName(RLHelper.getResourceLocation(name, override));
-	}
-	ModItems(Item item, String name) {
-		this(item, name, false);
-	}
+	@SubscribeEvent
+	@SuppressWarnings("ConstantConditions")
+	public static void onRegisterItem(final RegistryEvent.Register<Item> event) {
 
-	public static Item[] getAll() {
-
-		final ModItems[] values = ModItems.values();
-		net.minecraft.item.Item[] items = new Item[values.length];
-
-		for (int i = 0; i < values.length; i++) {
-			items[i] = values[i].item;
-		}
-		return items;
-	}
-	public Item get() {
-		return item;
+		event.getRegistry().registerAll(
+				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH,
+						ModBlocks.WALL_TORCH, ModItemGroup.PROPERTIES), "torch"),
+				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH_UNLIT,
+						ModBlocks.WALL_TORCH_UNLIT, ModItemGroup.PROPERTIES), "torch_unlit")
+		);
 	}
 }

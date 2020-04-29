@@ -9,7 +9,9 @@ public class ClientSetup {
 	/** Set appropriate render layers for certain blocks that need them to render properly. */
 	static void setRenderLayers() {
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.TORCH_UNLIT.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH_UNLIT.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TORCH, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TORCH_UNLIT, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH_UNLIT, RenderType.getCutout());
 	}
 }
