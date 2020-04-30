@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east": { "model": "twistedtweaks:block/wall_torch_glowstone" },
+    "facing=south": { "model": "twistedtweaks:block/wall_torch_glowstone", "y": 90 },
+    "facing=west": { "model": "twistedtweaks:block/wall_torch_glowstone", "y": 180 },
+    "facing=north": { "model": "twistedtweaks:block/wall_torch_glowstone", "y": 270 }
+  }
+}

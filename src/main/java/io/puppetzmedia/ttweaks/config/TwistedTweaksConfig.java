@@ -22,7 +22,7 @@ public class TwistedTweaksConfig {
 	}
 
 	public static void bakeConfig() {
-		// Bake our configs here
+		TorchConfig.bake();
 	}
 
 	@SubscribeEvent

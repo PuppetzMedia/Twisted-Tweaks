@@ -75,6 +75,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     compile group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
+
+    // https://mvnrepository.com/artifact/org.jooq/joor-java-8
+    compile group: 'org.jooq', name: 'joor-java-8', version: '0.9.13'
 }
 
 // Get properties into the manifest for reading by the runtime..
