@@ -15,8 +15,8 @@ import java.util.Random;
 
 public class GlowstoneTorch extends TorchBlock {
 
-	public GlowstoneTorch() {
-		super(Block.Properties.from(Blocks.TORCH).lightValue(1));
+	public GlowstoneTorch(int lightValue) {
+		super(Block.Properties.from(Blocks.TORCH).lightValue(lightValue));
 	}
 
 	@Override

@@ -125,7 +125,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 			if (destroyChance == 0 || world.rand.nextFloat() >= destroyChance)
 			{
 				if (torchBurnout) {
-					stack.setTagInfo("BlockEntityTag", ((TileEntityTorch)tile).write(new CompoundNBT()));
+					stack.setTagInfo("BlockEntityTag", tile.write(new CompoundNBT()));
 				}
 				spawnAsEntity(world, pos, stack);
 				return true;

@@ -26,6 +26,7 @@ public class TwistedTweaks {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public TwistedTweaks() {
+
         // Initialize mod logger
         TTLogger.init(LogManager.getLogger());
 
@@ -34,6 +35,7 @@ public class TwistedTweaks {
         if (Items.TORCH.getGroup() != null) {
             TTLogger.error("Unable to remove vanilla torch from creative tab");
         }
+
         // Register the setup methods for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -46,6 +48,7 @@ public class TwistedTweaks {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+
         LOGGER.info("Pre-initialization phase...");
 
         ForgeRegistries.BIOMES.forEach(biome ->

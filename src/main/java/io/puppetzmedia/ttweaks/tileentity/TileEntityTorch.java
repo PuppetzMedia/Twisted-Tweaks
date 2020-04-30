@@ -35,8 +35,8 @@ public class TileEntityTorch extends TileEntity {
 		this.litAmount = litAmount;
 		this.litTime = litTime;
 	}
-	protected TileEntityTorch(TileEntityType<?> tileEntityTypeIn) {
-		super(tileEntityTypeIn);
+	protected TileEntityTorch(TileEntityType<? extends TileEntityTorch> type) {
+		super(type);
 	}
 	public TileEntityTorch() {
 		this(0, 0);
