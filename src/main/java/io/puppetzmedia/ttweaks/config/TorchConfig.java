@@ -5,7 +5,7 @@ public class TorchConfig {
 	private static int maxLitTime;
 	private static int maxLitAmount;
 	private static double litChance;
-	private static double destroyChance ;
+	private static double burnoutDestroyChance;
 	private static boolean rainExtinguish ;
 	private static boolean showTorchTooltip;
 	private static boolean enableTorchBurnout;
@@ -15,7 +15,7 @@ public class TorchConfig {
 		maxLitTime = TwistedTweaksConfig.CLIENT.TORCH.maxLitTime.get();
 		maxLitAmount = TwistedTweaksConfig.CLIENT.TORCH.maxLitAmount.get();
 		litChance = TwistedTweaksConfig.CLIENT.TORCH.litChance.get();
-		destroyChance  = TwistedTweaksConfig.CLIENT.TORCH.destroyChance.get();
+		burnoutDestroyChance = TwistedTweaksConfig.CLIENT.TORCH.burnoutDestroyChance.get();
 		rainExtinguish  = TwistedTweaksConfig.CLIENT.TORCH.rainExtinguish.get();
 		showTorchTooltip = TwistedTweaksConfig.CLIENT.TORCH.showTorchTooltip.get();
 		enableTorchBurnout = TwistedTweaksConfig.CLIENT.TORCH.enableTorchBurnout.get();
@@ -37,8 +37,8 @@ public class TorchConfig {
 	}
 
 	/** @return Chance that a torch will be destroyed when it burns out */
-	public static double getDestroyChance() {
-		return destroyChance;
+	public static double getBurnoutDestroyChance() {
+		return burnoutDestroyChance;
 	}
 
 	/** @return {@code true} if rain should put out torches */

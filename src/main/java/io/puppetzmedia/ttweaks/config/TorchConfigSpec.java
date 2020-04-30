@@ -8,7 +8,7 @@ public class TorchConfigSpec {
 	public final ForgeConfigSpec.IntValue maxLitTime;
 	public final ForgeConfigSpec.IntValue maxLitAmount;
 	public final ForgeConfigSpec.DoubleValue litChance;
-	public final ForgeConfigSpec.DoubleValue destroyChance;
+	public final ForgeConfigSpec.DoubleValue burnoutDestroyChance;
 	public final ForgeConfigSpec.BooleanValue rainExtinguish;
 	public final ForgeConfigSpec.BooleanValue showTorchTooltip;
 	public final ForgeConfigSpec.BooleanValue enableTorchBurnout;
@@ -32,7 +32,7 @@ public class TorchConfigSpec {
 				.translation(TwistedTweaks.MODID + ".config." + "litChance")
 				.defineInRange("litChance", 0.5f, 0, 1.0f);
 
-		destroyChance = builder
+		burnoutDestroyChance = builder
 				.comment("Chance that a torch will be destroyed when it burns out [Default = 0]")
 				.translation(TwistedTweaks.MODID + ".config." + "destroyChance")
 				.defineInRange("destroyChance", 0, 0, 1.0f);
