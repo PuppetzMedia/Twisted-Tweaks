@@ -6,6 +6,7 @@ public class TorchConfig {
 	private static int maxLitAmount;
 	private static double litChance;
 	private static double burnoutDestroyChance;
+	private static double pickupDestroyChance;
 	private static boolean rainExtinguish ;
 	private static boolean showTorchTooltip;
 	private static boolean enableTorchBurnout;
@@ -16,6 +17,7 @@ public class TorchConfig {
 		maxLitAmount = TwistedTweaksConfig.CLIENT.TORCH.maxLitAmount.get();
 		litChance = TwistedTweaksConfig.CLIENT.TORCH.litChance.get();
 		burnoutDestroyChance = TwistedTweaksConfig.CLIENT.TORCH.burnoutDestroyChance.get();
+		pickupDestroyChance = TwistedTweaksConfig.CLIENT.TORCH.pickupDestroyChance.get();
 		rainExtinguish  = TwistedTweaksConfig.CLIENT.TORCH.rainExtinguish.get();
 		showTorchTooltip = TwistedTweaksConfig.CLIENT.TORCH.showTorchTooltip.get();
 		enableTorchBurnout = TwistedTweaksConfig.CLIENT.TORCH.enableTorchBurnout.get();
@@ -54,5 +56,10 @@ public class TorchConfig {
 	/** @return {@code true} if torches should burnout */
 	public static boolean isEnableTorchBurnout() {
 		return enableTorchBurnout;
+	}
+
+	/** @return chance of destroying the torch when picking it up */
+	public static double getPickupDestroyChance() {
+		return pickupDestroyChance;
 	}
 }

@@ -9,6 +9,7 @@ public class TorchConfigSpec {
 	public final ForgeConfigSpec.IntValue maxLitAmount;
 	public final ForgeConfigSpec.DoubleValue litChance;
 	public final ForgeConfigSpec.DoubleValue burnoutDestroyChance;
+	public final ForgeConfigSpec.DoubleValue pickupDestroyChance;
 	public final ForgeConfigSpec.BooleanValue rainExtinguish;
 	public final ForgeConfigSpec.BooleanValue showTorchTooltip;
 	public final ForgeConfigSpec.BooleanValue enableTorchBurnout;
@@ -34,8 +35,13 @@ public class TorchConfigSpec {
 
 		burnoutDestroyChance = builder
 				.comment("Chance that a torch will be destroyed when it burns out [Default = 0]")
-				.translation(TwistedTweaks.MODID + ".config." + "destroyChance")
-				.defineInRange("destroyChance", 0, 0, 1.0f);
+				.translation(TwistedTweaks.MODID + ".config." + "burnoutDestroyChance")
+				.defineInRange("burnoutDestroyChance", 0, 0, 1.0f);
+
+		pickupDestroyChance = builder
+				.comment("Chance that a torch will be destroyed when it is picked out [Default = 0]")
+				.translation(TwistedTweaks.MODID + ".config." + "pickupDestroyChance")
+				.defineInRange("pickupDestroyChance", 0, 0, 1.0f);
 
 		rainExtinguish = builder
 				.comment("Does rain put out torches [Default = true]")
