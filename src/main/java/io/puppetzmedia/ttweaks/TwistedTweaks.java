@@ -3,6 +3,7 @@ package io.puppetzmedia.ttweaks;
 import io.puppetzmedia.ttweaks.config.TwistedTweaksConfig;
 import io.puppetzmedia.ttweaks.worldgen.TorchFeature;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -62,5 +63,13 @@ public class TwistedTweaks {
 
         LOGGER.info("Post-initialization phase...");
         ClientSetup.setRenderLayers();
+    }
+
+    /**
+     * @return {@code ResourceLocation} pointing to provided path with
+     * {@link TwistedTweaks#MODID} as namespace
+     */
+    public static ResourceLocation getResourceLocation(String path) {
+        return new ResourceLocation(TwistedTweaks.MODID, path);
     }
 }

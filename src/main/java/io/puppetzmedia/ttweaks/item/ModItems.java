@@ -2,7 +2,7 @@ package io.puppetzmedia.ttweaks.item;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
-import io.puppetzmedia.ttweaks.util.RegHelper;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.event.RegistryEvent;
@@ -31,14 +31,14 @@ public final class ModItems {
 	public static void onRegisterItem(final RegistryEvent.Register<Item> event) {
 
 		event.getRegistry().registerAll(
-				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH,
+				RegistryHandler.setup(new WallOrFloorItem(ModBlocks.TORCH,
 						ModBlocks.WALL_TORCH, ModItemGroup.PROPERTIES), "torch"),
-				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH_UNLIT,
+				RegistryHandler.setup(new WallOrFloorItem(ModBlocks.TORCH_UNLIT,
 						ModBlocks.WALL_TORCH_UNLIT, ModItemGroup.PROPERTIES), "torch_unlit"),
-				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH_GLOWSTONE,
+				RegistryHandler.setup(new WallOrFloorItem(ModBlocks.TORCH_GLOWSTONE,
 						ModBlocks.WALL_TORCH_GLOWSTONE, ModItemGroup.PROPERTIES), "torch_glowstone"),
-				RegHelper.setup(new Item(ModItemGroup.PROPERTIES), "torch_oil"),
-				RegHelper.setup(new Item(ModItemGroup.PROPERTIES), "torch_paste")
+				RegistryHandler.setup(new Item(ModItemGroup.PROPERTIES), "torch_oil"),
+				RegistryHandler.setup(new Item(ModItemGroup.PROPERTIES), "torch_paste")
 		);
 	}
 }

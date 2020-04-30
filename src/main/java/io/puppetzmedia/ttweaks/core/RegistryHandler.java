@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 @Mod.EventBusSubscriber(modid = TwistedTweaks.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
@@ -26,5 +27,11 @@ public class RegistryHandler {
 
 		type.setRegistryName(TwistedTweaks.MODID, "torch_te");
 		evt.getRegistry().register(type);
+	}
+
+	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
+
+		entry.setRegistryName(TwistedTweaks.getResourceLocation(name));
+		return entry;
 	}
 }

@@ -1,7 +1,7 @@
 package io.puppetzmedia.ttweaks.block;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.util.RegHelper;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,12 +34,12 @@ public final class ModBlocks {
 	public static void onRegisterBlock(final RegistryEvent.Register<Block> event) {
 
 		event.getRegistry().registerAll(
-				RegHelper.setup(new ModTorchBlock(), "torch"),
-				RegHelper.setup(new ModTorchBlock(0), "torch_unlit"),
-				RegHelper.setup(new ModWallTorchBlock(), "wall_torch"),
-				RegHelper.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
-				RegHelper.setup(new GlowstoneTorch(1), "torch_glowstone"),
-				RegHelper.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone")
+				RegistryHandler.setup(new ModTorchBlock(), "torch"),
+				RegistryHandler.setup(new ModTorchBlock(0), "torch_unlit"),
+				RegistryHandler.setup(new ModWallTorchBlock(), "wall_torch"),
+				RegistryHandler.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
+				RegistryHandler.setup(new GlowstoneTorch(1), "torch_glowstone"),
+				RegistryHandler.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone")
 		);
 	}
 }
