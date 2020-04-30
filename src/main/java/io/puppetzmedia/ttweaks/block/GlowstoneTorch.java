@@ -1,20 +1,18 @@
-package uk.artdude.tweaks.twisted.common.blocks;
+package io.puppetzmedia.ttweaks.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import uk.artdude.tweaks.twisted.TwistedTweaks;
 
 import java.util.Random;
 
-public class BlockGlowstoneTorch extends TorchBlock
+public class GlowstoneTorch extends TorchBlock
 {
-	public BlockGlowstoneTorch()
+	public GlowstoneTorch()
 	{
 		setLightLevel(1);
 		setCreativeTab(TwistedTweaks.creativeTab);
