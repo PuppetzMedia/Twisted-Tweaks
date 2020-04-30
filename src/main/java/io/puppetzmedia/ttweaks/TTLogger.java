@@ -37,7 +37,7 @@ public final class TTLogger {
 		logger.error(log);
 	}
 	public static void error(String log, Object...args) {
-		logger.printf(Level.ERROR, log, args);
+		logger.printf(Level.ERROR, String.format(log, args));
 	}
 	public static void error(String log, Throwable t) {
 		logger.error(log, t);
@@ -49,7 +49,7 @@ public final class TTLogger {
 		logger.debug(log);
 	}
 	public static void debug(String format, Object...args) {
-		logger.debug(format, args);
+		logger.debug(String.format(format, args));
 	}
 	public static void debug(String log, Throwable t) {
 		logger.debug(log, t);
