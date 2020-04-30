@@ -16,9 +16,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
+@ObjectHolder(TwistedTweaks.MODID)
 public class TileEntityTorchLit extends TileEntityTorch implements ITickableTileEntity {
 
-	@ObjectHolder(TwistedTweaks.MODID + ":torch_lit_te")
+	@ObjectHolder("torch_lit_te")
 	public static final TileEntityType<TileEntityTorchLit> ENTITY_TYPE = null;
 
 	public static final Block[] VALID_BLOCKS = {

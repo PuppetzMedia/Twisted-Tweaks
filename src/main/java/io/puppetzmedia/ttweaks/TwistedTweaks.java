@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("twistedtweaks")
+@Mod(TwistedTweaks.MODID)
 public class TwistedTweaks {
 
     public static final String MODID = "twistedtweaks";
