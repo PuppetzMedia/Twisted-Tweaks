@@ -122,8 +122,10 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 					stack.setTagInfo("BlockEntityTag", ((TileEntityTorch)tile).write(new CompoundNBT()));
 				}
 				spawnAsEntity(world, pos, stack);
+				return true;
 			}
-		} return true;
+		}
+		return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override
