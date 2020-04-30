@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
+@SuppressWarnings("SameParameterValue")
 public class TileEntityTorch extends TileEntity {
 
 	@ObjectHolder("torch_te")
@@ -35,8 +36,8 @@ public class TileEntityTorch extends TileEntity {
 		this.litAmount = litAmount;
 		this.litTime = litTime;
 	}
-	protected TileEntityTorch(TileEntityType<?> tileEntityTypeIn) {
-		super(tileEntityTypeIn);
+	protected TileEntityTorch(TileEntityType<? extends TileEntityTorch> type) {
+		super(type);
 	}
 	public TileEntityTorch() {
 		this(0, 0);

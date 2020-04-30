@@ -60,6 +60,7 @@ public class TileEntityTorchLit extends TileEntityTorch implements ITickableTile
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public static ActionResultType extinguishTorch(World world, BlockPos pos) {
 		return extinguishTorch((TileEntityTorchLit)world.getTileEntity(pos));
 	}

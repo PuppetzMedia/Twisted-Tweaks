@@ -8,6 +8,7 @@ import net.minecraft.world.IBlockReader;
  * Denotes a class as having a tile entity and declares implementation of
  * Forge methods necessary to create {@code TileEntities}.
  */
+@SuppressWarnings({ "SameReturnValue", "unused" })
 public interface ITileEntityOwner {
 
 	boolean hasTileEntity(BlockState state);

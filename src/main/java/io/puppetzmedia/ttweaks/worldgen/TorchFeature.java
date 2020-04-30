@@ -14,6 +14,7 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -26,6 +27,8 @@ import java.util.function.Function;
  * @author MattCzyr
  * @see <a href="https://git.io/JfO80">RealisticTorches - TorchFeature.java</a>
  */
+@mcp.MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class TorchFeature extends Feature<NoFeatureConfig> {
 
 	public TorchFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config) {
