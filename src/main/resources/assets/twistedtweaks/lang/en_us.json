@@ -3,6 +3,7 @@
 
   "block.twistedtweaks.torch": "Torch",
   "block.twistedtweaks.torch_unlit": "Unlit Torch",
+  "block.twistedtweaks.torch_glowstone": "Glowstone Torch",
 
   "tt.info.torch.litamount": "Lit Amount",
   "tt.info.torch.littime": "Lit Time"
