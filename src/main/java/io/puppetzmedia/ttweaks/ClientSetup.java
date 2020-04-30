@@ -13,5 +13,7 @@ public class ClientSetup {
 		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TORCH_UNLIT, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH_UNLIT, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TORCH_GLOWSTONE, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.WALL_TORCH_GLOWSTONE, RenderType.getCutout());
 	}
 }
