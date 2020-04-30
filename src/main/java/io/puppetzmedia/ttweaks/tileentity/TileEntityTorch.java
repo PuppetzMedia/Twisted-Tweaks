@@ -90,20 +90,22 @@ public class TileEntityTorch extends TileEntity {
 
 			return ActionResultType.FAIL;
 		}
-		torchEntity.copyFromAndReset(world, pos);
-		return ActionResultType.SUCCESS;
+		return torchEntity.copyToAndReset(world, pos, 1);
 	}
 
-	protected void copyFromAndReset(World world, BlockPos pos) {
+	protected ActionResultType copyToAndReset(World world, BlockPos pos, int addLitAmount) {
 
 		TileEntityTorch torchEntity = (TileEntityTorch) world.getTileEntity(pos);
-		if (torchEntity != null)
+		if (torchEntity == null)
 		{
-			torchEntity.litAmount = litAmount;
-			torchEntity.litTime = 0;
-			markDirty();
+			TTLogger.error("Unable to find TileEntityTorch at pos %s", pos.toString());
+			return ActionResultType.FAIL;
 		}
-		else TTLogger.error("Unable to find TileEntityTorch at pos %s", pos.toString());
+		torchEntity.litAmount = litAmount + addLitAmount;
+		torchEntity.litTime = 0;
+		torchEntity.markDirty();
+
+		return ActionResultType.SUCCESS;
 	}
 
 	/**

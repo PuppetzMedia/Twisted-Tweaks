@@ -85,7 +85,6 @@ public class TileEntityTorchLit extends TileEntityTorch implements ITickableTile
 
 			return ActionResultType.FAIL;
 		}
-		torchEntity.copyFromAndReset(world, pos);
-		return ActionResultType.SUCCESS;
+		return torchEntity.copyToAndReset(world, pos, 0);
 	}
 }

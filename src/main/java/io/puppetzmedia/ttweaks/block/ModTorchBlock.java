@@ -78,15 +78,14 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 				{
 					double litChance = TorchConfig.getLitChance();
 					float attempt = worldIn.rand.nextFloat();
+					boolean light = !te.hasReachedMaxLitAmount() && attempt <= litChance;
 
-					if (!te.hasReachedMaxLitAmount() && attempt <= litChance) {
-						if (TileEntityTorch.lightTorch(worldIn, pos) == ActionResultType.FAIL)
-						{
-							TTLogger.debug("onBlockActivated for %s at pos %s failed",
-									player.getDisplayNameAndUUID(), pos.toString());
+					if (light && TileEntityTorch.lightTorch(worldIn, pos) == ActionResultType.FAIL)
+					{
+						TTLogger.debug("onBlockActivated for %s at pos %s failed",
+								player.getDisplayNameAndUUID(), pos.toString());
 
-							return ActionResultType.FAIL;
-						}
+						return ActionResultType.FAIL;
 					}
 				}
 				else {
