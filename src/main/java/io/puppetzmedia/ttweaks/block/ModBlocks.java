@@ -39,7 +39,7 @@ public final class ModBlocks {
 				RegHelper.setup(new ModWallTorchBlock(), "wall_torch"),
 				RegHelper.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
 				RegHelper.setup(new GlowstoneTorch(), "torch_glowstone"),
-				RegHelper.setup(new GlowstoneWallTorch(), "wall_torch_glowstone")
+				RegHelper.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone")
 		);
 	}
 }

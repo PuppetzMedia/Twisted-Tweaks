@@ -19,9 +19,6 @@ public class GlowstoneWallTorch extends WallTorchBlock {
 	public GlowstoneWallTorch(int lightValue) {
 		super(Block.Properties.from(Blocks.WALL_TORCH).lightValue(lightValue));
 	}
-	public GlowstoneWallTorch() {
-		super(Block.Properties.from(Blocks.WALL_TORCH));
-	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
