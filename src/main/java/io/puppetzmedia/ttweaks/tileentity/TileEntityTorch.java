@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
+@SuppressWarnings("SameParameterValue")
 public class TileEntityTorch extends TileEntity {
 
 	@ObjectHolder("torch_te")
