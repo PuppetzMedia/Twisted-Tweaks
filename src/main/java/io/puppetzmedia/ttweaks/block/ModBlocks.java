@@ -38,7 +38,7 @@ public final class ModBlocks {
 				RegistryHandler.setup(new ModTorchBlock(0), "torch_unlit"),
 				RegistryHandler.setup(new ModWallTorchBlock(), "wall_torch"),
 				RegistryHandler.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
-				RegistryHandler.setup(new GlowstoneTorch(1), "torch_glowstone"),
+				RegistryHandler.setup(new GlowstoneTorchBlock(1), "torch_glowstone"),
 				RegistryHandler.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone")
 		);
 	}

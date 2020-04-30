@@ -13,9 +13,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class GlowstoneTorch extends TorchBlock {
+public class GlowstoneTorchBlock extends TorchBlock {
 
-	public GlowstoneTorch(int lightValue) {
+	public GlowstoneTorchBlock(int lightValue) {
 		super(Block.Properties.from(Blocks.TORCH).lightValue(lightValue));
 	}
 
