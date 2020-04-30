@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TorchBlock;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.FireChargeItem;
@@ -23,12 +24,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
@@ -141,5 +147,29 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return lightValue != 0 ? new TileEntityTorchLit() : new TileEntityTorch();
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+
+		if(!TorchConfig.isShowTorchTooltip()) {
+			return;
+		}
+		int litAmount = 0, litTime = 0;
+
+		if(stack.hasTag())
+		{
+			CompoundNBT blockTags = stack.getTag().getCompound("BlockEntityTag");
+			litAmount = blockTags.getInt("lit_amount");
+			litTime = blockTags.getInt("lit_time");
+		}
+
+		tooltip.add(new StringTextComponent("")
+				.appendSibling(new TranslationTextComponent("tt.info.torch.litamount")
+						.applyTextStyle(TextFormatting.DARK_PURPLE)).appendText(": " + litAmount));
+
+		tooltip.add(new StringTextComponent("")
+				.appendSibling(new TranslationTextComponent("tt.info.torch.littime")
+						.applyTextStyle(TextFormatting.DARK_PURPLE)).appendText(": " + litTime));
 	}
 }
