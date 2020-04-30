@@ -1,12 +1,19 @@
 package io.puppetzmedia.ttweaks.tileentity;
 
+import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.ModBlocks;
 import io.puppetzmedia.ttweaks.config.TorchConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.WallTorchBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class TileEntityTorch extends TileEntity {
@@ -52,16 +59,58 @@ public class TileEntityTorch extends TileEntity {
 		return super.write(compound);
 	}
 
+	public void increaseLitTime(int amount) {
+		this.litTime += amount;
+		markDirty();
+	}
+
+	public static ActionResultType lightTorch(World world, BlockPos pos) {
+		return lightTorch((TileEntityTorch)world.getTileEntity(pos));
+	}
+
+	public static ActionResultType lightTorch(TileEntityTorch torchEntity) {
+
+		final World world = torchEntity.getWorld();
+		final BlockPos pos = torchEntity.getPos();
+		final BlockState state = torchEntity.getBlockState();
+		final Block torchBlock = state.getBlock();
+
+		if (torchBlock == ModBlocks.TORCH_UNLIT) {
+			world.setBlockState(pos, ModBlocks.TORCH.getDefaultState());
+		}
+		else if (torchBlock == ModBlocks.WALL_TORCH_UNLIT)
+		{
+			Direction direction = state.get(WallTorchBlock.HORIZONTAL_FACING);
+			world.setBlockState(pos, ModBlocks.WALL_TORCH.getDefaultState()
+					.with(WallTorchBlock.HORIZONTAL_FACING, direction));
+		}
+		else {
+			TTLogger.error("Unknown torch block at pos %s, expected %s or %s",
+					pos.toString(), ModBlocks.TORCH_UNLIT.toString(), ModBlocks.WALL_TORCH_UNLIT.toString());
+
+			return ActionResultType.FAIL;
+		}
+		torchEntity.copyFromAndReset(world, pos);
+		return ActionResultType.SUCCESS;
+	}
+
+	protected void copyFromAndReset(World world, BlockPos pos) {
+
+		TileEntityTorch torchEntity = (TileEntityTorch) world.getTileEntity(pos);
+		if (torchEntity != null)
+		{
+			torchEntity.litAmount = litAmount;
+			torchEntity.litTime = 0;
+			markDirty();
+		}
+		else TTLogger.error("Unable to find TileEntityTorch at pos %s", pos.toString());
+	}
+
 	/**
 	 * @return {@code true} if {@link #litAmount} has reached the maximum config value.
 	 */
 	public boolean hasReachedMaxLitAmount() {
 		return litAmount >= TorchConfig.getMaxLitAmount();
-	}
-
-	public void increaseLitTime(int amount) {
-		this.litTime += amount;
-		markDirty();
 	}
 
 	public int getLitTime() {
@@ -70,14 +119,5 @@ public class TileEntityTorch extends TileEntity {
 
 	public int getLitAmount() {
 		return litAmount;
-	}
-
-	/**
-	 * Copy all internal fields from given {@code TileEntityTorch}.
-	 */
-	public void cloneFrom(TileEntityTorch te) {
-
-		litTime = te.litTime;
-		litAmount = te.litAmount;
 	}
 }
