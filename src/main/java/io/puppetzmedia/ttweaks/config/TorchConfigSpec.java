@@ -21,12 +21,12 @@ public class TorchConfigSpec {
 		maxLitTime = builder
 				.comment("The total amount of time a torch will be lit, in ticks [Default = 10000]")
 				.translation(TwistedTweaks.MODID + ".config." + "maxLitTime")
-				.defineInRange("maxLitTime", 10000, 0, Integer.MAX_VALUE);
+				.defineInRange("maxLitTime", 10000, 1, Integer.MAX_VALUE);
 
 		maxLitAmount = builder
 				.comment("The total amount of times a torch can be lit [Default = 4]")
 				.translation(TwistedTweaks.MODID + ".config." + "maxLitAmount")
-				.defineInRange("maxLitAmount", 4, 0, Integer.MAX_VALUE);
+				.defineInRange("maxLitAmount", 4, 0, 10);
 
 		litChance = builder
 				.comment("The chance to successfully light a torch [Default = 0.5]")
