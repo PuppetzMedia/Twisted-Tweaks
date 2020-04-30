@@ -6,7 +6,7 @@
 /**/workspace.xml
 /**/tasks.xml
 /**/usage.statistics.xml
-/**/dictionaries
+#/**/dictionaries
 /**/shelf
 
 # Generated files
