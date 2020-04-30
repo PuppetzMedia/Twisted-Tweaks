@@ -10,8 +10,6 @@ public class TorchConfigSpec {
 	public final ForgeConfigSpec.DoubleValue litChance;
 	public final ForgeConfigSpec.DoubleValue destroyChance;
 	public final ForgeConfigSpec.BooleanValue rainExtinguish;
-	public final ForgeConfigSpec.BooleanValue onlyDestroyUnusable;
-	public final ForgeConfigSpec.BooleanValue alwaysDestroyUnusable;
 	public final ForgeConfigSpec.BooleanValue showTorchTooltip;
 	public final ForgeConfigSpec.BooleanValue enableTorchBurnout;
 
@@ -43,16 +41,6 @@ public class TorchConfigSpec {
 				.comment("Does rain put out torches [Default = true]")
 				.translation(TwistedTweaks.MODID + ".config." + "rainExtinguish")
 				.define("rainExtinguish", true);
-
-		onlyDestroyUnusable = builder
-				.comment("Will only have a chance to destroy unusable torches [Default = false]")
-				.translation(TwistedTweaks.MODID + ".config." + "onlyDestroyUnusable")
-				.define("onlyDestroyUnusable", false);
-
-		alwaysDestroyUnusable = builder
-				.comment("Always destroy unusable torches, regardless of destroy chance [Default = true]")
-				.translation(TwistedTweaks.MODID + ".config." + "alwaysDestroyUnusable")
-				.define("alwaysDestroyUnusable", true);
 
 		showTorchTooltip = builder
 				.comment("Show a tooltip on torches [Default = true]")

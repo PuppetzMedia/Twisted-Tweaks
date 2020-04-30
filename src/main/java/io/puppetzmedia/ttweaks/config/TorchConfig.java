@@ -7,8 +7,6 @@ public class TorchConfig {
 	private static double litChance;
 	private static double destroyChance ;
 	private static boolean rainExtinguish ;
-	private static boolean onlyDestroyUnusable;
-	private static boolean alwaysDestroyUnusable;
 	private static boolean showTorchTooltip;
 	private static boolean enableTorchBurnout;
 
@@ -19,8 +17,6 @@ public class TorchConfig {
 		litChance = TwistedTweaksConfig.CLIENT.TORCH.litChance.get();
 		destroyChance  = TwistedTweaksConfig.CLIENT.TORCH.destroyChance.get();
 		rainExtinguish  = TwistedTweaksConfig.CLIENT.TORCH.rainExtinguish.get();
-		onlyDestroyUnusable = TwistedTweaksConfig.CLIENT.TORCH.onlyDestroyUnusable.get();
-		alwaysDestroyUnusable = TwistedTweaksConfig.CLIENT.TORCH.alwaysDestroyUnusable.get();
 		showTorchTooltip = TwistedTweaksConfig.CLIENT.TORCH.showTorchTooltip.get();
 		enableTorchBurnout = TwistedTweaksConfig.CLIENT.TORCH.enableTorchBurnout.get();
 	}
@@ -48,16 +44,6 @@ public class TorchConfig {
 	/** @return {@code true} if rain should put out torches */
 	public static boolean isRainExtinguish() {
 		return rainExtinguish;
-	}
-
-	/** @return {@code true} if only unusable torches are affected by chance to destroy */
-	public static boolean isOnlyDestroyUnusable() {
-		return onlyDestroyUnusable;
-	}
-
-	/** @return {@code true} if unusable torches should always be destroyed, regardless of chance */
-	public static boolean isAlwaysDestroyUnusable() {
-		return alwaysDestroyUnusable;
 	}
 
 	/** @return {@code true} if torches should display tooltips */
