@@ -20,6 +20,12 @@ public final class ModItems {
 	@ObjectHolder("torch_unlit")
 	public static final Item TORCH_UNLIT = null;
 
+	@ObjectHolder("torch_oil")
+	public static final Item TORCH_OIL = null;
+
+	@ObjectHolder("torch_paste")
+	public static final Item TORCH_PASTE = null;
+
 	@SubscribeEvent
 	@SuppressWarnings("ConstantConditions")
 	public static void onRegisterItem(final RegistryEvent.Register<Item> event) {
@@ -28,7 +34,11 @@ public final class ModItems {
 				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH,
 						ModBlocks.WALL_TORCH, ModItemGroup.PROPERTIES), "torch"),
 				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH_UNLIT,
-						ModBlocks.WALL_TORCH_UNLIT, ModItemGroup.PROPERTIES), "torch_unlit")
+						ModBlocks.WALL_TORCH_UNLIT, ModItemGroup.PROPERTIES), "torch_unlit"),
+				RegHelper.setup(new WallOrFloorItem(ModBlocks.TORCH_GLOWSTONE,
+						ModBlocks.WALL_TORCH_GLOWSTONE, ModItemGroup.PROPERTIES), "torch_glowstone"),
+				RegHelper.setup(new Item(ModItemGroup.PROPERTIES), "torch_oil"),
+				RegHelper.setup(new Item(ModItemGroup.PROPERTIES), "torch_paste")
 		);
 	}
 }

@@ -24,6 +24,12 @@ public final class ModBlocks {
 	@ObjectHolder("wall_torch_unlit")
 	public static final Block WALL_TORCH_UNLIT = null;
 
+	@ObjectHolder("torch_glowstone")
+	public static final Block TORCH_GLOWSTONE = null;
+
+	@ObjectHolder("wall_torch_glowstone")
+	public static final Block WALL_TORCH_GLOWSTONE = null;
+
 	@SubscribeEvent
 	public static void onRegisterBlock(final RegistryEvent.Register<Block> event) {
 
@@ -31,7 +37,9 @@ public final class ModBlocks {
 				RegHelper.setup(new ModTorchBlock(), "torch"),
 				RegHelper.setup(new ModTorchBlock(0), "torch_unlit"),
 				RegHelper.setup(new ModWallTorchBlock(), "wall_torch"),
-				RegHelper.setup(new ModWallTorchBlock(0), "wall_torch_unlit")
+				RegHelper.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
+				RegHelper.setup(new GlowstoneTorch(), "torch_glowstone"),
+				RegHelper.setup(new GlowstoneWallTorch(), "wall_torch_glowstone")
 		);
 	}
 }
