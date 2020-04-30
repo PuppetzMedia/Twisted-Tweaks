@@ -9,10 +9,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.FireChargeItem;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -26,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
@@ -98,6 +101,34 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 			return ActionResultType.PASS;
 		}
 		return ActionResultType.PASS;
+	}
+
+	@Override
+	public boolean removedByPlayer(BlockState state, World world, BlockPos pos,
+								   PlayerEntity player, boolean willHarvest, IFluidState fluid) {
+
+		TileEntity tile = world.getTileEntity(pos);
+		if (!world.isRemote && !player.isCreative() && tile instanceof TileEntityTorch)
+		{
+			boolean torchBurnout = TorchConfig.isEnableTorchBurnout();
+			ItemStack stack = new ItemStack(torchBurnout ? ModBlocks.TORCH_UNLIT : ModBlocks.TORCH);
+
+			final double destroyChance = TorchConfig.getPickupDestroyChance();
+
+			// Roll dice to see if torch should be destroyed
+			if (destroyChance == 0 || world.rand.nextFloat() >= destroyChance)
+			{
+				if (torchBurnout) {
+					stack.setTagInfo("BlockEntityTag", ((TileEntityTorch)tile).write(new CompoundNBT()));
+				}
+				spawnAsEntity(world, pos, stack);
+			}
+		} return true;
+	}
+
+	@Override
+	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos,
+							 BlockState state, @Nullable TileEntity te, ItemStack stack) {
 	}
 
 	@Override
