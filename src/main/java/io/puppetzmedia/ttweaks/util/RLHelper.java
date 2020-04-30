@@ -4,7 +4,7 @@ import io.puppetzmedia.ttweaks.TwistedTweaks;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Tiny utility class to help find the righ {@code ResourceLocation}.
+ * Tiny utility class to help find the right {@code ResourceLocation}.
  */
 public class RLHelper {
 
