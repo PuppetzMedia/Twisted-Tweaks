@@ -1,8 +1,8 @@
 package io.puppetzmedia.ttweaks.core;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorch;
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorchLit;
+import io.puppetzmedia.ttweaks.tileentity.TorchTileEntity;
+import io.puppetzmedia.ttweaks.tileentity.TorchLitTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,13 +17,13 @@ public class RegistryHandler {
 	public static void registerTE(RegistryEvent.Register<TileEntityType<?>> evt) {
 
 		TileEntityType<?> type = TileEntityType.Builder.create(
-				TileEntityTorchLit::new, TileEntityTorchLit.VALID_BLOCKS).build(null);
+				TorchLitTileEntity::new, TorchLitTileEntity.VALID_BLOCKS).build(null);
 
 		type.setRegistryName(TwistedTweaks.MODID, "torch_lit_te");
 		evt.getRegistry().register(type);
 
 		type = TileEntityType.Builder.create(
-				TileEntityTorch::new, TileEntityTorch.VALID_BLOCKS).build(null);
+				TorchTileEntity::new, TorchTileEntity.VALID_BLOCKS).build(null);
 
 		type.setRegistryName(TwistedTweaks.MODID, "torch_te");
 		evt.getRegistry().register(type);

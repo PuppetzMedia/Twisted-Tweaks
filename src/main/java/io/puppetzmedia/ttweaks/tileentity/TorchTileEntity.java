@@ -18,10 +18,10 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
 @SuppressWarnings("SameParameterValue")
-public class TileEntityTorch extends TileEntity {
+public class TorchTileEntity extends TileEntity {
 
 	@ObjectHolder("torch_te")
-	public static final TileEntityType<TileEntityTorch> ENTITY_TYPE = null;
+	public static final TileEntityType<TorchTileEntity> ENTITY_TYPE = null;
 
 	public static final Block[] VALID_BLOCKS = {
 			ModBlocks.TORCH_UNLIT, ModBlocks.WALL_TORCH_UNLIT
@@ -29,17 +29,17 @@ public class TileEntityTorch extends TileEntity {
 	private int litAmount;
 	private int litTime;
 
-	protected TileEntityTorch(int litAmount, int litTime) {
+	protected TorchTileEntity(int litAmount, int litTime) {
 		//noinspection ConstantConditions
 		super(ENTITY_TYPE);
 
 		this.litAmount = litAmount;
 		this.litTime = litTime;
 	}
-	protected TileEntityTorch(TileEntityType<? extends TileEntityTorch> type) {
+	protected TorchTileEntity(TileEntityType<? extends TorchTileEntity> type) {
 		super(type);
 	}
-	public TileEntityTorch() {
+	public TorchTileEntity() {
 		this(0, 0);
 	}
 
@@ -67,10 +67,10 @@ public class TileEntityTorch extends TileEntity {
 	}
 
 	public static ActionResultType lightTorch(World world, BlockPos pos) {
-		return lightTorch((TileEntityTorch)world.getTileEntity(pos));
+		return lightTorch((TorchTileEntity)world.getTileEntity(pos));
 	}
 
-	public static ActionResultType lightTorch(TileEntityTorch torchEntity) {
+	public static ActionResultType lightTorch(TorchTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();
 		final BlockPos pos = torchEntity.getPos();
@@ -97,7 +97,7 @@ public class TileEntityTorch extends TileEntity {
 
 	protected ActionResultType copyToAndReset(World world, BlockPos pos, int addLitAmount) {
 
-		TileEntityTorch torchEntity = (TileEntityTorch) world.getTileEntity(pos);
+		TorchTileEntity torchEntity = (TorchTileEntity) world.getTileEntity(pos);
 		if (torchEntity == null)
 		{
 			TTLogger.error("Unable to find TileEntityTorch at pos %s", pos.toString());

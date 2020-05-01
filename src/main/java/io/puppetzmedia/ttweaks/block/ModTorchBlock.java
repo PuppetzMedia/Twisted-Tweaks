@@ -2,8 +2,8 @@ package io.puppetzmedia.ttweaks.block;
 
 import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.config.TorchConfig;
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorch;
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorchLit;
+import io.puppetzmedia.ttweaks.tileentity.TorchTileEntity;
+import io.puppetzmedia.ttweaks.tileentity.TorchLitTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -72,7 +72,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 				}
 				else stack.shrink(1);
 
-				final TileEntityTorch te = (TileEntityTorch) worldIn.getTileEntity(pos);
+				final TorchTileEntity te = (TorchTileEntity) worldIn.getTileEntity(pos);
 				if (te == null)
 				{
 					TTLogger.debug("onBlockActivated for %s at pos %s failed, no TileEntityTorch found",
@@ -89,7 +89,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 					float attempt = worldIn.rand.nextFloat();
 					boolean light = !te.hasReachedMaxLitAmount() && attempt <= litChance;
 
-					if (light && TileEntityTorch.lightTorch(worldIn, pos) == ActionResultType.FAIL)
+					if (light && TorchTileEntity.lightTorch(worldIn, pos) == ActionResultType.FAIL)
 					{
 						TTLogger.debug("onBlockActivated for %s at pos %s failed",
 								player.getDisplayNameAndUUID(), pos.toString());
@@ -114,7 +114,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 								   PlayerEntity player, boolean willHarvest, IFluidState fluid) {
 
 		TileEntity tile = world.getTileEntity(pos);
-		if (!world.isRemote && !player.isCreative() && tile instanceof TileEntityTorch)
+		if (!world.isRemote && !player.isCreative() && tile instanceof TorchTileEntity)
 		{
 			boolean torchBurnout = TorchConfig.isEnableTorchBurnout();
 			ItemStack stack = new ItemStack(torchBurnout ? ModBlocks.TORCH_UNLIT : ModBlocks.TORCH);
@@ -146,7 +146,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return lightValue != 0 ? new TileEntityTorchLit() : new TileEntityTorch();
+		return lightValue != 0 ? new TorchLitTileEntity() : new TorchTileEntity();
 	}
 
 	@OnlyIn(Dist.CLIENT)

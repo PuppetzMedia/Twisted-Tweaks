@@ -1,7 +1,7 @@
 package io.puppetzmedia.ttweaks.block;
 
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorch;
-import io.puppetzmedia.ttweaks.tileentity.TileEntityTorchLit;
+import io.puppetzmedia.ttweaks.tileentity.TorchTileEntity;
+import io.puppetzmedia.ttweaks.tileentity.TorchLitTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -41,6 +41,6 @@ public class ModWallTorchBlock extends WallTorchBlock implements ITileEntityOwne
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return lightValue != 0 ? new TileEntityTorchLit() : new TileEntityTorch();
+		return lightValue != 0 ? new TorchLitTileEntity() : new TorchTileEntity();
 	}
 }

@@ -17,16 +17,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
-public class TileEntityTorchLit extends TileEntityTorch implements ITickableTileEntity {
+public class TorchLitTileEntity extends TorchTileEntity implements ITickableTileEntity {
 
 	@ObjectHolder("torch_lit_te")
-	public static final TileEntityType<TileEntityTorchLit> ENTITY_TYPE = null;
+	public static final TileEntityType<TorchLitTileEntity> ENTITY_TYPE = null;
 
 	public static final Block[] VALID_BLOCKS = {
 			ModBlocks.TORCH, ModBlocks.WALL_TORCH
 	};
 
-	public TileEntityTorchLit() {
+	public TorchLitTileEntity() {
 		super(ENTITY_TYPE);
 	}
 
@@ -62,10 +62,10 @@ public class TileEntityTorchLit extends TileEntityTorch implements ITickableTile
 
 	@SuppressWarnings("UnusedReturnValue")
 	public static ActionResultType extinguishTorch(World world, BlockPos pos) {
-		return extinguishTorch((TileEntityTorchLit)world.getTileEntity(pos));
+		return extinguishTorch((TorchLitTileEntity)world.getTileEntity(pos));
 	}
 
-	public static ActionResultType extinguishTorch(TileEntityTorchLit torchEntity) {
+	public static ActionResultType extinguishTorch(TorchLitTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();
 		final BlockPos pos = torchEntity.getPos();
