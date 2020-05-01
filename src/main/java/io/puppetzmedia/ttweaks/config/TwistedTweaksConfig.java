@@ -7,6 +7,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Arrays;
+
 @Mod.EventBusSubscriber(modid = TwistedTweaks.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TwistedTweaksConfig {
 
@@ -31,5 +33,15 @@ public class TwistedTweaksConfig {
 		if (configEvent.getConfig().getSpec() == CLIENT_SPEC) {
 			bakeConfig();
 		}
+	}
+
+	static String[] splitAndTrimString(String string) {
+
+		final String[] split = string.split(",");
+		final String[] finish = new String[split.length];
+		for (int i = 0; i < split.length; i++) {
+			finish[i] = split[i].trim();
+		}
+		return finish;
 	}
 }
