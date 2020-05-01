@@ -1,48 +1,28 @@
-package uk.artdude.tweaks.twisted.common.blocks.tileentity;
+package io.puppetzmedia.ttweaks.tileentity;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
-/**
- * Created by Sam on 3/03/2018.
- */
-public class FluidTankTileEntity extends FluidTank
-{
-	public FluidTankTileEntity(final TileEntity tileEntity, final int capacity) {
+public class FluidTankTileEntity extends FluidTank {
+
+	public FluidTankTileEntity(final int capacity) {
 		super(capacity);
-		tile = tileEntity;
-	}
-
-	public FluidTankTileEntity(final TileEntity tileEntity, final FluidStack stack, final int capacity) {
-		super(stack, capacity);
-		tile = tileEntity;
-	}
-
-	public FluidTankTileEntity(final TileEntity tileEntity, final Fluid fluid, final int amount, final int capacity) {
-		super(fluid, amount, capacity);
-		tile = tileEntity;
 	}
 
 	@Override
-	public void setFluid(@Nullable FluidStack fluid)
-	{
+	public void setFluid(@Nullable FluidStack fluid) {
 		this.fluid = null;
 	}
 
 	@Override
-	public int getFluidAmount()
-	{
+	public int getFluidAmount() {
 		return 0;
 	}
 
 	@Override
-	public int fill(FluidStack resource, boolean doFill)
-	{
-		return resource.amount;
+	public int fill(FluidStack resource, FluidAction action) {
+		return resource.getAmount();
 	}
-
 }
