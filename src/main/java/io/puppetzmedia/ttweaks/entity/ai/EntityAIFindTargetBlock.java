@@ -1,4 +1,4 @@
-package uk.artdude.tweaks.twisted.common.ai;
+package io.puppetzmedia.ttweaks.entity.ai;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

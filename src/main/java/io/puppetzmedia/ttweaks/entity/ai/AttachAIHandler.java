@@ -1,4 +1,4 @@
-package uk.artdude.tweaks.twisted.common.ai;
+package io.puppetzmedia.ttweaks.entity.ai;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.util.ResourceLocation;
