@@ -5,14 +5,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TorchConfigSpec {
 
-	public final ForgeConfigSpec.IntValue maxLitTime;
-	public final ForgeConfigSpec.IntValue maxLitAmount;
-	public final ForgeConfigSpec.DoubleValue litChance;
-	public final ForgeConfigSpec.DoubleValue burnoutDestroyChance;
-	public final ForgeConfigSpec.DoubleValue pickupDestroyChance;
-	public final ForgeConfigSpec.BooleanValue rainExtinguish;
-	public final ForgeConfigSpec.BooleanValue showTorchTooltip;
-	public final ForgeConfigSpec.BooleanValue enableTorchBurnout;
+	final ForgeConfigSpec.IntValue maxLitTime;
+	final ForgeConfigSpec.IntValue maxLitAmount;
+	final ForgeConfigSpec.DoubleValue litChance;
+	final ForgeConfigSpec.DoubleValue burnoutDestroyChance;
+	final ForgeConfigSpec.DoubleValue pickupDestroyChance;
+	final ForgeConfigSpec.BooleanValue rainExtinguish;
+	final ForgeConfigSpec.BooleanValue showTorchTooltip;
+	final ForgeConfigSpec.BooleanValue enableTorchBurnout;
 
 	public TorchConfigSpec(ForgeConfigSpec.Builder builder) {
 
