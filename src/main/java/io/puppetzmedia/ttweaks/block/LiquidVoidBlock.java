@@ -1,29 +1,18 @@
-package uk.artdude.tweaks.twisted.common.blocks;
+package io.puppetzmedia.ttweaks.block;
 
+import io.puppetzmedia.ttweaks.tileentity.LiquidVoidTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.world.World;
-import uk.artdude.tweaks.twisted.TwistedTweaks;
-import uk.artdude.tweaks.twisted.common.tileentity.LiquidVoidTileEntity;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 
-public class LiquidVoidBlock extends Block implements ITileEntityProvider {
+public class LiquidVoidBlock extends Block implements ITileEntityOwner {
 
     public LiquidVoidBlock() {
-        super(Material.IRON);
-        setSoundType(SoundType.METAL);
-        setHardness(2.0F);
-        setResistance(10.0F);
-        setHarvestLevel("pickaxe", 2);
-        setCreativeTab(TwistedTweaks.creativeTab);
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.SOLID;
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL)
+                .hardnessAndResistance(2.0F, 10.0F)
+                .harvestTool(ToolType.PICKAXE).harvestLevel(2));
     }
 
     @Override
@@ -32,8 +21,12 @@ public class LiquidVoidBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
-        // Create the Tile Entity for the Liquid Void.
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new LiquidVoidTileEntity();
     }
 }

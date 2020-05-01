@@ -30,6 +30,9 @@ public final class ModBlocks {
 	@ObjectHolder("wall_torch_glowstone")
 	public static final Block WALL_TORCH_GLOWSTONE = null;
 
+	@ObjectHolder("liquid_void")
+	public static final Block LIQUID_VOID = null;
+
 	@SubscribeEvent
 	public static void onRegisterBlock(final RegistryEvent.Register<Block> event) {
 
@@ -39,7 +42,8 @@ public final class ModBlocks {
 				RegistryHandler.setup(new ModWallTorchBlock(), "wall_torch"),
 				RegistryHandler.setup(new ModWallTorchBlock(0), "wall_torch_unlit"),
 				RegistryHandler.setup(new GlowstoneTorchBlock(1), "torch_glowstone"),
-				RegistryHandler.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone")
+				RegistryHandler.setup(new GlowstoneWallTorch(1), "wall_torch_glowstone"),
+				RegistryHandler.setup(new LiquidVoidBlock(), "liquid_void")
 		);
 	}
 }
