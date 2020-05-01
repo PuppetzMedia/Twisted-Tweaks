@@ -5,7 +5,6 @@ import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import uk.artdude.tweaks.twisted.common.util.References;
 
 /**
  * Created by Sam on 4/03/2018.

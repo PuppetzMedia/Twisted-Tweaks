@@ -15,7 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import uk.artdude.tweaks.twisted.TwistedTweaks;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
-import uk.artdude.tweaks.twisted.common.util.References;
 import uk.artdude.tweaks.twisted.common.util.TTUtilities;
 
 import java.util.ArrayList;

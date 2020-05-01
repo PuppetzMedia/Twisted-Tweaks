@@ -10,7 +10,6 @@ import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import uk.artdude.tweaks.twisted.common.util.References;
 
 import java.util.List;
 import java.util.Map;

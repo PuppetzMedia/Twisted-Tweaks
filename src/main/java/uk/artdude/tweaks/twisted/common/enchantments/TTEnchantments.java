@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
-import uk.artdude.tweaks.twisted.common.util.References;
 
 @Mod.EventBusSubscriber
 public class TTEnchantments
