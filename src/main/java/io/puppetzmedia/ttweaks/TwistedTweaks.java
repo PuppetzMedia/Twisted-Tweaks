@@ -2,7 +2,6 @@ package io.puppetzmedia.ttweaks;
 
 import io.puppetzmedia.ttweaks.config.TwistedTweaksConfig;
 import io.puppetzmedia.ttweaks.worldgen.TorchFeature;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
@@ -30,12 +29,6 @@ public class TwistedTweaks {
 
         // Initialize mod logger
         TTLogger.init(LogManager.getLogger());
-
-        // Remove vanilla torch from creative tab using reflection
-        org.joor.Reflect.on(Items.TORCH).set("group", null);
-        if (Items.TORCH.getGroup() != null) {
-            TTLogger.error("Unable to remove vanilla torch from creative tab");
-        }
 
         // Register the setup methods for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
