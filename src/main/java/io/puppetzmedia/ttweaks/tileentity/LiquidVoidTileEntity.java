@@ -13,6 +13,7 @@ public class LiquidVoidTileEntity extends TileFluidHandler {
 	@ObjectHolder("liquid_void_te")
 	public static final TileEntityType<LiquidVoidTileEntity> ENTITY_TYPE = null;
 
+	/** Array of valid blocks for this tile entity used in registration process */
 	public static final Block[] VALID_BLOCKS = { ModBlocks.LIQUID_VOID };
 
 	public static final int CAPACITY = Integer.MAX_VALUE;

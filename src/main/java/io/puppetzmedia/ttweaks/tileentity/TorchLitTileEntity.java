@@ -22,6 +22,7 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 	@ObjectHolder("torch_lit_te")
 	public static final TileEntityType<TorchLitTileEntity> ENTITY_TYPE = null;
 
+	/** Array of valid blocks for this tile entity used in registration process */
 	public static final Block[] VALID_BLOCKS = {
 			ModBlocks.TORCH, ModBlocks.WALL_TORCH
 	};
@@ -56,15 +57,33 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 		}
 	}
 
+	/**
+	 * Remove torch tile entity and block at given {@code BlockPos}.
+	 */
 	public void destroyTorch(World world, BlockPos pos) {
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
 	}
 
+	/**
+	 * Replace {@code TorchLitTileEntity} in given world at
+	 * given {@code BlockPos} with unlit version.
+	 *
+	 * @see #extinguishTorch(TorchLitTileEntity)
+	 */
 	@SuppressWarnings("UnusedReturnValue")
 	public static ActionResultType extinguishTorch(World world, BlockPos pos) {
 		return extinguishTorch((TorchLitTileEntity)world.getTileEntity(pos));
 	}
 
+	/**
+	 * Replace given {@code TorchLitTileEntity} and block with unlit version.
+	 *
+	 * @param torchEntity torch {@code TileEntity} to extinguish.
+	 * @return {@link ActionResultType#SUCCESS} if torch was successfully extinguished
+	 * 			or {@link ActionResultType#FAIL} if something went wrong.
+	 *
+	 * @see #copyToAndReset(World, BlockPos, int)
+	 */
 	public static ActionResultType extinguishTorch(TorchLitTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();

@@ -36,6 +36,15 @@ public class RegistryHandler {
 		evt.getRegistry().register(type);
 	}
 
+	/**
+	 * Prepare given registry entry for registration process.
+	 *
+	 * @param entry registry entry to process.
+	 * @param name path to use for registry name creation.
+	 * @param <T> Forge registry entry type
+	 *
+	 * @return given registry entry
+	 */
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
 
 		entry.setRegistryName(TwistedTweaks.getResourceLocation(name));

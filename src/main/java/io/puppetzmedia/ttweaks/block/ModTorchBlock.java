@@ -47,7 +47,7 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 
-		// Disable spawning flame and smoke particles if no light
+		// Disable spawning flame and smoke particles for unlit torches
 		if (lightValue != 0) {
 			super.animateTick(stateIn, worldIn, pos, rand);
 		}
@@ -140,6 +140,8 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 	@Override
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos,
 							 BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		// Don't harvest block,
+		// we are already manually spawning it as entity in removedByPlayer
 	}
 
 	@Override

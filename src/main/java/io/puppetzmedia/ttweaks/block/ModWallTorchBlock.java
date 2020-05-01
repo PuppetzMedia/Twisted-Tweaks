@@ -28,7 +28,7 @@ public class ModWallTorchBlock extends WallTorchBlock implements ITileEntityOwne
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 
-		// Disable spawning flame and smoke particles if no light
+		// Disable spawning flame and smoke particles for unlit torches
 		if (lightValue != 0) {
 			super.animateTick(stateIn, worldIn, pos, rand);
 		}

@@ -66,10 +66,25 @@ public class TorchTileEntity extends TileEntity {
 		markDirty();
 	}
 
+	/**
+	 * Replace {@code TorchTileEntity} in given world at
+	 * given {@code BlockPos} with lit version.
+	 *
+	 * @see #lightTorch(TorchTileEntity)
+	 */
 	public static ActionResultType lightTorch(World world, BlockPos pos) {
 		return lightTorch((TorchTileEntity)world.getTileEntity(pos));
 	}
 
+	/**
+	 * Replace given {@code TorchTileEntity} and block with lit version.
+	 *
+	 * @param torchEntity torch {@code TileEntity} to light.
+	 * @return {@link ActionResultType#SUCCESS} if torch was successfully lit
+	 * 			or {@link ActionResultType#FAIL} if something went wrong.
+	 *
+	 * @see #copyToAndReset(World, BlockPos, int)
+	 */
 	public static ActionResultType lightTorch(TorchTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();
@@ -95,6 +110,17 @@ public class TorchTileEntity extends TileEntity {
 		return torchEntity.copyToAndReset(world, pos, 1);
 	}
 
+	/**
+	 * Increment lit amount for specified value and copy internal fields
+	 * to {@code TorchTileEntity} found in the given world at the given position.
+	 *
+	 * @param world {@code World} the tile entity to copy to is in.
+	 * @param pos {@code BlockPos} tile entity to copy to is at.
+	 * @param addLitAmount value to add to found tile entity {@code litAmount}.
+	 *
+	 * @return {@link ActionResultType#FAIL} if tile entity at specified pos was
+	 * 			not found and {@link ActionResultType#SUCCESS} otherwise.
+	 */
 	protected ActionResultType copyToAndReset(World world, BlockPos pos, int addLitAmount) {
 
 		TorchTileEntity torchEntity = (TorchTileEntity) world.getTileEntity(pos);
@@ -117,10 +143,16 @@ public class TorchTileEntity extends TileEntity {
 		return litAmount >= TorchConfig.getMaxLitAmount();
 	}
 
+	/**
+	 * @return amount of time this torch has been burning without being extinguished.
+	 */
 	public int getLitTime() {
 		return litTime;
 	}
 
+	/**
+	 * @return amount of time this torch was lit up through block activation.
+	 */
 	public int getLitAmount() {
 		return litAmount;
 	}
