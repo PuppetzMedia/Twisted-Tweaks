@@ -13,7 +13,7 @@ public class TorchConfig {
 	private static boolean showTorchTooltip;
 	private static boolean enableTorchBurnout;
 
-	protected static void bake() {
+	static void bake() {
 
 		maxLitTime = CLIENT.TORCH.maxLitTime.get();
 		maxLitAmount = CLIENT.TORCH.maxLitAmount.get();

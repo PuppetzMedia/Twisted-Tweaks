@@ -14,7 +14,7 @@ public class TorchConfigSpec {
 	final ForgeConfigSpec.BooleanValue showTorchTooltip;
 	final ForgeConfigSpec.BooleanValue enableTorchBurnout;
 
-	public TorchConfigSpec(ForgeConfigSpec.Builder builder) {
+	TorchConfigSpec(ForgeConfigSpec.Builder builder) {
 
 		builder.push("Torch");
 
