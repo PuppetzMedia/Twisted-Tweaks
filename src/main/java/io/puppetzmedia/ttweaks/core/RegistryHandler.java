@@ -1,6 +1,7 @@
 package io.puppetzmedia.ttweaks.core;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
+import io.puppetzmedia.ttweaks.tileentity.LiquidVoidTileEntity;
 import io.puppetzmedia.ttweaks.tileentity.TorchTileEntity;
 import io.puppetzmedia.ttweaks.tileentity.TorchLitTileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -26,6 +27,12 @@ public class RegistryHandler {
 				TorchTileEntity::new, TorchTileEntity.VALID_BLOCKS).build(null);
 
 		type.setRegistryName(TwistedTweaks.MODID, "torch_te");
+		evt.getRegistry().register(type);
+
+		type = TileEntityType.Builder.create(LiquidVoidTileEntity::new,
+				LiquidVoidTileEntity.VALID_BLOCKS).build(null);
+
+		type.setRegistryName(TwistedTweaks.MODID, "liquid_void_te");
 		evt.getRegistry().register(type);
 	}
 
