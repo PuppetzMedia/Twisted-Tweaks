@@ -4,11 +4,11 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fluids.capability.TileFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public class TileEntityLiquidVoid extends TileFluidHandler
+public class LiquidVoidTileEntity extends TileFluidHandler
 {
 	public static final int CAPACITY = Integer.MAX_VALUE;
 
-	public TileEntityLiquidVoid() {
+	public LiquidVoidTileEntity() {
 		tank = new FluidTank(CAPACITY);
 		super(TileEntityType.TANK);
 	}

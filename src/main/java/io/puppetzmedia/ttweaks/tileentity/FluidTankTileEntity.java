@@ -10,19 +10,19 @@ import javax.annotation.Nullable;
 /**
  * Created by Sam on 3/03/2018.
  */
-public class FluidTankTile extends FluidTank
+public class FluidTankTileEntity extends FluidTank
 {
-	public FluidTankTile(final TileEntity tileEntity, final int capacity) {
+	public FluidTankTileEntity(final TileEntity tileEntity, final int capacity) {
 		super(capacity);
 		tile = tileEntity;
 	}
 
-	public FluidTankTile(final TileEntity tileEntity, final FluidStack stack, final int capacity) {
+	public FluidTankTileEntity(final TileEntity tileEntity, final FluidStack stack, final int capacity) {
 		super(stack, capacity);
 		tile = tileEntity;
 	}
 
-	public FluidTankTile(final TileEntity tileEntity, final Fluid fluid, final int amount, final int capacity) {
+	public FluidTankTileEntity(final TileEntity tileEntity, final Fluid fluid, final int amount, final int capacity) {
 		super(fluid, amount, capacity);
 		tile = tileEntity;
 	}
