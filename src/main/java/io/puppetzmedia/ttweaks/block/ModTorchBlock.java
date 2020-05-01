@@ -18,10 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -67,11 +64,6 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 		{
 			if (lightValue == 0)
 			{
-				if(!isItemFireCharge) {
-					stack.damageItem(1, player, (p) -> p.sendBreakAnimation(handIn));
-				}
-				else stack.shrink(1);
-
 				final TorchTileEntity te = (TorchTileEntity) worldIn.getTileEntity(pos);
 				if (te == null)
 				{
@@ -80,7 +72,18 @@ public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
 
 					return ActionResultType.FAIL;
 				}
-				worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS,
+				SoundEvent sound;
+				// We need to manually handle using up item charge
+				if(!isItemFireCharge)
+				{
+					stack.damageItem(1, player, (p) -> p.sendBreakAnimation(handIn));
+					sound = SoundEvents.ITEM_FIRECHARGE_USE;
+				}
+				else {
+					stack.shrink(1);
+					sound = SoundEvents.ITEM_FLINTANDSTEEL_USE;
+				}
+				worldIn.playSound(player, pos, sound, SoundCategory.BLOCKS,
 						1.0F, player.getRNG().nextFloat() * 0.4F + 0.8F);
 
 				if (!worldIn.isRemote)
