@@ -22,11 +22,6 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 	@ObjectHolder("torch_lit_te")
 	public static final TileEntityType<TorchLitTileEntity> ENTITY_TYPE = null;
 
-	/** Array of valid blocks for this tile entity used in registration process */
-	public static final Block[] VALID_BLOCKS = {
-			ModBlocks.TORCH, ModBlocks.WALL_TORCH
-	};
-
 	public TorchLitTileEntity() {
 		super(ENTITY_TYPE);
 	}

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:torch",
+    "twistedtweaks:torch_unlit",
+    "twistedtweaks:torch_glowstone"
+  ]
+}

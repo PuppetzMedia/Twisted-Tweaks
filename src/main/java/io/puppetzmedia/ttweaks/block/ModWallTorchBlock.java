@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class ModWallTorchBlock extends WallTorchBlock implements ITileEntityOwner {
+public class ModWallTorchBlock extends WallTorchBlock {
 
 	public ModWallTorchBlock(int lightValue) {
 		super(Block.Properties.from(Blocks.WALL_TORCH).lightValue(lightValue));

@@ -1,32 +1,30 @@
 package io.puppetzmedia.ttweaks.entity.ai;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
+import io.puppetzmedia.ttweaks.config.AiConfig;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.math.BlockPos;
-import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
-
-import java.util.Arrays;
 
 
 /**
  * Created by Sam on 21/03/2018.
  */
-public class EntityAIBlockInteract extends EntityAIBase
+public class EntityAIBlockInteract extends Goal
 {
-	protected LivingEntity entity;
-	protected BlockPos targetPos = BlockPos.ORIGIN;
-	protected Block target;
+	protected MobEntity entity;
+	protected BlockPos targetPos = BlockPos.ZERO;
+	protected boolean target;
 	boolean hasStoppedDoorInteraction;
 	float entityPositionX;
 	float entityPositionZ;
 
-	public EntityAIBlockInteract(LivingEntity entityIn)
-	{
+	public EntityAIBlockInteract(MobEntity entityIn) {
 		this.entity = entityIn;
 
-		if (!(entityIn.getNavigator() instanceof PathNavigateGround))
+		if (!(entityIn.getNavigator() instanceof GroundPathNavigator))
 		{
 			throw new IllegalArgumentException("Unsupported mob type for DoorInteractGoal");
 		}
@@ -37,7 +35,7 @@ public class EntityAIBlockInteract extends EntityAIBase
 	 */
 	public boolean shouldExecute()
 	{
-		if(!TTConfiguration.ai.aiAttackBlocks)
+		if(!AiConfig.isAiAttackBlocks())
 			return false;
 
 		for(int i = -6; i < 7; i++)
@@ -46,7 +44,7 @@ public class EntityAIBlockInteract extends EntityAIBase
 			{
 				for(int k = -6; k < 7; k++)
 				{
-					if(getTargetBlock(new BlockPos(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k)) != null)
+					if(canTargetBlock(new BlockPos(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k)))
 					{
 						if(entity.getNavigator().canEntityStandOnPos(new BlockPos(entity.getPosition().getX() + i, entity.getPosition().getY() + j, entity.getPosition().getZ() + k)))
 						{
@@ -57,7 +55,7 @@ public class EntityAIBlockInteract extends EntityAIBase
 			}
 		}
 
-		PathNavigateGround pathnavigateground = (PathNavigateGround)this.entity.getNavigator();
+		GroundPathNavigator pathnavigateground = (GroundPathNavigator)this.entity.getNavigator();
 		Path path = pathnavigateground.getPath();
 
 		if (path != null)
@@ -68,23 +66,23 @@ public class EntityAIBlockInteract extends EntityAIBase
 				PathPoint pathpoint = path.getPathPointFromIndex(i);
 				this.targetPos = new BlockPos(pathpoint.x, pathpoint.y, pathpoint.z);
 
-				if (this.entity.getDistanceSq((double)this.targetPos.getX(), this.entity.posY, (double)this.targetPos.getZ()) <= 2.25D)
+				if (this.entity.getDistanceSq((double)this.targetPos.getX(), this.entity.getPosY(), (double)this.targetPos.getZ()) <= 2.25D)
 				{
-					this.target = this.getTargetBlock(this.targetPos);
-					if(target == null)
+					this.target = this.canTargetBlock(this.targetPos);
+					if(!target)
 					{
-						this.target = this.getTargetBlock(this.targetPos.down());
+						this.target = this.canTargetBlock(this.targetPos.down());
 						this.targetPos = targetPos.down();
 					}
 
-					if(target == null)
+					if(!target)
 					{
-						this.target = this.getTargetBlock(this.targetPos.up(2));
+						this.target = this.canTargetBlock(this.targetPos.up(2));
 						this.targetPos = targetPos.up(2);
 
 					}
 
-					if (this.target != null)
+					if (this.target)
 					{
 						return true;
 					}
@@ -92,8 +90,8 @@ public class EntityAIBlockInteract extends EntityAIBase
 			}
 
 			this.targetPos = (new BlockPos(this.entity)).down();
-			this.target = this.getTargetBlock(this.targetPos);
-			return this.target != null;
+			this.target = this.canTargetBlock(this.targetPos);
+			return this.target;
 		}
 		else
 		{
@@ -116,8 +114,8 @@ public class EntityAIBlockInteract extends EntityAIBase
 	public void startExecuting()
 	{
 		this.hasStoppedDoorInteraction = false;
-		this.entityPositionX = (float)((double)((float)this.targetPos.getX() + 0.5F) - this.entity.posX);
-		this.entityPositionZ = (float)((double)((float)this.targetPos.getZ() + 0.5F) - this.entity.posZ);
+		this.entityPositionX = (float)((double)((float)this.targetPos.getX() + 0.5F) - this.entity.getPosX());
+		this.entityPositionZ = (float)((double)((float)this.targetPos.getZ() + 0.5F) - this.entity.getPosZ());
 	}
 
 	/**
@@ -127,8 +125,8 @@ public class EntityAIBlockInteract extends EntityAIBase
 	{
 
 
-		float f = (float)((double)((float)this.targetPos.getX() + 0.5F) - this.entity.posX);
-		float f1 = (float)((double)((float)this.targetPos.getZ() + 0.5F) - this.entity.posZ);
+		float f = (float)((double)((float)this.targetPos.getX() + 0.5F) - this.entity.getPosX());
+		float f1 = (float)((double)((float)this.targetPos.getZ() + 0.5F) - this.entity.getPosZ());
 		float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
 
 		if (f2 < 0.0F)
@@ -137,17 +135,8 @@ public class EntityAIBlockInteract extends EntityAIBase
 		}
 	}
 
-	private Block getTargetBlock(BlockPos pos)
+	private boolean canTargetBlock(BlockPos pos)
 	{
-		IBlockState iblockstate = this.entity.world.getBlockState(pos);
-		Block block = iblockstate.getBlock();
-
-		String regName = block.getRegistryName().toString();
-		for(String s : TTConfiguration.ai.attackableBlocks)
-			if(s.equalsIgnoreCase(regName))
-				return block;
-
-
-		return null;
+		return this.entity.world.getBlockState(pos).getBlock().isIn(AiConfig.attackableBlocks);
 	}
 }

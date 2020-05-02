@@ -1,11 +1,10 @@
 package io.puppetzmedia.ttweaks.entity.ai;
 
+import io.puppetzmedia.ttweaks.config.AiConfigSpec;
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import uk.artdude.tweaks.twisted.common.configuration.TTConfiguration;
 
 /**
  * Created by Sam on 21/03/2018.
@@ -16,20 +15,14 @@ public class AttachAIHandler
 	@SubscribeEvent
 	public static void onEntitySpawn(EntityJoinWorldEvent event)
 	{
-		if(event.getEntity() instanceof CreatureEntity)
+		if(event.getEntity().getType().isContained(AiConfigSpec.attackBlockMobs))
 		{
-			for(String s : TTConfiguration.ai.attackBlockMobs)
-			{
-				if(EntityList.getClass(new ResourceLocation(s)) == event.getEntity().getClass())
-				{
-					CreatureEntity living = (CreatureEntity) event.getEntity();
-					EntityAIBreakBlocks breakBlocks = new EntityAIBreakBlocks(living);
-					EntityAIFindTargetBlock moveTo = new EntityAIFindTargetBlock(living);
+			CreatureEntity living = (CreatureEntity) event.getEntity();
+			BreakBlocksGoal breakBlocks = new BreakBlocksGoal(living);
+			FindTargetBlockGoal moveTo = new FindTargetBlockGoal(living);
 
-					living.tasks.addTask(living.tasks.taskEntries.size() + 1, breakBlocks);
-					living.tasks.addTask(living.tasks.taskEntries.size() + 1, moveTo);
-				}
-			}
+			living.goalSelector.addGoal((int) (living.goalSelector.getRunningGoals().count() + 1), breakBlocks);//todo
+			living.goalSelector.addGoal((int) (living.goalSelector.getRunningGoals().count() + 1), moveTo);
 		}
 	}
 }

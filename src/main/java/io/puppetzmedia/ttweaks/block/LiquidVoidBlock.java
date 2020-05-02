@@ -7,12 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 
-public class LiquidVoidBlock extends Block implements ITileEntityOwner {
+public class LiquidVoidBlock extends Block {
 
-    public LiquidVoidBlock() {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL)
-                .hardnessAndResistance(2.0F, 10.0F)
-                .harvestTool(ToolType.PICKAXE).harvestLevel(2));
+    public LiquidVoidBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

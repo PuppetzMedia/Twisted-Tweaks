@@ -10,5 +10,12 @@
   "item.twistedtweaks.torch_paste": "Torch Paste",
 
   "tt.info.torch.litamount": "Lit Amount",
-  "tt.info.torch.littime": "Lit Time"
+  "tt.info.torch.littime": "Lit Time",
+
+  "tt.command.error.generic":"Invalid Command!",
+  "tt.command.error.invalidoption":"Invalid Option!",
+  "tt.command.error.invalidclear":"Please Enter A Player's Name!",
+  "tt.command.error.invalidinventory":"Invalid Option!,",
+  "tt.command.success.clearall":"Cleared All Starter Inventory Data!",
+  "tt.command.success.clearplayer":"Cleared Player Starter Data!"
 }

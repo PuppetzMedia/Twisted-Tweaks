@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class TwistedTweaks {
 
     public static final String MODID = "twistedtweaks";
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public TwistedTweaks() {
 
@@ -35,7 +35,7 @@ public class TwistedTweaks {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 
         // Register Mod configuration
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, TwistedTweaksConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, TwistedTweaksConfig.SERVER_SPEC);
 
         // Register ourselves for game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

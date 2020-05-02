@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class ModTorchBlock extends TorchBlock implements ITileEntityOwner {
+public class ModTorchBlock extends TorchBlock {
 
 	public ModTorchBlock(int lightValue) {
 		super(Block.Properties.from(Blocks.TORCH).lightValue(lightValue));

@@ -1,6 +1,6 @@
 package io.puppetzmedia.ttweaks.config;
 
-import static io.puppetzmedia.ttweaks.config.TwistedTweaksConfig.CLIENT;
+import static io.puppetzmedia.ttweaks.config.TwistedTweaksConfig.SERVER;
 
 public class TorchConfig {
 
@@ -15,14 +15,14 @@ public class TorchConfig {
 
 	static void bake() {
 
-		maxLitTime = CLIENT.TORCH.maxLitTime.get();
-		maxLitAmount = CLIENT.TORCH.maxLitAmount.get();
-		litChance = CLIENT.TORCH.litChance.get();
-		burnoutDestroyChance = CLIENT.TORCH.burnoutDestroyChance.get();
-		pickupDestroyChance = CLIENT.TORCH.pickupDestroyChance.get();
-		rainExtinguish  = CLIENT.TORCH.rainExtinguish.get();
-		showTorchTooltip = CLIENT.TORCH.showTorchTooltip.get();
-		enableTorchBurnout = CLIENT.TORCH.enableTorchBurnout.get();
+		maxLitTime = SERVER.TORCH.maxLitTime.get();
+		maxLitAmount = SERVER.TORCH.maxLitAmount.get();
+		litChance = SERVER.TORCH.litChance.get();
+		burnoutDestroyChance = SERVER.TORCH.burnoutDestroyChance.get();
+		pickupDestroyChance = SERVER.TORCH.pickupDestroyChance.get();
+		rainExtinguish  = SERVER.TORCH.rainExtinguish.get();
+		showTorchTooltip = SERVER.TORCH.showTorchTooltip.get();
+		enableTorchBurnout = SERVER.TORCH.enableTorchBurnout.get();
 	}
 
 	/** @return Total amount of time a torch will be lit, in ticks */

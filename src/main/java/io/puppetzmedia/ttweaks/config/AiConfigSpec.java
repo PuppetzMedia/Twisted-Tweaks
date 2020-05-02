@@ -1,14 +1,17 @@
 package io.puppetzmedia.ttweaks.config;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public final class AiConfigSpec {
 
 	final ForgeConfigSpec.BooleanValue aiAttackBlocks;
-	final ForgeConfigSpec.ConfigValue<String> attackBlockMobs;
-	final ForgeConfigSpec.ConfigValue<String> attackableBlocks;
+	public static final Tag<EntityType<?>> attackBlockMobs = new EntityTypeTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"attack_block_mobs"));
 	final ForgeConfigSpec.EnumValue<Difficulty> minAttackBlockDifficulty;
 	final ForgeConfigSpec.DoubleValue aiAttackBlocksBreakSpeed;
 
@@ -20,17 +23,6 @@ public final class AiConfigSpec {
 				.comment("Should mobs attack target blocks? [Default = true]")
 				.translation(TwistedTweaks.MODID + ".config." + "aiAttackBlocks")
 				.define("aiAttackBlocks", true);
-
-		attackBlockMobs = builder
-				.comment("List of mobs that should attack blocks [Default = Zombie]")
-				.translation(TwistedTweaks.MODID + ".config." + "attackBlockMobs")
-				.define("attackBlockMobs", "Zombie");
-
-		attackableBlocks = builder
-				.comment("List of attackable blocks [Example = minecraft:torch]")
-				.translation(TwistedTweaks.MODID + ".config." + "attackableBlocks")
-				.define("attackableBlocks", "minecraft:torch, " +
-						"twistedtweaks:torch_unlit, twistedtweaks:glowstone_torch");
 
 		minAttackBlockDifficulty = builder
 				.comment("The minimum difficulty that mobs will break blocks [Default = EASY]")
