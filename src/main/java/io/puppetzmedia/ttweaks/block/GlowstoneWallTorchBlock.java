@@ -1,27 +1,24 @@
 package io.puppetzmedia.ttweaks.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.WallTorchBlock;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class GlowstoneWallTorch extends WallTorchBlock {
+public class GlowstoneWallTorchBlock extends WallTorchBlock {
 
-	public GlowstoneWallTorch(int lightValue) {
-		super(Block.Properties.from(Blocks.WALL_TORCH).lightValue(lightValue));
+
+	public GlowstoneWallTorchBlock(Properties p_i48298_1_) {
+		super(p_i48298_1_);
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	//@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 
 		if (worldIn.getGameTime() % 5 != 0) {

@@ -57,12 +57,4 @@ public class TwistedTweaks {
         LOGGER.info("Post-initialization phase...");
         ClientSetup.setRenderLayers();
     }
-
-    /**
-     * @return {@code ResourceLocation} pointing to provided path with
-     * {@link TwistedTweaks#MODID} as namespace
-     */
-    public static ResourceLocation getResourceLocation(String path) {
-        return new ResourceLocation(TwistedTweaks.MODID, path);
-    }
 }

@@ -3,7 +3,7 @@ package io.puppetzmedia.ttweaks.item;
 import java.util.function.Supplier;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.block.ModBlocks;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ public class ModItemGroup extends ItemGroup {
 
 	/** Main item group for this mod used for all items */
 	public static final ItemGroup MAIN = new ModItemGroup(
-			TwistedTweaks.MODID, () -> new ItemStack(ModBlocks.LIQUID_VOID.asItem()));
+			TwistedTweaks.MODID, () -> new ItemStack(RegistryHandler.ModBlocks.LIQUID_VOID.asItem()));
 
 	public static final Item.Properties PROPERTIES =
 			new Item.Properties().group(ModItemGroup.MAIN);

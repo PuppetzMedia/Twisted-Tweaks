@@ -1,7 +1,8 @@
 package io.puppetzmedia.ttweaks.worldgen;
 
 import com.mojang.datafixers.Dynamic;
-import io.puppetzmedia.ttweaks.block.ModBlocks;
+import io.puppetzmedia.ttweaks.block.LitTorchBlock;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -20,7 +21,7 @@ import java.util.function.Function;
 
 /**
  * Add this feature to biomes in which you want vanilla torch blocks replaced with
- * {@link io.puppetzmedia.ttweaks.block.ModTorchBlock ModTorchBlock} instances.
+ * {@link LitTorchBlock ModTorchBlock} instances.
  *
  * This should be done from {@code FMLCommonSetupEvent} in the pre-initialization phase
  *
@@ -52,12 +53,12 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
 					Block block = state.getBlock();
 
 					if (block == Blocks.TORCH) {
-						world.setBlockState(replacePos, ModBlocks.TORCH.getDefaultState(), 3);
+						world.setBlockState(replacePos, RegistryHandler.ModBlocks.TORCH.getDefaultState(), 3);
 					}
 					else if (block == Blocks.WALL_TORCH)
 					{
 						Direction direction = state.get(BlockStateProperties.HORIZONTAL_FACING);
-						world.setBlockState(replacePos, ModBlocks.WALL_TORCH.getDefaultState()
+						world.setBlockState(replacePos, RegistryHandler.ModBlocks.WALL_TORCH.getDefaultState()
 								.with(BlockStateProperties.HORIZONTAL_FACING, direction), 3);
 					}
 				}

@@ -2,8 +2,8 @@ package io.puppetzmedia.ttweaks.tileentity;
 
 import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.block.ModBlocks;
 import io.puppetzmedia.ttweaks.config.TorchConfig;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,12 +17,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
-public class TorchLitTileEntity extends TorchTileEntity implements ITickableTileEntity {
+public class LitTorchTileEntity extends UnlitTorchTileEntity implements ITickableTileEntity {
 
 	@ObjectHolder("torch_lit_te")
-	public static final TileEntityType<TorchLitTileEntity> ENTITY_TYPE = null;
+	public static final TileEntityType<LitTorchTileEntity> ENTITY_TYPE = null;
 
-	public TorchLitTileEntity() {
+	public LitTorchTileEntity() {
 		super(ENTITY_TYPE);
 	}
 
@@ -34,14 +34,12 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 		}
 		final int litTime = getLitTime();
 
-		final boolean canSeeSky = (TorchConfig.isRainExtinguish() &&
-				(litTime % 200) == 0) && world.canSeeSky(pos.up(1));
+		final boolean isInOpenRain = TorchConfig.isRainExtinguish() && world.canSeeSky(pos.up()) && world.isRaining();
 
 		increaseLitTime(1);
  		boolean isTimeOverMax = litTime >= TorchConfig.getMaxLitTime();
 
-		if (isTimeOverMax || (TorchConfig.isRainExtinguish() && world.isRaining() && canSeeSky))
-		{
+		if (isTimeOverMax || isInOpenRain) {
 			final double destroyChance = TorchConfig.getBurnoutDestroyChance();
 
 			// Roll dice to see if torch should be destroyed
@@ -63,11 +61,11 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 	 * Replace {@code TorchLitTileEntity} in given world at
 	 * given {@code BlockPos} with unlit version.
 	 *
-	 * @see #extinguishTorch(TorchLitTileEntity)
+	 * @see #extinguishTorch(LitTorchTileEntity)
 	 */
 	@SuppressWarnings("UnusedReturnValue")
 	public static ActionResultType extinguishTorch(World world, BlockPos pos) {
-		return extinguishTorch((TorchLitTileEntity)world.getTileEntity(pos));
+		return extinguishTorch((LitTorchTileEntity)world.getTileEntity(pos));
 	}
 
 	/**
@@ -79,25 +77,25 @@ public class TorchLitTileEntity extends TorchTileEntity implements ITickableTile
 	 *
 	 * @see #copyToAndReset(World, BlockPos, int)
 	 */
-	public static ActionResultType extinguishTorch(TorchLitTileEntity torchEntity) {
+	public static ActionResultType extinguishTorch(LitTorchTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();
 		final BlockPos pos = torchEntity.getPos();
 		final BlockState state = torchEntity.getBlockState();
 		final Block torchBlock = state.getBlock();
 
-		if (torchBlock == ModBlocks.TORCH) {
-			world.setBlockState(pos, ModBlocks.TORCH_UNLIT.getDefaultState());
+		if (torchBlock == RegistryHandler.ModBlocks.TORCH) {
+			world.setBlockState(pos, RegistryHandler.ModBlocks.TORCH_UNLIT.getDefaultState());
 		}
-		else if (torchBlock == ModBlocks.WALL_TORCH)
+		else if (torchBlock == RegistryHandler.ModBlocks.WALL_TORCH)
 		{
 			Direction direction = state.get(WallTorchBlock.HORIZONTAL_FACING);
-			world.setBlockState(pos, ModBlocks.WALL_TORCH_UNLIT.getDefaultState()
+			world.setBlockState(pos, RegistryHandler.ModBlocks.WALL_TORCH_UNLIT.getDefaultState()
 					.with(WallTorchBlock.HORIZONTAL_FACING, direction));
 		}
 		else {
 			TTLogger.error("Unknown torch block at pos %s, expected %s or %s",
-					pos.toString(), ModBlocks.TORCH.toString(), ModBlocks.WALL_TORCH.toString());
+					pos.toString(), RegistryHandler.ModBlocks.TORCH.toString(), RegistryHandler.ModBlocks.WALL_TORCH.toString());
 
 			return ActionResultType.FAIL;
 		}

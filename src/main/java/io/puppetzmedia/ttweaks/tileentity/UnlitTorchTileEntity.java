@@ -2,8 +2,8 @@ package io.puppetzmedia.ttweaks.tileentity;
 
 import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.block.ModBlocks;
 import io.puppetzmedia.ttweaks.config.TorchConfig;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.WallTorchBlock;
@@ -18,46 +18,36 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(TwistedTweaks.MODID)
 @SuppressWarnings("SameParameterValue")
-public class TorchTileEntity extends TileEntity {
+public class UnlitTorchTileEntity extends TileEntity {
 
 	@ObjectHolder("torch_te")
-	public static final TileEntityType<TorchTileEntity> ENTITY_TYPE = null;
+	public static final TileEntityType<UnlitTorchTileEntity> ENTITY_TYPE = null;
 
-	public static final Block[] VALID_BLOCKS = {
-			ModBlocks.TORCH_UNLIT, ModBlocks.WALL_TORCH_UNLIT
-	};
-	private int litAmount;
-	private int litTime;
+	private int litAmount = 0;
+	private int litTime = 0;
 
-	protected TorchTileEntity(int litAmount, int litTime) {
-		//noinspection ConstantConditions
-		super(ENTITY_TYPE);
-
-		this.litAmount = litAmount;
-		this.litTime = litTime;
-	}
-	protected TorchTileEntity(TileEntityType<? extends TorchTileEntity> type) {
+	protected UnlitTorchTileEntity(TileEntityType<? extends UnlitTorchTileEntity> type) {
 		super(type);
 	}
-	public TorchTileEntity() {
-		this(0, 0);
+	public UnlitTorchTileEntity() {
+		super(ENTITY_TYPE);
 	}
 
 	@Override
 	public void read(CompoundNBT compound) {
 
 		super.read(compound);
-
-		litAmount = compound.getInt("lit_amount");
-		litTime  = compound.getInt("lit_time");
+		CompoundNBT data = compound.getCompound("data");
+		litAmount = data.getInt("lit_amount");
+		litTime  = data.getInt("lit_time");
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-
-		compound.putInt("lit_amount", litAmount);
-		compound.putInt("lit_time", litTime);
-
+		CompoundNBT data = new CompoundNBT();
+		data.putInt("lit_amount", litAmount);
+		data.putInt("lit_time", litTime);
+		compound.put("data",data);
 		return super.write(compound);
 	}
 
@@ -70,10 +60,10 @@ public class TorchTileEntity extends TileEntity {
 	 * Replace {@code TorchTileEntity} in given world at
 	 * given {@code BlockPos} with lit version.
 	 *
-	 * @see #lightTorch(TorchTileEntity)
+	 * @see #lightTorch(UnlitTorchTileEntity)
 	 */
 	public static ActionResultType lightTorch(World world, BlockPos pos) {
-		return lightTorch((TorchTileEntity)world.getTileEntity(pos));
+		return lightTorch((UnlitTorchTileEntity)world.getTileEntity(pos));
 	}
 
 	/**
@@ -85,25 +75,25 @@ public class TorchTileEntity extends TileEntity {
 	 *
 	 * @see #copyToAndReset(World, BlockPos, int)
 	 */
-	public static ActionResultType lightTorch(TorchTileEntity torchEntity) {
+	public static ActionResultType lightTorch(UnlitTorchTileEntity torchEntity) {
 
 		final World world = torchEntity.getWorld();
 		final BlockPos pos = torchEntity.getPos();
 		final BlockState state = torchEntity.getBlockState();
 		final Block torchBlock = state.getBlock();
 
-		if (torchBlock == ModBlocks.TORCH_UNLIT) {
-			world.setBlockState(pos, ModBlocks.TORCH.getDefaultState());
+		if (torchBlock == RegistryHandler.ModBlocks.TORCH_UNLIT) {
+			world.setBlockState(pos, RegistryHandler.ModBlocks.TORCH.getDefaultState());
 		}
-		else if (torchBlock == ModBlocks.WALL_TORCH_UNLIT)
+		else if (torchBlock == RegistryHandler.ModBlocks.WALL_TORCH_UNLIT)
 		{
 			Direction direction = state.get(WallTorchBlock.HORIZONTAL_FACING);
-			world.setBlockState(pos, ModBlocks.WALL_TORCH.getDefaultState()
+			world.setBlockState(pos, RegistryHandler.ModBlocks.WALL_TORCH.getDefaultState()
 					.with(WallTorchBlock.HORIZONTAL_FACING, direction));
 		}
 		else {
 			TTLogger.error("Unknown torch block at pos %s, expected %s or %s",
-					pos.toString(), ModBlocks.TORCH_UNLIT.toString(), ModBlocks.WALL_TORCH_UNLIT.toString());
+					pos.toString(), RegistryHandler.ModBlocks.TORCH_UNLIT.toString(), RegistryHandler.ModBlocks.WALL_TORCH_UNLIT.toString());
 
 			return ActionResultType.FAIL;
 		}
@@ -123,7 +113,7 @@ public class TorchTileEntity extends TileEntity {
 	 */
 	protected ActionResultType copyToAndReset(World world, BlockPos pos, int addLitAmount) {
 
-		TorchTileEntity torchEntity = (TorchTileEntity) world.getTileEntity(pos);
+		UnlitTorchTileEntity torchEntity = (UnlitTorchTileEntity) world.getTileEntity(pos);
 		if (torchEntity == null)
 		{
 			TTLogger.error("Unable to find TileEntityTorch at pos %s", pos.toString());
@@ -155,5 +145,13 @@ public class TorchTileEntity extends TileEntity {
 	 */
 	public int getLitAmount() {
 		return litAmount;
+	}
+
+	public void setLitTime(int litTime) {
+		this.litTime = litTime;
+	}
+
+	public void setLitAmount(int litAmount) {
+		this.litAmount = litAmount;
 	}
 }

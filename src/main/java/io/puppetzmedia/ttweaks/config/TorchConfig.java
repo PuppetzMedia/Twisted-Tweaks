@@ -8,7 +8,6 @@ public class TorchConfig {
 	private static int maxLitAmount;
 	private static double litChance;
 	private static double burnoutDestroyChance;
-	private static double pickupDestroyChance;
 	private static boolean rainExtinguish ;
 	private static boolean showTorchTooltip;
 	private static boolean enableTorchBurnout;
@@ -19,7 +18,6 @@ public class TorchConfig {
 		maxLitAmount = SERVER.TORCH.maxLitAmount.get();
 		litChance = SERVER.TORCH.litChance.get();
 		burnoutDestroyChance = SERVER.TORCH.burnoutDestroyChance.get();
-		pickupDestroyChance = SERVER.TORCH.pickupDestroyChance.get();
 		rainExtinguish  = SERVER.TORCH.rainExtinguish.get();
 		showTorchTooltip = SERVER.TORCH.showTorchTooltip.get();
 		enableTorchBurnout = SERVER.TORCH.enableTorchBurnout.get();
@@ -60,8 +58,4 @@ public class TorchConfig {
 		return enableTorchBurnout;
 	}
 
-	/** @return chance of destroying the torch when picking it up */
-	public static double getPickupDestroyChance() {
-		return pickupDestroyChance;
-	}
 }
