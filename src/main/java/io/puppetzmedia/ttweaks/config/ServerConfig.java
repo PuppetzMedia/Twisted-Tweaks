@@ -1,14 +1,26 @@
 package io.puppetzmedia.ttweaks.config;
 
 import com.google.common.collect.Lists;
+import io.puppetzmedia.ttweaks.TwistedTweaks;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.Difficulty;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
 public class ServerConfig {
 
+	public static final Tag<EntityType<?>> attackBlockMobs = new EntityTypeTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"attack_block_mobs"));
+	public static final Tag<Block> attackableBlocks = new BlockTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"attackable_blocks"));
+	public static ForgeConfigSpec.BooleanValue aiAttackBlocks;
+	public static ForgeConfigSpec.EnumValue<Difficulty> minAttackBlockDifficulty;
+	public static ForgeConfigSpec.IntValue aiBlockBreakTime;
 	final TorchConfigSpec TORCH;
-	final AiConfigSpec AI;
 
 	public static ForgeConfigSpec.BooleanValue enableGalvanized;
 	public static ForgeConfigSpec.BooleanValue enablePlayerAcidRain;
@@ -46,7 +58,6 @@ public class ServerConfig {
 		TORCH = new TorchConfigSpec(builder);
 
 		// Enter AI configurations
-		AI = new AiConfigSpec(builder);
 
 		builder.push("acid rain");
 		enablePlayerAcidRain = builder.define("enable_acid_rain",true);
@@ -65,7 +76,6 @@ public class ServerConfig {
 		mobAcidRainChance = builder.defineInRange("acid_rain_damage_mob_chance",.25,0,1);
 		deadlyAcidRain = builder.define("deadly_acid_rain",true);
 
-
 		enableCropAcidRain = builder.define("enable_crop_acid_rain",true);
 		seedDropChance = builder.defineInRange("seed_drop_chance",.25,0,1);
 		acidRainCropsRevertChance = builder.defineInRange("acid_rain_revert_drop_chance",.25,0,1);
@@ -80,7 +90,22 @@ public class ServerConfig {
 
 		builder.pop();
 
-		// Finish building configurations
-		builder.build();
+		builder.push("Ai");
+
+		ServerConfig.aiAttackBlocks = builder
+						.comment("Should mobs attack target blocks? [Default = true]")
+						.translation(TwistedTweaks.MODID + ".config." + "aiAttackBlocks")
+						.define("aiAttackBlocks", true);
+
+		ServerConfig.minAttackBlockDifficulty = builder
+						.comment("The minimum difficulty that mobs will break blocks [Default = EASY]")
+						.translation(TwistedTweaks.MODID + ".config." + "minAttackBlockDifficulty")
+						.defineEnum("minAttackBlockDifficulty", Difficulty.EASY);
+
+		ServerConfig.aiBlockBreakTime = builder
+						.comment("The speed at which blocks will be broken [Default = 10.0]")
+						.translation(TwistedTweaks.MODID + ".config." + "aiBlockBreakTime")
+						.defineInRange("aiBlockBreakTime", 10, 1, Integer.MAX_VALUE);
+		builder.pop();
 	}
 }

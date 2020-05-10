@@ -1,6 +1,6 @@
 package io.puppetzmedia.ttweaks.entity.ai;
 
-import io.puppetzmedia.ttweaks.config.AiConfig;
+import io.puppetzmedia.ttweaks.config.ServerConfig;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.GroundPathNavigator;
@@ -35,7 +35,7 @@ public class EntityAIBlockInteract extends Goal
 	 */
 	public boolean shouldExecute()
 	{
-		if(!AiConfig.isAiAttackBlocks())
+		if(!ServerConfig.aiAttackBlocks.get())
 			return false;
 
 		for(int i = -6; i < 7; i++)
@@ -137,6 +137,6 @@ public class EntityAIBlockInteract extends Goal
 
 	private boolean canTargetBlock(BlockPos pos)
 	{
-		return this.entity.world.getBlockState(pos).getBlock().isIn(AiConfig.attackableBlocks);
+		return this.entity.world.getBlockState(pos).getBlock().isIn(ServerConfig.attackableBlocks);
 	}
 }

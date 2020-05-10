@@ -1,6 +1,6 @@
 package io.puppetzmedia.ttweaks.entity.ai;
 
-import io.puppetzmedia.ttweaks.config.AiConfig;
+import io.puppetzmedia.ttweaks.config.ServerConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
@@ -20,7 +20,7 @@ public class FindTargetBlockGoal extends MoveToBlockGoal
 
 	public boolean shouldExecute()
 	{
-		return AiConfig.isAiAttackBlocks();
+		return ServerConfig.aiAttackBlocks.get();
 	}
 
 
@@ -30,6 +30,6 @@ public class FindTargetBlockGoal extends MoveToBlockGoal
 	{
 		BlockState iblockstate = worldIn.getBlockState(pos);
 		Block block = iblockstate.getBlock();
-		return AiConfig.attackableBlocks.contains(block);
+		return ServerConfig.attackableBlocks.contains(block);
 	}
 }

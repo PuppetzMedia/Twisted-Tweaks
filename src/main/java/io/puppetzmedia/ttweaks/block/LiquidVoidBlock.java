@@ -16,6 +16,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 public class LiquidVoidBlock extends Block {
@@ -29,15 +30,15 @@ public class LiquidVoidBlock extends Block {
         ItemStack itemHeld = player.getHeldItem(hand);
         TileEntity tank = world.getTileEntity(pos);
         final boolean[] success = {false};
-            itemHeld.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(handler -> {
+        tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(iFluidHandler ->
+            itemHeld.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(iFluidHandlerItem -> {
                 PlayerInvWrapper invWrapper = new PlayerInvWrapper(player.inventory);
-                FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(itemHeld,
-                        tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), invWrapper, Integer.MAX_VALUE, player, true);
+                FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(itemHeld, iFluidHandler, invWrapper, Integer.MAX_VALUE, player, true);
                 if (fillResult.isSuccess()) {
                     player.setHeldItem(hand, fillResult.getResult());
                     success[0] = true;
                 }
-            });
+            }));
         return success[0] ? ActionResultType.SUCCESS : ActionResultType.PASS;
     }
 
