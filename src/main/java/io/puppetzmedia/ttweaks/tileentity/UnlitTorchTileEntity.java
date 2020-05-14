@@ -2,7 +2,7 @@ package io.puppetzmedia.ttweaks.tileentity;
 
 import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.config.TorchConfig;
+import io.puppetzmedia.ttweaks.config.ServerConfig;
 import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -130,7 +130,7 @@ public class UnlitTorchTileEntity extends TileEntity {
 	 * @return {@code true} if {@link #litAmount} has reached the maximum config value.
 	 */
 	public boolean hasReachedMaxLitAmount() {
-		return litAmount >= TorchConfig.getMaxLitAmount();
+		return litAmount >= ServerConfig.maxLitAmount.get();
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package io.puppetzmedia.ttweaks;
 
+import io.puppetzmedia.ttweaks.achievement.TTTriggers;
 import io.puppetzmedia.ttweaks.config.TwistedTweaksConfig;
 import io.puppetzmedia.ttweaks.worldgen.TorchFeature;
 import net.minecraft.util.ResourceLocation;
@@ -9,6 +10,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -44,12 +46,13 @@ public class TwistedTweaks {
     private void setup(final FMLCommonSetupEvent event) {
 
         LOGGER.info("Pre-initialization phase...");
-
-        ForgeRegistries.BIOMES.forEach(biome ->
+        TTTriggers.init();
+        //not thread safe, needs to be ran later
+        DeferredWorkQueue.runLater(() -> ForgeRegistries.BIOMES.forEach(biome ->
                 biome.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION,
                         new TorchFeature(NoFeatureConfig::deserialize).withConfiguration(
                                 IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(
-                                        Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))));
+                                        Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)))));
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

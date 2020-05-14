@@ -6,6 +6,7 @@ import io.puppetzmedia.ttweaks.event.acidrain.AcidRainCore;
 import net.minecraft.block.*;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +34,7 @@ public class CropAcidRain {
             return;
         }
 
-        if (!AcidRainCore.isAcidRain(world)) {
+        if (!AcidRainCore.isAcidRain((World) world)) {
             return;
         }
 

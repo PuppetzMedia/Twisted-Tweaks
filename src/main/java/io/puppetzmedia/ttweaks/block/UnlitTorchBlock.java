@@ -1,7 +1,7 @@
 package io.puppetzmedia.ttweaks.block;
 
 import io.puppetzmedia.ttweaks.TTLogger;
-import io.puppetzmedia.ttweaks.config.TorchConfig;
+import io.puppetzmedia.ttweaks.config.ServerConfig;
 import io.puppetzmedia.ttweaks.tileentity.UnlitTorchTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TorchBlock;
@@ -14,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -49,38 +48,26 @@ public class UnlitTorchBlock extends TorchBlock {
 
 		final ItemStack stack = player.getHeldItem(handIn);
 		final Item item = stack.getItem();
-
 		boolean isItemFireCharge = item instanceof FireChargeItem;
 		if (item instanceof FlintAndSteelItem || isItemFireCharge) {
-			final UnlitTorchTileEntity te = (UnlitTorchTileEntity) worldIn.getTileEntity(pos);
-			if (te == null) {
-				TTLogger.debug("onBlockActivated for %s at pos %s failed, no TileEntityTorch found",
-						player.getDisplayNameAndUUID(), pos.toString());
-
-				return ActionResultType.FAIL;
-			}
+				final UnlitTorchTileEntity te = (UnlitTorchTileEntity) worldIn.getTileEntity(pos);
 			SoundEvent sound;
 			// We need to manually handle using up item charge
-			if(!isItemFireCharge)
-			{
+			if(!isItemFireCharge) {
 				stack.damageItem(1, player, (p) -> p.sendBreakAnimation(handIn));
 				sound = SoundEvents.ITEM_FIRECHARGE_USE;
-			}
-			else {
+			} else {
 				stack.shrink(1);
 				sound = SoundEvents.ITEM_FLINTANDSTEEL_USE;
 			}
 			worldIn.playSound(player, pos, sound, SoundCategory.BLOCKS,
 					1.0F, player.getRNG().nextFloat() * 0.4F + 0.8F);
 
-			if (!worldIn.isRemote)
-			{
-				double litChance = TorchConfig.getLitChance();
+				double litChance = ServerConfig.litChance.get();
 				float attempt = worldIn.rand.nextFloat();
-				boolean light = !te.hasReachedMaxLitAmount() && attempt <= litChance;
+				boolean canLight = !te.hasReachedMaxLitAmount() && attempt <= litChance;
 
-				if (light && UnlitTorchTileEntity.lightTorch(worldIn, pos) == ActionResultType.FAIL)
-				{
+				if (canLight && UnlitTorchTileEntity.lightTorch(worldIn, pos) == ActionResultType.FAIL) {
 					TTLogger.debug("onBlockActivated for %s at pos %s failed",
 							player.getDisplayNameAndUUID(), pos.toString());
 
@@ -93,8 +80,6 @@ public class UnlitTorchBlock extends TorchBlock {
 						(double)pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 			}
 			return ActionResultType.SUCCESS;
-		}
-		return ActionResultType.PASS;
 	}
 
 	@Override
@@ -110,7 +95,7 @@ public class UnlitTorchBlock extends TorchBlock {
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 
-		if(!TorchConfig.isShowTorchTooltip()) {
+		if(!ServerConfig.showTorchTooltip.get()) {
 			return;
 		}
 		int litAmount = 0, litTime = 0;

@@ -4,6 +4,7 @@ import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.block.*;
 import io.puppetzmedia.ttweaks.enchantments.GalvanizedEnchantment;
 import io.puppetzmedia.ttweaks.item.ModItemGroup;
+import io.puppetzmedia.ttweaks.potions.AcidBurnEffect;
 import io.puppetzmedia.ttweaks.tileentity.LiquidVoidTileEntity;
 import io.puppetzmedia.ttweaks.tileentity.UnlitTorchTileEntity;
 import io.puppetzmedia.ttweaks.tileentity.LitTorchTileEntity;
@@ -15,6 +16,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ToolType;
@@ -177,5 +179,18 @@ public class RegistryHandler {
 									.hardnessAndResistance(2.0F, 10.0F)
 									.harvestTool(ToolType.PICKAXE).harvestLevel(2)), "liquid_void",registry);
 		}
+	}
+
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class TTPotions
+	{
+			@ObjectHolder("twistedtweaks:acid_burn")
+			public static Effect ACID_BURN = null;
+
+			@SubscribeEvent
+			public static void onRegisterPotion(RegistryEvent.Register<Effect> event) {
+					event.getRegistry().register(
+									new AcidBurnEffect( 13223819).setRegistryName("acid_burn"));
+			}
 	}
 }

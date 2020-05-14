@@ -14,11 +14,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AcidBurnEffect extends Effect
 {
 	// Create the resource location to get the texture sprites to use for the potion icon.
-	public static ResourceLocation textureResource = new ResourceLocation(TwistedTweaks.MODID, "textures/gui/potion_effects.png");
+	//public static ResourceLocation textureResource = new ResourceLocation(TwistedTweaks.MODID, "textures/gui/potion_effects.png");
 
 	public AcidBurnEffect(int potionColour) {
-		// Set the super.
 		super(EffectType.HARMFUL, potionColour);
-		this.setRegistryName("acid_burn");
 	}
 }

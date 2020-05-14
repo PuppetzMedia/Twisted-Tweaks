@@ -1,6 +1,7 @@
 package io.puppetzmedia.ttweaks.potions;
 
 import io.puppetzmedia.ttweaks.config.ServerConfig;
+import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -23,7 +24,7 @@ public class TTPotionEvent {
 		}
 
 		// Check to see if the entity has our potion effect, if so apply the effect of the "damage" to the entity.
-		if (event.getEntityLiving().isPotionActive(TTPotions.ACID_BURN)) {
+		if (event.getEntityLiving().isPotionActive(RegistryHandler.TTPotions.ACID_BURN)) {
 			if (event.getEntityLiving().getHealth() > 1.0F || ServerConfig.deadlyAcidRain.get()) {
 				event.getEntityLiving().attackEntityFrom(damageSourceAcidRain, 1.0F);
 			}

@@ -20,7 +20,15 @@ public class ServerConfig {
 	public static ForgeConfigSpec.BooleanValue aiAttackBlocks;
 	public static ForgeConfigSpec.EnumValue<Difficulty> minAttackBlockDifficulty;
 	public static ForgeConfigSpec.IntValue aiBlockBreakTime;
-	final TorchConfigSpec TORCH;
+
+	public static ForgeConfigSpec.IntValue maxLitTime;
+	public static ForgeConfigSpec.IntValue maxLitAmount;
+	public static ForgeConfigSpec.DoubleValue litChance;
+	public static ForgeConfigSpec.DoubleValue burnoutDestroyChance;
+	public static ForgeConfigSpec.DoubleValue pickupDestroyChance;
+	public static ForgeConfigSpec.BooleanValue rainExtinguish;
+	public static ForgeConfigSpec.BooleanValue showTorchTooltip;
+	public static ForgeConfigSpec.BooleanValue enableTorchBurnout;
 
 	public static ForgeConfigSpec.BooleanValue enableGalvanized;
 	public static ForgeConfigSpec.BooleanValue enablePlayerAcidRain;
@@ -36,7 +44,7 @@ public class ServerConfig {
 
 	public static ForgeConfigSpec.DoubleValue infested_leaves_spider_spawn_chance;
 
-	//should really be a dimensiontype tag but tags don't support that by default
+	//should really be a dimension_type tag but tags don't support that by default
 	// and I don't want to add a hard dep
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> acid_rain_dims;
 	public static ForgeConfigSpec.BooleanValue enableCropAcidRain;
@@ -52,14 +60,58 @@ public class ServerConfig {
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> startingInventory;
 
 
+
+
 	public ServerConfig(ForgeConfigSpec.Builder builder) {
 
 		// Enter torch configurations
-		TORCH = new TorchConfigSpec(builder);
 
+		builder.push("torch");
+
+		maxLitTime = builder
+						.comment("The total amount of time a torch will be lit, in ticks [Default = 10000]")
+						.translation(TwistedTweaks.MODID + ".config." + "maxLitTime")
+						.defineInRange("maxLitTime", 10000, 1, Integer.MAX_VALUE);
+
+		maxLitAmount = builder
+						.comment("The total amount of times a torch can be lit [Default = 4]")
+						.translation(TwistedTweaks.MODID + ".config." + "maxLitAmount")
+						.defineInRange("maxLitAmount", 4, 0, 10);
+
+		litChance = builder
+						.comment("The chance to successfully light a torch [Default = 0.5]")
+						.translation(TwistedTweaks.MODID + ".config." + "litChance")
+						.defineInRange("litChance", 0.5f, 0, 1.0f);
+
+		burnoutDestroyChance = builder
+						.comment("Chance that a torch will be destroyed when it burns out [Default = 0]")
+						.translation(TwistedTweaks.MODID + ".config." + "burnoutDestroyChance")
+						.defineInRange("burnoutDestroyChance", 0, 0, 1.0f);
+
+		pickupDestroyChance = builder
+						.comment("Chance that a torch will be destroyed when it is picked out [Default = 0]")
+						.translation(TwistedTweaks.MODID + ".config." + "pickupDestroyChance")
+						.defineInRange("pickupDestroyChance", 0, 0, 1.0f);
+
+		rainExtinguish = builder
+						.comment("Does rain put out torches [Default = true]")
+						.translation(TwistedTweaks.MODID + ".config." + "rainExtinguish")
+						.define("rainExtinguish", true);
+
+		showTorchTooltip = builder
+						.comment("Show a tooltip on torches [Default = true]")
+						.translation(TwistedTweaks.MODID + ".config." + "showTorchTooltip")
+						.define("showTorchTooltip", true);
+
+		enableTorchBurnout = builder
+						.comment("Should torches burnout [Default = true]")
+						.translation(TwistedTweaks.MODID + ".config." + "enableTorchBurnout")
+						.define("enableTorchBurnout", true);
+
+		builder.pop();
 		// Enter AI configurations
 
-		builder.push("acid rain");
+		builder.push("acid_rain");
 		enablePlayerAcidRain = builder.define("enable_acid_rain",true);
 		enableAcidBurnPotion = builder.define("enable_acid_burn_potion",true);
 		enableGalvanized = builder.define("enable_galvanized_enchant",true);
@@ -90,7 +142,7 @@ public class ServerConfig {
 
 		builder.pop();
 
-		builder.push("Ai");
+		builder.push("ai");
 
 		ServerConfig.aiAttackBlocks = builder
 						.comment("Should mobs attack target blocks? [Default = true]")

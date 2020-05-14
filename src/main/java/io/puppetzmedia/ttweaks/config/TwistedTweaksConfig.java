@@ -17,28 +17,12 @@ public class TwistedTweaksConfig {
 	public static final ServerConfig SERVER;
 	public static final ForgeConfigSpec SERVER_SPEC;
 
-	public static Set<String> acid_rain_dims = new HashSet<>();
-
 	static {
 		final Pair<ServerConfig, ForgeConfigSpec> specPair =
 				new ForgeConfigSpec.Builder().configure(ServerConfig::new);
 
 		SERVER_SPEC = specPair.getRight();
 		SERVER = specPair.getLeft();
-	}
-
-	public static void bakeConfig() {
-		TorchConfig.bake();
-		acid_rain_dims.clear();
-		acid_rain_dims.addAll(ServerConfig.acid_rain_dims.get());
-	}
-
-	@SubscribeEvent
-	public static void onModConfigEvent(final ModConfig.ModConfigEvent configEvent) {
-
-		if (configEvent.getConfig().getSpec() == SERVER_SPEC) {
-			bakeConfig();
-		}
 	}
 
 	static String[] splitAndTrimString(String string) {

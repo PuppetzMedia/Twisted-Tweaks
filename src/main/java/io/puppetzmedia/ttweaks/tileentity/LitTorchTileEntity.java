@@ -2,7 +2,7 @@ package io.puppetzmedia.ttweaks.tileentity;
 
 import io.puppetzmedia.ttweaks.TTLogger;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import io.puppetzmedia.ttweaks.config.TorchConfig;
+import io.puppetzmedia.ttweaks.config.ServerConfig;
 import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,18 +29,18 @@ public class LitTorchTileEntity extends UnlitTorchTileEntity implements ITickabl
 	@Override
 	public void tick() {
 
-		if (!TorchConfig.isEnableTorchBurnout() || world == null) {
+		if (!ServerConfig.enableTorchBurnout.get()) {
 			return;
 		}
 		final int litTime = getLitTime();
 
-		final boolean isInOpenRain = TorchConfig.isRainExtinguish() && world.canSeeSky(pos.up()) && world.isRaining();
+		final boolean isInOpenRain = ServerConfig.rainExtinguish.get() && world.canSeeSky(pos.up()) && world.isRaining();
 
 		increaseLitTime(1);
- 		boolean isTimeOverMax = litTime >= TorchConfig.getMaxLitTime();
+ 		boolean isTimeOverMax = litTime >= ServerConfig.maxLitTime.get();
 
 		if (isTimeOverMax || isInOpenRain) {
-			final double destroyChance = TorchConfig.getBurnoutDestroyChance();
+			final double destroyChance = ServerConfig.burnoutDestroyChance.get();
 
 			// Roll dice to see if torch should be destroyed
 			if (destroyChance > 0 && world.rand.nextFloat() < destroyChance) {
