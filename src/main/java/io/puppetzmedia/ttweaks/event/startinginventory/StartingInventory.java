@@ -1,12 +1,19 @@
 package io.puppetzmedia.ttweaks.event.startinginventory;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import io.puppetzmedia.ttweaks.config.ServerConfig;
+import net.minecraft.command.arguments.ItemParser;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
@@ -19,26 +26,49 @@ import java.util.*;
 
 @Mod.EventBusSubscriber
 public class StartingInventory {
-	private static List<PlayerInventorySavedData.StartingItem> items = new ArrayList<>();
+	private static List<ItemStack> items = new ArrayList<>();
 
-	public static void init() {
+	public static final UUID NULL = new UUID(0,0);
+
+	public static void init() throws CommandSyntaxException {
 		items.clear();
-		for (String item : ServerConfig.startingInventory.get()) {
-			String[] parts = item.split(":");
-			int quantity = Integer.valueOf(parts[2]);
-			if (parts.length >= 4) {
+		for (String stack : ServerConfig.startingInventory.get()) {
+			String[] parts = stack.split("\\|");
+			int length = parts.length;
+			Item item = Registry.ITEM.getValue(new ResourceLocation(parts[0]))
+							.orElseThrow(() -> new IllegalStateException("invalid item: " + parts[0]));
+			int quantity = 1;
+			CompoundNBT nbt = null;
+			if (length > 1) {
+				quantity = Integer.valueOf(parts[1]);
+				if (length > 2) {
+					String raw = parts[2];
+					StringBuilder stringBuilder = new StringBuilder();
+					stringBuilder.append("'");
+					StringBuilder stringBuilder1 = new StringBuilder();
+					stringBuilder1.append("\"");
+					String cooked = raw.replace(stringBuilder, stringBuilder1);
+
+					String s3 = item.getRegistryName().toString()
+									+ cooked + " " + quantity;
+
+					//System.out.println(s3);
+
+					ItemParser itemParser = new ItemParser(new StringReader(s3), true);
+					itemParser.parse();
+					nbt = itemParser.getNbt();
+				}
 			}
-			if (quantity > 0 && quantity <= 64) {
-				items.add(new PlayerInventorySavedData.StartingItem(quantity, parts[0], parts[1]));
-			}
+			items.add(new ItemStack(item, quantity, nbt));
 		}
 	}
 
 	@SubscribeEvent
-	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-		if (!ServerConfig.enableStartingInventory.get())return;
+	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) throws CommandSyntaxException {
+		if (!ServerConfig.enableStartingInventory.get()) return;
 		PlayerEntity player = event.getPlayer();
 		if (player.world.isRemote) return;
+		init();
 		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 		if (!isPlayerNewToWorld(serverPlayer)) {
 			return;
@@ -56,19 +86,7 @@ public class StartingInventory {
 
 
 	private static boolean addItems(PlayerEntity player) {
-		for (PlayerInventorySavedData.StartingItem item : items) {
-			ItemStack itemStack;
-			{
-				itemStack = new ItemStack(TTUtilities.getItem(item.modId, item.item).get(), item.quantity);
-			}
-
-			if (itemStack.getItem() == null || itemStack.getItem() == Items.AIR) {
-				TwistedTweaks.LOGGER.error("The item " + item.modId + ":" + item.item + " was not found in the game or is invalid! Please check your config.");
-				continue;
-			}
-			player.inventory.addItemStackToInventory(itemStack);
-		}
-
+		items.forEach(player.inventory::addItemStackToInventory);
 		return true;
 	}
 
@@ -76,13 +94,21 @@ public class StartingInventory {
 		public final Set<UUID> playerUUids = new HashSet<>();
 
 		public PlayerInventorySavedData() {
-			super(TwistedTweaks.MODID + "_startertracking");
+			super("twistedtweaks:starting_inventory");
 			this.markDirty();
 		}
 
 		@Override
 		public void read(CompoundNBT nbt) {
-			nbt.keySet().forEach(s -> playerUUids.add(nbt.getUniqueId(s)));
+			int index = 0;
+			while (true) {
+				UUID uuid = nbt.getUniqueId(String.valueOf(index));
+				if (!NULL.equals(uuid)) {
+					playerUUids.add(nbt.getUniqueId(String.valueOf(index)));
+					break;
+				}
+				index++;
+			}
 		}
 
 		@Override
@@ -96,18 +122,18 @@ public class StartingInventory {
 		}
 
 		private static void add(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServerWorld());
+			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
 			instance.playerUUids.add(player.getUniqueID());
 			instance.markDirty();
 		}
 
 		private static boolean playerHasStarter(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServerWorld());
+			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
 			return instance.playerUUids.contains(player.getUniqueID());
 		}
 
 		public static void clearPlayerStarter(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServerWorld());
+			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
 			instance.playerUUids.remove(player.getUniqueID());
 			instance.markDirty();
 		}
@@ -120,8 +146,8 @@ public class StartingInventory {
 
 		public static PlayerInventorySavedData get(ServerWorld world) {
 			DimensionSavedDataManager storage = world.getSavedData();
-			//MapStorage storage = world.getMapStorage();
-			PlayerInventorySavedData instance = storage.getOrCreate(PlayerInventorySavedData::new, "a");
+			PlayerInventorySavedData instance = storage.getOrCreate(PlayerInventorySavedData::new,
+							"twistedtweaks:starting_inventory");
 
 			if (instance == null) {
 				instance = new PlayerInventorySavedData();
@@ -139,18 +165,6 @@ public class StartingInventory {
 			if (player != null) {
 				instance.playerUUids.remove(player.getUniqueID());
 				instance.markDirty();
-			}
-		}
-
-		static class StartingItem {
-			private int quantity;
-			private String modId;
-			public String item;
-
-			private StartingItem(int quantity, String modId, String item) {
-				this.quantity = quantity;
-				this.modId = modId;
-				this.item = item;
 			}
 		}
 	}

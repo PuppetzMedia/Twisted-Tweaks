@@ -138,7 +138,8 @@ public class ServerConfig {
 		starveDeathDamage = builder.defineInRange("starve_death_damage",2,0,Double.MAX_VALUE);
 
 		enableStartingInventory = builder.define("enable_starting_inventory",true);
-		startingInventory = builder.defineList("starting_inventory", Lists.newArrayList(), String.class::isInstance);
+		startingInventory = builder.comment("Items to give players when the join the world for the first time. [Format: modid:item|quantity]")
+						.defineList("starting_inventory", Lists.newArrayList("minecraft:apple|3"), String.class::isInstance);
 
 		builder.pop();
 
