@@ -9,9 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
@@ -24,11 +25,11 @@ import java.util.Random;
  * Created by Sam on 21/03/2018.
  */
 public class BreakBlocksGoal extends MoveToBlockGoal {
-	private final Tag<Block> blocks;
+	private final ITag.INamedTag<Block> blocks;
 	private final MobEntity entity;
 	private int breakingTime;
 
-	public BreakBlocksGoal(Tag<Block> blocks, CreatureEntity creature, double speed, int yMax) {
+	public BreakBlocksGoal(ITag.INamedTag<Block> blocks, CreatureEntity creature, double speed, int yMax) {
 		super(creature, speed, 24, yMax);
 		this.blocks = blocks;
 		this.entity = creature;
@@ -90,12 +91,12 @@ public class BreakBlocksGoal extends MoveToBlockGoal {
 	public void tick() {
 		super.tick();
 		World world = this.entity.world;
-		BlockPos blockpos = new BlockPos(this.entity);
+		BlockPos blockpos = entity.getPosition();
 		BlockPos blockpos1 = this.findTarget(blockpos, world);
 		Random random = this.entity.getRNG();
 		if (this.getIsAboveDestination() && blockpos1 != null) {
 			if (this.breakingTime > 0) {
-				Vec3d vec3d = this.entity.getMotion();
+				Vector3d vec3d = this.entity.getMotion();
 				this.entity.setMotion(vec3d.x, 0.3D, vec3d.z);
 				if (!world.isRemote) {
 					double d0 = 0.08D;
@@ -104,7 +105,7 @@ public class BreakBlocksGoal extends MoveToBlockGoal {
 			}
 
 			if (this.breakingTime % 2 == 0) {
-				Vec3d vec3d1 = this.entity.getMotion();
+				Vector3d vec3d1 = this.entity.getMotion();
 				this.entity.setMotion(vec3d1.x, -0.3D, vec3d1.z);
 				if (this.breakingTime % 6 == 0) {
 					this.playBreakingSound(world, this.destinationBlock);

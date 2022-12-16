@@ -2,6 +2,7 @@ package io.puppetzmedia.ttweaks.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.WallTorchBlock;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
@@ -14,7 +15,7 @@ public class GlowstoneWallTorchBlock extends WallTorchBlock {
 
 
 	public GlowstoneWallTorchBlock(Properties p_i48298_1_) {
-		super(p_i48298_1_);
+		super(p_i48298_1_, ParticleTypes.FLAME);
 	}
 
 	@Override

@@ -15,14 +15,15 @@ public class AcidRainCore {
      * @return boolean
      */
 	public static boolean isAcidRain(World world) {
-		String dimID = world.getDimension().getType().getRegistryName().toString();
+		String dimID = world.getDimensionKey().toString();
 
 		List<? extends String> list = ServerConfig.acid_rain_dims.get();
 
 		if (list.contains(dimID))
-			if (world.getDimension().isSurfaceWorld())
-			if (world.isRaining())
-				if (world.rand.nextFloat() < ServerConfig.acidRainChance.get()) return true;
+			if (world.getDimensionType().hasSkyLight()) {
+				if (world.isRaining())
+					return world.rand.nextFloat() < ServerConfig.acidRainChance.get();
+			}
 		return false;
 	}
 }

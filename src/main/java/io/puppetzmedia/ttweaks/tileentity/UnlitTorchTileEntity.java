@@ -34,9 +34,8 @@ public class UnlitTorchTileEntity extends TileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT compound) {
-
-		super.read(compound);
+	public void read(BlockState state,CompoundNBT compound) {
+		super.read(state,compound);
 		CompoundNBT data = compound.getCompound("data");
 		litAmount = data.getInt("lit_amount");
 		litTime  = data.getInt("lit_time");

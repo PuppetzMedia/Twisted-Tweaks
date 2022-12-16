@@ -16,6 +16,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -155,23 +157,23 @@ public class RegistryHandler {
 		public static void onRegisterBlock(final RegistryEvent.Register<Block> event) {
 
 			IForgeRegistry<Block> registry = event.getRegistry();
-			Block lit_torch = new LitTorchBlock(Block.Properties.from(Blocks.TORCH));
+			Block lit_torch = new LitTorchBlock(Block.Properties.from(Blocks.TORCH),ParticleTypes.FLAME);
 
-			Block unlit_torch = new UnlitTorchBlock(Block.Properties.from(Blocks.TORCH).lightValue(0));
+			Block unlit_torch = new UnlitTorchBlock(Block.Properties.from(Blocks.TORCH).setLightLevel(s -> 0));
 
-			Block glowstone_torch = new GlowstoneTorchBlock(Block.Properties.from(Blocks.TORCH));
+			Block glowstone_torch = new GlowstoneTorchBlock(Block.Properties.from(Blocks.TORCH), RedstoneParticleData.REDSTONE_DUST);
 
 			Block.Properties lit_wall_torch_props = Block.Properties.from(Blocks.TORCH).lootFrom(lit_torch);
 
 			Block.Properties unlit_wall_torch_props = Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement()
-							.hardnessAndResistance(0).lightValue(0).sound(SoundType.WOOD).lootFrom(unlit_torch);
+							.hardnessAndResistance(0).setLightLevel(s -> 0).sound(SoundType.WOOD).lootFrom(unlit_torch);
 
 			Block.Properties glowstone_wall_torch_props = Block.Properties.from(Blocks.TORCH).lootFrom(glowstone_torch);
 
 					setup(lit_torch, "torch",registry);
 					setup(unlit_torch, "torch_unlit",registry);
 
-					setup(new LitWallTorchBlock(lit_wall_torch_props), "wall_torch",registry);
+					setup(new LitWallTorchBlock(lit_wall_torch_props, ParticleTypes.FLAME), "wall_torch",registry);
 					setup(new UnlitWallTorchBlock(unlit_wall_torch_props), "wall_torch_unlit",registry);
 					setup(glowstone_torch, "torch_glowstone",registry);
 					setup(new GlowstoneWallTorchBlock(glowstone_wall_torch_props), "wall_torch_glowstone",registry);

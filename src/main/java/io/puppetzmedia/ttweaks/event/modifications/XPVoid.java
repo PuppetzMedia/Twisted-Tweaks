@@ -2,6 +2,7 @@ package io.puppetzmedia.ttweaks.event.modifications;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +15,7 @@ import net.minecraftforge.event.world.BlockEvent;
 public class XPVoid {
 
     // Set the ArrayList which will contain the blocks to prevent XP from dropping from.
-    public static Tag<Block> blockList = new BlockTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"xp_disabled"));
+    public static ITag.INamedTag<Block> blockList = BlockTags.makeWrapperTag(new ResourceLocation(TwistedTweaks.MODID,"xp_disabled").toString());
 
     /**
      * This event gets fired on the block break event which will void any XP dropping to the player.

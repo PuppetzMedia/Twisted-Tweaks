@@ -15,7 +15,7 @@ public class TTUtilities {
      * @return The block data from the information passed or null if it was not found.
      */
     public static Optional<Block> getBlock(String modID, String blockName) {
-        return Registry.BLOCK.getValue(new ResourceLocation(modID, blockName));
+        return Registry.BLOCK.getOptional(new ResourceLocation(modID, blockName));
     }
 
    /**
@@ -25,6 +25,6 @@ public class TTUtilities {
      * @return The item data from the information passed or null if it was not found.
      */
     public static Optional<Item> getItem(String modID, String itemName) {
-      return Registry.ITEM.getValue(new ResourceLocation(modID, itemName));
+      return Registry.ITEM.getOptional(new ResourceLocation(modID, itemName));
     }
 }

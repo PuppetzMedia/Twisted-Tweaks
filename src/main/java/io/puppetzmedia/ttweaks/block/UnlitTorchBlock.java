@@ -34,7 +34,7 @@ import java.util.Random;
 public class UnlitTorchBlock extends TorchBlock {
 
 	public UnlitTorchBlock(Properties properties) {
-		super(properties);
+		super(properties,null);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class UnlitTorchBlock extends TorchBlock {
 
 				if (canLight && UnlitTorchTileEntity.lightTorch(worldIn, pos) == ActionResultType.FAIL) {
 					TTLogger.debug("onBlockActivated for %s at pos %s failed",
-							player.getDisplayNameAndUUID(), pos.toString());
+							player.getDisplayName(), pos.toString());
 
 					return ActionResultType.FAIL;
 				}
@@ -107,12 +107,12 @@ public class UnlitTorchBlock extends TorchBlock {
 		}
 
 		tooltip.add(new StringTextComponent("")
-				.appendSibling(new TranslationTextComponent("tt.info.torch.litamount")
-						.applyTextStyle(TextFormatting.DARK_PURPLE)).appendText(": " + litAmount));
+				.append(new TranslationTextComponent("tt.info.torch.litamount")
+						.mergeStyle(TextFormatting.DARK_PURPLE)).appendString(": " + litAmount));
 
 		tooltip.add(new StringTextComponent("")
-				.appendSibling(new TranslationTextComponent("tt.info.torch.littime")
-						.applyTextStyle(TextFormatting.DARK_PURPLE)).appendText(": " + litTime));
+				.append(new TranslationTextComponent("tt.info.torch.littime")
+						.mergeStyle(TextFormatting.DARK_PURPLE)).appendString(": " + litTime));
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package io.puppetzmedia.ttweaks.worldgen;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import io.puppetzmedia.ttweaks.block.LitTorchBlock;
 import io.puppetzmedia.ttweaks.core.RegistryHandler;
 import net.minecraft.block.Block;
@@ -9,15 +9,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.NoOpFeature;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
-import java.util.function.Function;
 
 /**
  * Add this feature to biomes in which you want vanilla torch blocks replaced with
@@ -30,21 +29,22 @@ import java.util.function.Function;
  */
 @mcp.MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class TorchFeature extends Feature<NoFeatureConfig> {
+public class TorchFeature extends NoOpFeature {
 
-	public TorchFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config) {
-		super(config);
+
+	public TorchFeature(Codec<NoFeatureConfig> p_i231973_1_) {
+		super(p_i231973_1_);
 	}
 
 	@Override
-	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
 
 		int startX = pos.getX();
 		int startZ = pos.getZ();
 
 		for (int x = 0; x < 16; x++)
 		{
-			for (int y = 0; y < world.getMaxHeight(); y++)
+			for (int y = 0; y < world.getHeight(Heightmap.Type.MOTION_BLOCKING,pos).getY(); y++)
 			{
 				for (int z = 0; z < 16; z++)
 				{

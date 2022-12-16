@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class ServerConfig {
 
-	public static final Tag<EntityType<?>> attackBlockMobs = new EntityTypeTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"attack_block_mobs"));
-	public static final Tag<Block> attackableBlocks = new BlockTags.Wrapper(new ResourceLocation(TwistedTweaks.MODID,"attackable_blocks"));
+	public static final ITag.INamedTag<EntityType<?>> attackBlockMobs = EntityTypeTags.getTagById(new ResourceLocation(TwistedTweaks.MODID,"attack_block_mobs").toString());
+	public static final ITag.INamedTag<Block> attackableBlocks = BlockTags.makeWrapperTag(new ResourceLocation(TwistedTweaks.MODID,"attackable_blocks").toString());
 	public static ForgeConfigSpec.BooleanValue aiAttackBlocks;
 	public static ForgeConfigSpec.EnumValue<Difficulty> minAttackBlockDifficulty;
 	public static ForgeConfigSpec.IntValue aiBlockBreakTime;

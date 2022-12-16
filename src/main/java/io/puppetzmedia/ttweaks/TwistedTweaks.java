@@ -1,6 +1,7 @@
 package io.puppetzmedia.ttweaks;
 
 import io.puppetzmedia.ttweaks.achievement.TTTriggers;
+import io.puppetzmedia.ttweaks.command.CommandTT;
 import io.puppetzmedia.ttweaks.config.TwistedTweaksConfig;
 import io.puppetzmedia.ttweaks.worldgen.TorchFeature;
 import net.minecraft.util.ResourceLocation;
@@ -10,6 +11,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -40,24 +43,27 @@ public class TwistedTweaks {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, TwistedTweaksConfig.SERVER_SPEC);
 
         // Register ourselves for game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
 
         LOGGER.info("Pre-initialization phase...");
         TTTriggers.init();
-        //not thread safe, needs to be ran later
-        DeferredWorkQueue.runLater(() -> ForgeRegistries.BIOMES.forEach(biome ->
-                biome.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION,
-                        new TorchFeature(NoFeatureConfig::deserialize).withConfiguration(
-                                IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(
-                                        Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)))));
+    }
+
+    private void biome(BiomeLoadingEvent e) {
+        e.getGeneration().getFeatures(GenerationStage.Decoration.TOP_LAYER_MODIFICATION).add(() -> new TorchFeature(NoFeatureConfig.field_236558_a_).withConfiguration(
+                IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(
+                Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-
         LOGGER.info("Post-initialization phase...");
         ClientSetup.setRenderLayers();
+    }
+
+    private void registerCommands(RegisterCommandsEvent event) {
+        CommandTT.regCommands(event.getDispatcher());
     }
 }

@@ -103,7 +103,7 @@ public class PlayerAcidRain {
 		/*
 		 * If the player is in water also while acid rain is active. They will be affect by the acid.
 		 */
-		boolean isPlayerInWater = player.handleWaterMovement();
+		boolean isPlayerInWater = player.isInWater();
         /*
         Check that the world the player is in, is raining and that they are under the sky. If the player meets
         the conditions meet whats needed begin the process to add the poison effect the player.

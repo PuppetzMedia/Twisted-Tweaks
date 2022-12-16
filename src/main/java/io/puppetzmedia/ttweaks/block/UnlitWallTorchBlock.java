@@ -19,7 +19,7 @@ import java.util.Random;
 public class UnlitWallTorchBlock extends WallTorchBlock {
 
 	public UnlitWallTorchBlock(Properties properties) {
-		super(properties);
+		super(properties,null);
 	}
 
 	@Override

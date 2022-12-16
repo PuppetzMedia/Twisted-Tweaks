@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.CaveSpiderEntity;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,7 +40,7 @@ public class InfestedSpiders
             // Generate a random number between 0.0 and 1.0 and see if the player is unlucky. >:)
             if (world.getRandom().nextFloat() < chance) {
                 // Create the spider and set its position.
-                CaveSpiderEntity spider = new CaveSpiderEntity(EntityType.CAVE_SPIDER, world.getWorld());
+                CaveSpiderEntity spider = new CaveSpiderEntity(EntityType.CAVE_SPIDER, (World) world);
                 BlockPos pos = event.getPos();
                 float yaw = (world.getRandom().nextFloat() * 360.0F); // Get a random rotation.
                 spider.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, yaw, 0.0F);

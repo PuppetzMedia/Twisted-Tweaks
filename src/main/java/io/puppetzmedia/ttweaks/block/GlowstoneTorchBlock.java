@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class GlowstoneTorchBlock extends TorchBlock {
 
-	public GlowstoneTorchBlock(Properties p_i48308_1_) {
-		super(p_i48308_1_);
+	public GlowstoneTorchBlock(Properties p_i48308_1_,IParticleData data) {
+		super(p_i48308_1_,data);
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class EntityAIBlockInteract extends Goal
 				}
 			}
 
-			this.targetPos = (new BlockPos(this.entity)).down();
+			this.targetPos = this.entity.getPosition().down();
 			this.target = this.canTargetBlock(this.targetPos);
 			return this.target;
 		}

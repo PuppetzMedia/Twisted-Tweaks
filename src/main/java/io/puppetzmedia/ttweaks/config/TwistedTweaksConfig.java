@@ -1,15 +1,9 @@
 package io.puppetzmedia.ttweaks.config;
 
 import io.puppetzmedia.ttweaks.TwistedTweaks;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = TwistedTweaks.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TwistedTweaksConfig {

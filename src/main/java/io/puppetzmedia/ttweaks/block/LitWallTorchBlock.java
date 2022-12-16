@@ -7,6 +7,7 @@ import net.minecraft.block.WallTorchBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -16,8 +17,8 @@ import javax.annotation.Nullable;
 
 public class LitWallTorchBlock extends WallTorchBlock {
 
-	public LitWallTorchBlock(Properties properties) {
-		super(properties);
+	public LitWallTorchBlock(Properties properties,IParticleData data) {
+		super(properties, data);
 	}
 
 	@Override

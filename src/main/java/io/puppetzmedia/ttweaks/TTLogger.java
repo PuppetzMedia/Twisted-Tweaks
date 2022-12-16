@@ -2,7 +2,6 @@ package io.puppetzmedia.ttweaks;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
 
 /**
  * Simple Log4J wrapper to help us log messages.
@@ -26,7 +25,6 @@ public final class TTLogger {
 		}
 	}
 
-	@Contract(pure = true)
 	public static Logger get() {
 		return logger;
 	}

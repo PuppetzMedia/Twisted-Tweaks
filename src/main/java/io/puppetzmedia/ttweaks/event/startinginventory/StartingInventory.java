@@ -9,18 +9,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import io.puppetzmedia.ttweaks.util.TTUtilities;
 
 import java.util.*;
 
@@ -35,12 +33,12 @@ public class StartingInventory {
 		for (String stack : ServerConfig.startingInventory.get()) {
 			String[] parts = stack.split("\\|");
 			int length = parts.length;
-			Item item = Registry.ITEM.getValue(new ResourceLocation(parts[0]))
+			Item item = Registry.ITEM.getOptional(new ResourceLocation(parts[0]))
 							.orElseThrow(() -> new IllegalStateException("invalid item: " + parts[0]));
 			int quantity = 1;
 			CompoundNBT nbt = null;
 			if (length > 1) {
-				quantity = Integer.valueOf(parts[1]);
+				quantity = Integer.parseInt(parts[1]);
 				if (length > 2) {
 					String raw = parts[2];
 					StringBuilder stringBuilder = new StringBuilder();
@@ -122,18 +120,18 @@ public class StartingInventory {
 		}
 
 		private static void add(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
+			PlayerInventorySavedData instance = getOverworld(player);
 			instance.playerUUids.add(player.getUniqueID());
 			instance.markDirty();
 		}
 
 		private static boolean playerHasStarter(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
+			PlayerInventorySavedData instance = getOverworld(player);
 			return instance.playerUUids.contains(player.getUniqueID());
 		}
 
 		public static void clearPlayerStarter(ServerPlayerEntity player) {
-			PlayerInventorySavedData instance = get(player.getServer().getWorld(DimensionType.OVERWORLD));
+			PlayerInventorySavedData instance = getOverworld(player);
 			instance.playerUUids.remove(player.getUniqueID());
 			instance.markDirty();
 		}
@@ -143,8 +141,12 @@ public class StartingInventory {
 			instance.playerUUids.clear();
 			instance.markDirty();
 		}
+		public static PlayerInventorySavedData getOverworld(ServerPlayerEntity serverPlayer) {
+			return get(serverPlayer.getServer().getWorld(World.OVERWORLD));
+		}
 
-		public static PlayerInventorySavedData get(ServerWorld world) {
+
+			public static PlayerInventorySavedData get(ServerWorld world) {
 			DimensionSavedDataManager storage = world.getSavedData();
 			PlayerInventorySavedData instance = storage.getOrCreate(PlayerInventorySavedData::new,
 							"twistedtweaks:starting_inventory");
@@ -156,6 +158,8 @@ public class StartingInventory {
 
 			return instance;
 		}
+
+
 
 		public static void clearPlayerWithName(String name, ServerWorld world) {
 			name = name.toLowerCase();
