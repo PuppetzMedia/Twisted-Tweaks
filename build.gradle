@@ -5,12 +5,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
-plugins {
-    id "com.wynprice.cursemaven" version "2.1.0"
-}
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -72,7 +70,7 @@ minecraft {
 
 dependencies {
 
-    runtimeOnly fg.deobf("curse.maven:mekanism:2873222")
+ //   runtimeOnly fg.deobf("curse.maven:mekanism:2873222")
 
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
@@ -80,7 +78,6 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}"
 
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
-    compile group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
 }
 
 // Get properties into the manifest for reading by the runtime..
